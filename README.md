@@ -3,10 +3,10 @@
 **Grupo**: 1  
 **Proyecto**: Sistema de Alojamiento   
 **Integrantes**:
-- Antonio; Chalita 
-- Mateo; Hernandez 
-- Benjamin; Nanzer 
-- Thiago; Sarco
+- Antonio Chalita 
+- Mateo Hernandez 
+- Benjamin Nanzer 
+- Thiago Sarco
 
 ---
 
