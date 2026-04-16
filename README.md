@@ -1,12 +1,12 @@
 # PP1 2026 — Proyecto Integrador
 
-**Grupo**: [Nombre del grupo]  
-**Proyecto**: [Nombre del proyecto elegido]  
+**Grupo**: 1  
+**Proyecto**: Sistema de Alojamiento   
 **Integrantes**:
-- [Nombre y Apellido 1]
-- [Nombre y Apellido 2]
-- [Nombre y Apellido 3]
-- [Nombre y Apellido 4]
+- Antonio; Chalita 
+- Mateo; Hernandez 
+- Benjamin; Nanzer 
+- Thiago; Sarco
 
 ---
 
