@@ -8,25 +8,11 @@
 
 ## 1. Identificación de Actores
 
-| Actor | Rol / Función en el sistema | Tipo (usuario final, sistema externo, etc.) |
-|Dueño|   Es el dueño del lugar.       Usuario final
-         Publica lu propiedad,
-         la edita, la da de baja y 
-         elige qué comodidades ofrece 
-         (Wi-Fi, pileta, etc.)-----------|
-| Huesped      |   Es el cliente.             Usuario final
-              Busca propiedades, 
-              hace reservas, y puede 
-              modificarlas o cancelarlas.
-               También puede ver 
-               su historial de viajes pasados                        |                                             |
-Encargado      Mantiene el sistema.
-               Se encarga de agregar,modificar
-              o quitar los servicios globales      Usuario interno/del sistema
-             por ejemplo: "Gimnasio
-              que los anfitriones
-              luego pueden seleccionar para
-              sus propiedades.
+| Actor | Rol / Función en el sistema | Tipo |
+| :--- | :--- | :--- |
+| **Dueño** | Es el dueño del lugar. Publica su propiedad, la edita, la da de baja y elige qué comodidades ofrece (Wi-Fi, pileta, etc.). | Usuario final |
+| **Huésped** | Es el cliente. Busca propiedades, hace reservas y puede modificarlas o cancelarlas. También puede ver su historial de viajes. | Usuario final |
+| **Encargado** | Mantiene el sistema. Se encarga de agregar, modificar o quitar los servicios globales (ej: "Gimnasio") que se pueden seleccionar. | Usuario interno del sistema |
 ## 2. Requisitos Funcionales
 
 | ID    | Descripción | Actor | HU relacionada |
