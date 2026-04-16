@@ -1,7 +1,7 @@
 # Entrega 1 — Análisis del Sistema
 
-**Grupo**: [Nombre del grupo]  
-**Proyecto**: [Nombre del proyecto elegido]  
+**Grupo**: [TBMA]  
+**Proyecto**: [Sistema de Reserva de Alojamiento]  
 **Fecha de entrega**: 30/04/2026
 
 ---
@@ -9,9 +9,24 @@
 ## 1. Identificación de Actores
 
 | Actor | Rol / Función en el sistema | Tipo (usuario final, sistema externo, etc.) |
-|-------|-----------------------------|---------------------------------------------|
-|       |                             |                                             |
-
+|Dueño|   Es el dueño del lugar.       Usuario final
+         Publica lu propiedad,
+         la edita, la da de baja y 
+         elige qué comodidades ofrece 
+         (Wi-Fi, pileta, etc.)-----------|
+| Huesped      |   Es el cliente.             Usuario final
+              Busca propiedades, 
+              hace reservas, y puede 
+              modificarlas o cancelarlas.
+               También puede ver 
+               su historial de viajes pasados                        |                                             |
+Encargado      Mantiene el sistema.
+               Se encarga de agregar,modificar
+              o quitar los servicios globales      Usuario interno/del sistema
+             por ejemplo: "Gimnasio
+              que los anfitriones
+              luego pueden seleccionar para
+              sus propiedades.
 ## 2. Requisitos Funcionales
 
 | ID    | Descripción | Actor | HU relacionada |
