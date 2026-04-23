@@ -17,11 +17,11 @@
 
 | ID    | Descripción | Actor | HU relacionada |
 |-------|-------------|-------|----------------|
-| RF-01 |      El sistema debe permitir que el **huésped** se registre con correo electrónico y contraseña.        |     huesped  |      HU-01    |
-| RF-02 |      El sistema debe permitir que el **propietario** publique un alojamiento con fotos, precio y descripción.     |    dueño  |    HU-02 | 
+| RF-01 |      El sistema debe permitir que el **huésped** se registre con correo electrónico y contraseña.        |     Huesped  |      HU-01    |
+| RF-02 |      El sistema debe permitir que el **propietario** publique un alojamiento con fotos, precio y descripción.     |    Propietario  |    HU-02 | 
 | RF-03 | El sistema debe permitir que el **huésped** busque alojamientos filtrando por ubicación, fechas y precio. | Huésped | HU-03 |
 | RF-04 | El sistema debe permitir que el **huésped** realice una reserva seleccionando fechas disponibles. | Huésped | HU-04 |
-| RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas  | dueño | HU-05 |
+| RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas  | Propietario | HU-05 |
 | RF-06 | El sistema debe permitir que el **huésped** deje una reseña | Huésped | HU-06 |
 | RF-07 | El sistema debe permitir que el **administrador** supervise usuarios y alojamientos para garantizar cumplimiento de normas. | Administrador | HU-07 |
 > Cada requisito debe describir una acción concreta: "El sistema debe permitir que [actor] [acción]..."
