@@ -10,18 +10,18 @@
 
 | Actor | Rol / Función en el sistema | Tipo |
 | :--- | :--- | :--- |
-| **Dueño** | Es el dueño del lugar. Publica su propiedad, la edita, la da de baja y elige qué comodidades ofrece (Wi-Fi, pileta, etc.). | Usuario final |
+| **Propietario** | Es el dueño del lugar. Publica su propiedad, la edita, la da de baja y elige qué comodidades ofrece (Wi-Fi, pileta, etc.). | Usuario final |
 | **Huésped** | Es el cliente. Busca propiedades, hace reservas y puede modificarlas o cancelarlas. También puede ver su historial de viajes. | Usuario final |
-| **administrador** | Mantiene el sistema. Se encarga de agregar, modificar o quitar los servicios globales (ej: "Gimnasio") que se pueden seleccionar. | Usuario interno del sistema |
+| **Administrador** | Mantiene el sistema. Se encarga de agregar, modificar o quitar los servicios globales (ej: "Gimnasio") que se pueden seleccionar. | Usuario interno del sistema |
 ## 2. Requisitos Funcionales
 
 | ID    | Descripción | Actor | HU relacionada |
 |-------|-------------|-------|----------------|
 | RF-01 |      El sistema debe permitir que el **huésped** se registre con correo electrónico y contraseña.        |     huesped  |      HU-01    |
-| RF-02 |      El sistema debe permitir que el **dueño** publique un alojamiento con fotos, precio y descripción.     |    dueño  |    HU-02 | 
+| RF-02 |      El sistema debe permitir que el **propietario** publique un alojamiento con fotos, precio y descripción.     |    dueño  |    HU-02 | 
 | RF-03 | El sistema debe permitir que el **huésped** busque alojamientos filtrando por ubicación, fechas y precio. | Huésped | HU-03 |
 | RF-04 | El sistema debe permitir que el **huésped** realice una reserva seleccionando fechas disponibles. | Huésped | HU-04 |
-| RF-05 | El sistema debe permitir que el **dueño** gestione sus reservas  | dueño | HU-05 |
+| RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas  | dueño | HU-05 |
 | RF-06 | El sistema debe permitir que el **huésped** deje una reseña | Huésped | HU-06 |
 | RF-07 | El sistema debe permitir que el **administrador** supervise usuarios y alojamientos para garantizar cumplimiento de normas. | Administrador | HU-07 |
 > Cada requisito debe describir una acción concreta: "El sistema debe permitir que [actor] [acción]..."
@@ -40,10 +40,10 @@
 | ID    | Como...       | Quiero...                  | Para...                            |
 |-------|---------------|----------------------------|------------------------------------|
 | HU-01 | **Huesped**   | quiero registrarme con mi correo y contraseña | crear una cuenta que permita realizar reservas. |
-| HU-02 | **Dueño**   | publicar mi alojamiento con fotos, precios y descripcion | que los huespedes puedan conocerlo y reservarlo. |
+| HU-02 | **Propietario**   | publicar mi alojamiento con fotos, precios y descripcion | que los huespedes puedan conocerlo y reservarlo. |
 | HU-03 | **Huesped**   | buscar alojamiento filtrando por ubicacion, fechas y precios | encontrar opciones que se ajusten a mis planes y presupuesto. |
 | HU-04 | **Huesped** | realizar reserva seleccionando fechas disponibles | asegurar mi estadia en el alojamiento que elijo. |
-| HU-05 | **Dueño** | gestionar las reservas de mi alojamieto | aceptar, rechazar o hacer seguimiento de las estadias confirmadas. |
+| HU-05 | **Propietario** | gestionar las reservas de mi alojamieto | aceptar, rechazar o hacer seguimiento de las estadias confirmadas. |
 | HU-06 | **Huesped** | dejar una reseña sobre el alojamiento donde me hospede | compartir mi experiencia y ayudar a otros viajeros a elegir. |
 | HU-07 | **Administrador** | supervisar los usarios y alojamientos de la plataforma | garantizar el cumplimientos de las normas de la comunidad. |
 ## 5. Diagrama de Casos de Uso
