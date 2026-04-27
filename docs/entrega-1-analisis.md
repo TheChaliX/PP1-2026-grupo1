@@ -8,11 +8,14 @@
 
 ## 1. Identificación de Actores
 
+## Actores del Sistema
+
 | Actor | Rol / Función en el sistema | Tipo |
 | :--- | :--- | :--- |
 | **Dueño** | Es el dueño del lugar. Publica su propiedad, la edita, la da de baja y elige qué comodidades ofrece (Wi-Fi, pileta, etc.). | Usuario final |
 | **Huésped** | Es el cliente. Busca propiedades, hace reservas y puede modificarlas o cancelarlas. También puede ver su historial de viajes. | Usuario final |
 | **Encargado** | Mantiene el sistema. Se encarga de agregar, modificar o quitar los servicios globales (ej: "Gimnasio") que se pueden seleccionar. | Usuario interno del sistema |
+| **Plataforma de Confirmación** | Sistema automatizado que procesa las reservas, valida disponibilidad, gestiona pagos (si aplica) y confirma o rechaza las solicitudes del huésped. También envía notificaciones a las partes involucradas. | Sistema / Servicio automático |
 ## 2. Requisitos Funcionales
 
 | ID    | Descripción | Actor | HU relacionada |
