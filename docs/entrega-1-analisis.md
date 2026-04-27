@@ -16,7 +16,9 @@
 | :--- | :--- | :--- |
 | **Propietario** | Publica alojamientos, los edita o elimina, y gestiona las reservas recibidas. | Usuario final |
 | **Huésped** | Busca alojamientos, realiza reservas, puede cancelarlas, ver su historial y dejar reseñas. | Usuario final |
-| **Administrador** | Supervisa usuarios y alojamientos dentro de la plataforma y gestiona el funcionamiento general del sistema. | Usuario interno del sistema |
+| **Administrador** | Supervisa usuarios y alojamientos dentro de la plataforma y gestiona el funcionamiento general del sistema. | actor interno |
+| **servicio de notificaciones**| Notifica al huesped con mensaje SMS o Email ante eventos del sistema (reserva,cancelacion,etc)  | actor externo|
+
 ## 2. Requisitos Funcionales
 
 | ID    | Descripción | Actor | HU relacionada |
@@ -25,9 +27,12 @@
 | RF-02 |      El sistema debe permitir que el **propietario** publique un alojamiento con fotos, precio y descripción.     |    Propietario  |    HU-02 | 
 | RF-03 | El sistema debe permitir que el **huésped** busque alojamientos filtrando por ubicación, fechas y precio. | Huésped | HU-03 |
 | RF-04 | El sistema debe permitir que el **huésped** realice una reserva seleccionando fechas disponibles. | Huésped | HU-04 |
-| RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas  | Propietario | HU-05 |
-| RF-06 | El sistema debe permitir que el **huésped** deje una reseña | Huésped | HU-06 |
+| RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas (aceptar, cancelar o rechazar reservas)  | Propietario | HU-05 |
+| RF-06 | El sistema debe permitir que el **huésped** deje una reseña post estadia | Huésped | HU-06 |
 | RF-07 | El sistema debe permitir que el **administrador** supervise usuarios y alojamientos para garantizar cumplimiento de normas. | Administrador | HU-07 |
+| RF-08 | el sistema debe notificar a traves del **servicio de notificaciones** al huesped y el propietario cuando se realiza un evento  | servicio de notificaciones | HU-08 |
+| RF-09 | el sistema debe permitir que el **servicio de notificaciones** envie un recordatorio al huesped 24 hs antes de su alojamiento | servicio de notificaciones | HU-09 |
+
 > Cada requisito debe describir una acción concreta: "El sistema debe permitir que [actor] [acción]..."
 
 ## 3. Requisitos No Funcionales
@@ -38,6 +43,7 @@
 | RNF-02 | Seguridad    |   Las contraseñas deben almacenarse en formato **encriptado**   |
 | RNF-03 | Usabilidad | La interfaz debe estar disponible en **español** y ser accesible desde dispositivos móviles. |
 | RNF-04 | Portabilidad | El sistema debe poder ejecutarse en navegadores modernos (Chrome, Edge, Firefox, Safari). |
+| RNF-05 | disponibilidad| El sistema debe poder soportar al menos 500 usuarios diarios |
 
 ## 4. Historias de Usuario
 
@@ -50,6 +56,8 @@
 | HU-05 | **Propietario** | gestionar las reservas de mi alojamieto | aceptar, rechazar o hacer seguimiento de las estadias confirmadas. |
 | HU-06 | **Huesped** | dejar una reseña sobre el alojamiento donde me hospede | compartir mi experiencia y ayudar a otros viajeros a elegir. |
 | HU-07 | **Administrador** | supervisar los usarios y alojamientos de la plataforma | garantizar el cumplimientos de las normas de la comunidad. |
+| HU-08 | **huesped** | recibir notificaciones sobre el estado de mi reserva | estar informado sin entrar a la plataforma 
+
 ## 5. Diagrama de Casos de Uso
 
 > Insertar imagen del diagrama exportado desde Draw.io, Lucidchart, StarUML o similar.  
