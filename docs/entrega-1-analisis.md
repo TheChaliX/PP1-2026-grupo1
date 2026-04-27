@@ -11,13 +11,12 @@
 ## Actores del Sistema
 
 ## 1. Identificación de Actores
-
-| Nombre | Rol / Función | Tipo |
-| :--- | :--- | :--- |
-| **Propietario** | Publica alojamientos, los edita o elimina, y gestiona las reservas recibidas. | Usuario final |
-| **Huésped** | Busca alojamientos, realiza reservas, puede cancelarlas, ver su historial y dejar reseñas. | Usuario final |
-| **Administrador** | Supervisa usuarios y alojamientos dentro de la plataforma y gestiona el funcionamiento general del sistema. | actor interno |
-| **servicio de notificaciones**| Notifica al huesped con mensaje SMS o Email ante eventos del sistema (reserva,cancelacion,etc)  | actor externo|
+| Nombre                  | Rol / Función                                                                 | Tipo                     |
+|------------------------|------------------------------------------------------------------------------|--------------------------|
+| Propietario            | Publica alojamientos, los edita o elimina, y gestiona las reservas recibidas.| Usuario final            |
+| Huésped                | Busca alojamientos, realiza reservas, puede cancelarlas, ver su historial y dejar reseñas. | Usuario final |
+| Administrador          | Supervisa usuarios y alojamientos dentro de la plataforma y gestiona el funcionamiento general del sistema. | Usuario interno del sistema |
+| Servicio de Notificaciones | Envía alertas y mensajes automáticos a los usuarios (confirmaciones, cancelaciones, recordatorios, etc.). | Servicio externo |
 
 ## 2. Requisitos Funcionales
 
