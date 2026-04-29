@@ -62,7 +62,7 @@
 > Insertar imagen del diagrama exportado desde Draw.io, Lucidchart, StarUML o similar.  
 > Guardar la imagen en esta misma carpeta (`docs/`) y referenciarla abajo.
 
-![Diagrama de Casos de Uso](https://raw.githubusercontent.com/TheChaliX/PP1-2026-grupo1/f49655e1e369cac01bae9319977e2fd37c8387c3/docs/Casos%20de%20Usos%20Reserva.drawio.png)
+![Diagrama de Casos de Uso]()
 
 ## 6. Especificación de Casos de Uso
 
