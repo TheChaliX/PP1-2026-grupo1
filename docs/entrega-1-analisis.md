@@ -35,13 +35,13 @@
 
 ## 3. Requisitos No Funcionales
 
-| ID     | Categoría (rendimiento, seguridad, usabilidad, etc.) | Descripción |
-|--------|------------------------------------------------------|-------------|
-| RNF-01 | Rendimiento  |    El sistema debe procesar la busqueda de alojamiento, en un tiempo menor a 3 segundos bajo una carga de hasta 50 usuarios concurrentes         |
-| RNF-02 | Seguridad    |   Las contraseñas deben almacenarse en formato **encriptado**   |
-| RNF-03 | Usabilidad | La interfaz debe estar disponible en **español** y ser accesible desde dispositivos móviles. |
-| RNF-04 | Portabilidad | El sistema debe poder ejecutarse en navegadores modernos (Chrome, Edge, Firefox, Safari). |
-| RNF-05 | Disponibilidad| El sistema debe poder soportar al menos 500 usuarios diarios |
+| ID | Categoría | Descripción |
+|----|----------|------------|
+| RNF-01 | Rendimiento | El sistema debe procesar la búsqueda de alojamientos en un tiempo menor a 3 segundos bajo una carga de hasta 50 usuarios concurrentes. |
+| RNF-02 | Seguridad | Las contraseñas deben almacenarse utilizando algoritmos de hash seguros (por ejemplo, bcrypt o Argon2) con salting, y no deben guardarse en texto plano. |
+| RNF-03 | Usabilidad | La interfaz debe estar disponible en idioma español y ser responsive, permitiendo su uso en dispositivos móviles y de escritorio. |
+| RNF-04 | Portabilidad | El sistema debe ser compatible con navegadores modernos como Chrome, Edge, Firefox y Safari en sus últimas versiones. |
+| RNF-05 | Disponibilidad | El sistema debe soportar al menos 500 usuarios diarios con una disponibilidad mínima del 99% mensual. |
 
 ## 4. Historias de Usuario
 
@@ -143,6 +143,89 @@
 | 6. El sistema actualiza el estado de la reserva. | |
 | 7. El sistema envía una notificación al huésped. | |
 
+### CU-05 — Registrarse e iniciar sesión
+
+| Campo | Detalle |
+|------|--------|
+| Actor principal | Huésped / Propietario |
+| Descripción | El usuario se registra en la plataforma con correo y contraseña, y luego inicia sesión. |
+| Precondiciones | - El usuario no debe estar registrado previamente (para registro). |
+| Postcondiciones (criterios de aceptación) | - El usuario queda autenticado en el sistema. |
+
+| Secuencia Normal (Camino feliz) | Excepciones / Alternativas |
+|--------------------------------|---------------------------|
+| 1. El usuario accede a la opción de registro/inicio de sesión. | |
+| 2. El sistema muestra el formulario. | |
+| 3. El usuario ingresa correo y contraseña. | 3.1 Si los datos son inválidos, el sistema informa el error. |
+| 4. El usuario confirma. | |
+| 5. El sistema valida los datos. | 5.1 Si el usuario no existe (login), el sistema informa. |
+| 6. El sistema inicia sesión. | |
+
+### CU-06 — Realizar pago
+
+| Campo | Detalle |
+|------|--------|
+| Actor principal | Huésped |
+| Descripción | El huésped realiza el pago correspondiente a la reserva. |
+| Precondiciones | - Debe existir una reserva pendiente de pago. |
+| Postcondiciones (criterios de aceptación) | - El pago queda registrado como aprobado. |
+
+| Secuencia Normal (Camino feliz) | Excepciones / Alternativas |
+|--------------------------------|---------------------------|
+| 1. El sistema solicita los datos de pago. | |
+| 2. El huésped ingresa los datos. | |
+| 3. El sistema procesa el pago. | 3.1 Si el pago es rechazado, se informa el error. |
+| 4. El sistema confirma el pago. | |
+
+### CU-07 — Enviar correo de confirmación
+
+| Campo | Detalle |
+|------|--------|
+| Actor principal | Plataforma de confirmación (sistema externo) |
+| Descripción | El sistema envía un correo de confirmación al huésped y al propietario luego de una reserva. |
+| Precondiciones | - La reserva debe estar confirmada. |
+| Postcondiciones (criterios de aceptación) | - Los usuarios reciben la notificación por correo. |
+
+| Secuencia Normal (Camino feliz) | Excepciones / Alternativas |
+|--------------------------------|---------------------------|
+| 1. El sistema genera el mensaje de confirmación. | |
+| 2. El sistema envía el correo. | 2.1 Si falla el envío, se reintenta. |
+| 3. El usuario recibe el correo. | |
+
+
+### CU-08 — Dejar reseña
+
+| Campo | Detalle |
+|------|--------|
+| Actor principal | Huésped |
+| Descripción | El huésped deja una reseña sobre el alojamiento luego de su estadía. |
+| Precondiciones | - El huésped debe haber completado una reserva. |
+| Postcondiciones (criterios de aceptación) | - La reseña queda registrada y visible. |
+
+| Secuencia Normal (Camino feliz) | Excepciones / Alternativas |
+|--------------------------------|---------------------------|
+| 1. El huésped accede a la opción de reseñar. | |
+| 2. El sistema muestra el formulario. | |
+| 3. El huésped ingresa comentario y calificación. | 3.1 Si falta información, el sistema solicita completarla. |
+| 4. El huésped envía la reseña. | |
+| 5. El sistema la registra. | |
+
+### CU-09 — Supervisar usuarios y alojamientos
+
+| Campo | Detalle |
+|------|--------|
+| Actor principal | Administrador |
+| Descripción | El administrador supervisa y gestiona usuarios y alojamientos dentro de la plataforma. |
+| Precondiciones | - El administrador debe iniciar sesión. |
+| Postcondiciones (criterios de aceptación) | - Los cambios quedan registrados en el sistema. |
+
+| Secuencia Normal (Camino feliz) | Excepciones / Alternativas |
+|--------------------------------|---------------------------|
+| 1. El administrador accede al panel de control. | |
+| 2. El sistema muestra usuarios y alojamientos. | |
+| 3. El administrador selecciona un elemento. | |
+| 4. El administrador realiza una acción (bloquear, eliminar, etc.). | 4.1 Si ocurre un error, el sistema informa. |
+| 5. El sistema guarda los cambios. | |
 
 > Repetir la ficha completa para cada caso de uso del diagrama.
 > Las excepciones se numeran ligadas al paso del que se desvían (ej: 4.1 en la misma fila que el paso 4).
