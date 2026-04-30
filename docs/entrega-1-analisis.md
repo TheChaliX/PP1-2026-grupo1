@@ -6,7 +6,6 @@
 
 ---
 
-## 1. Identificación de Actores
 
 ## Actores del Sistema
 
@@ -29,8 +28,8 @@
 | RF-05 | El sistema debe permitir que el **propietario** gestione sus reservas (aceptar, cancelar o rechazar reservas)  | Propietario | HU-05 |
 | RF-06 | El sistema debe permitir que el **huésped** deje una reseña post estadia | Huésped | HU-06 |
 | RF-07 | El sistema debe permitir que el **administrador** supervise usuarios y alojamientos para garantizar cumplimiento de normas. | Administrador | HU-07 |
-| RF-08 | el sistema debe notificar a traves del **servicio de notificaciones** al huesped y el propietario cuando se realiza un evento  | servicio de notificaciones | HU-08 |
-| RF-09 | el sistema debe permitir que el **servicio de notificaciones** envie un recordatorio al huesped 24 hs antes de su alojamiento | servicio de notificaciones | HU-09 |
+| RF-08 | El sistema debe enviar una notificacion automatica al huesped y propietario a traves del servicio externo, cuando cambie el estado de una reserva  | Servicio de notificaciones | HU-08 |
+| RF-09 | El sistema debe enviar una notificacion automatica al huesped 24 hs antes de su alojamiento | Servicio de notificaciones | HU-09 |
 
 > Cada requisito debe describir una acción concreta: "El sistema debe permitir que [actor] [acción]..."
 
@@ -38,11 +37,11 @@
 
 | ID     | Categoría (rendimiento, seguridad, usabilidad, etc.) | Descripción |
 |--------|------------------------------------------------------|-------------|
-| RNF-01 | rendimiento  |    El sistema debe responder rapido ante cualquier consulta         |
+| RNF-01 | Rendimiento  |    El sistema debe procesar la busqueda de alojamiento, en un tiempo menor a 3 segundos bajo una carga de hasta 50 usuarios concurrentes         |
 | RNF-02 | Seguridad    |   Las contraseñas deben almacenarse en formato **encriptado**   |
 | RNF-03 | Usabilidad | La interfaz debe estar disponible en **español** y ser accesible desde dispositivos móviles. |
 | RNF-04 | Portabilidad | El sistema debe poder ejecutarse en navegadores modernos (Chrome, Edge, Firefox, Safari). |
-| RNF-05 | disponibilidad| El sistema debe poder soportar al menos 500 usuarios diarios |
+| RNF-05 | Disponibilidad| El sistema debe poder soportar al menos 500 usuarios diarios |
 
 ## 4. Historias de Usuario
 
@@ -55,8 +54,8 @@
 | HU-05 | **Propietario** | gestionar las reservas de mi alojamieto | aceptar, rechazar o hacer seguimiento de las estadias confirmadas. |
 | HU-06 | **Huesped** | dejar una reseña sobre el alojamiento donde me hospede | compartir mi experiencia y ayudar a otros viajeros a elegir. |
 | HU-07 | **Administrador** | supervisar los usarios y alojamientos de la plataforma | garantizar el cumplimientos de las normas de la comunidad. |
-| HU-08 | **huesped** | recibir notificaciones sobre el estado de mi reserva | estar informado sin entrar a la plataforma 
-
+| HU-08 | **Huesped** | recibir notificaciones sobre el estado de mi reserva | estar informado sin entrar a la plataforma. |
+| HU-09 | **Huesped** | recibir notificaciones 24hs antes de mi estadia | organizar mi viaje. |
 ## 5. Diagrama de Casos de Uso
 
 > Insertar imagen del diagrama exportado desde Draw.io, Lucidchart, StarUML o similar.  
@@ -64,7 +63,6 @@
 
 ![Diagrama de Casos de Uso](https://github.com/TheChaliX/PP1-2026-grupo1/blob/main/docs/Casos%20de%20Usos%20Reserva.drawio11.png)
 
-## 6. Especificación de Casos de Uso
 
 ## 6. Especificación de Casos de Uso
 
@@ -83,7 +81,7 @@
 | 2. El sistema muestra una lista de alojamientos disponibles. | |
 | 3. El huésped selecciona un alojamiento. | |
 | 4. El huésped elige las fechas disponibles. | 4.1 Si las fechas no están disponibles, el sistema informa el error y solicita seleccionar otras. |
-| 5. El sistema valida la disponibilidad. | |
+| 5. El sistema verifica calendario de reservas activas con fechas solicitadas. | |
 | 6. El huésped confirma la reserva. | |
 | 7. El sistema solicita y procesa el pago. | 7.1 Si el pago es rechazado, el sistema informa el error y permite reintentar. |
 | 8. El sistema registra la reserva. | |
