@@ -64,7 +64,7 @@ RF-10 | El sistema debe permitir enviar notificaciones automáticas ante eventos
 > Insertar imagen del diagrama exportado desde Draw.io, Lucidchart, StarUML o similar.  
 > Guardar la imagen en esta misma carpeta (`docs/`) y referenciarla abajo.
 
-![Diagrama de Casos de Uso]()
+![Diagrama de Casos de Uso](https://github.com/TheChaliX/PP1-2026-grupo1/blob/main/docs/Casos%20de%20Usos%20Reserva.drawio11.png)
 
 
 ## 6. Especificación de Casos de Uso
