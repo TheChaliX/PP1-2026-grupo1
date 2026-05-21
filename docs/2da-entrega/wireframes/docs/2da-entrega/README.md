@@ -1,12 +1,12 @@
 # Entrega 2 — Diseño de Interfaces
-**Grupo**: [Nombre del grupo]
-**Proyecto**: [Nombre del proyecto]
+**Grupo**: [Grupo N°1]
+**Proyecto**: [Sistema de reservas de alojamiento]
 **Fecha de entrega**: 25/06/2026
 ---
 ## 1. Inventario de pantallas troncales
 | N° | Nombre | Actor principal | CU(s) cubierto(s) | Función (1 frase) |
 |----|--------|------------------|---------------------|--------------------|
-| 01 | Login | | | |
+| 01 | Login |huesped/propietario | - HU- 01 | el usuario debe registrarse con usuario y contraseña
 | 02 | | | | |
 | 03 | | | | |
 | 04 | | | | |
