@@ -158,20 +158,23 @@ RF-10 | El sistema debe permitir enviar notificaciones automáticas ante eventos
 
 ---
 
-### CU-05 — Consultar disponibilidad
+### CU-05 — Consultar disponibilidad (Actualizado)
 
 | Campo | Detalle |
-|------|--------|
-| Actor principal | Huésped |
-| Descripción | Permite visualizar el calendario de disponibilidad |
-| Precondiciones | - Alojamiento existente |
-| Postcondiciones | - Calendario visible |
+| :--- | :--- |
+| **Actor principal** | Huésped |
+| **Descripción** | Permite visualizar el calendario de disponibilidad de un alojamiento para conocer fechas libres, ocupadas y bloqueadas. |
+| **Precondiciones** | - Alojamiento existente en el sistema. |
+| **Postcondiciones** | - Calendario visible y actualizado. |
 
 | Secuencia Normal | Excepciones |
-|------------------|------------|
-| 1. El huésped selecciona un alojamiento | |
-| 2. El sistema muestra el calendario con fechas libres, ocupadas y bloqueadas | |
+| :--- | :--- |
+| 1. El huésped solicita ver la disponibilidad de un alojamiento específico. | 1.1 Si el sistema pierde conexión con la base de datos, informa que el calendario no está disponible temporalmente y pide reintentar. |
+| 2. El sistema verifica el estado de publicación del alojamiento. | 2.1 Si el alojamiento fue retirado o despublicado por el propietario, el sistema informa que ya no está disponible y redirige a la búsqueda. |
+| 3. El sistema recupera las fechas ocupadas (reservas confirmadas) y bloqueadas. | |
+| 4. El sistema muestra el calendario interactivo indicando claramente qué fechas están libres, ocupadas o bloqueadas. | |
 
+---
 ---
 
 ### CU-06 — Cancelar reserva
@@ -228,6 +231,84 @@ RF-10 | El sistema debe permitir enviar notificaciones automáticas ante eventos
 | 3. Verifica estado del alojamiento | |
 | 4. Verifica capacidad | |
 | 5. Retorna resultado | 5.1 Si falla alguna validación, retorna el motivo |
+### CU-09 — Asociar servicios
 
+| Campo | Detalle |
+| :--- | :--- |
+| **Actor principal** | Propietario |
+| **Descripción** | El propietario asocia o actualiza comodidades y servicios (ej: WiFi, piscina, desayuno) a un alojamiento. |
+| **Precondiciones** | - Usuario autenticado como propietario.<br>- Alojamiento previamente registrado. |
+| **Postcondiciones** | - Lista de servicios del alojamiento actualizada y visible. |
+
+| Secuencia Normal | Excepciones |
+| :--- | :--- |
+| 1. El propietario accede a la gestión de su alojamiento. | |
+| 2. Selecciona la opción de "Asociar servicios". | |
+| 3. El sistema muestra el catálogo de servicios disponibles. | |
+| 4. El propietario selecciona/deselecciona los servicios deseados y guarda. | 4.1 Si ocurre un error de conexión al intentar guardar, el sistema informa el error y mantiene los datos previos. |
+| 5. El sistema actualiza el registro del alojamiento. | |
+| 6. El sistema confirma que los servicios fueron actualizados. | |
+
+---
+
+### CU-10 — Modificar alojamiento
+
+| Campo | Detalle |
+| :--- | :--- |
+| **Actor principal** | Propietario |
+| **Descripción** | Permite al propietario editar la información general de su alojamiento (precio, título, descripción, fotos). |
+| **Precondiciones** | - Usuario autenticado.<br>- Alojamiento existente. |
+| **Postcondiciones** | - Datos del alojamiento actualizados en el sistema. |
+
+| Secuencia Normal | Excepciones |
+| :--- | :--- |
+| 1. El propietario selecciona un alojamiento de su lista para editar. | |
+| 2. El sistema muestra el formulario con los datos actuales precargados. | |
+| 3. El propietario modifica los datos (ej: actualiza el precio). | 3.1 Si el propietario borra un dato obligatorio, el sistema deshabilita el botón de guardado y marca el campo. |
+| 4. El propietario confirma los cambios. | 4.1 Si los datos ingresados son inválidos (ej: precio negativo), el sistema muestra un error y detiene el proceso. |
+| 5. El sistema valida los nuevos datos. | |
+| 6. El sistema guarda la modificación e informa el éxito de la operación. | |
+
+---
+
+### CU-11 — Retirar alojamiento
+
+| Campo | Detalle |
+| :--- | :--- |
+| **Actor principal** | Propietario |
+| **Descripción** | El propietario despublica un alojamiento para que ya no aparezca en las búsquedas ni reciba nuevas reservas. |
+| **Precondiciones** | - Alojamiento en estado "Publicado". |
+| **Postcondiciones** | - Alojamiento en estado "Retirado/Oculto". |
+
+| Secuencia Normal | Excepciones |
+| :--- | :--- |
+| 1. El propietario accede a las opciones de su alojamiento. | |
+| 2. Selecciona la opción "Retirar alojamiento". | |
+| 3. El sistema verifica si existen reservas futuras confirmadas. | 3.1 Si existen reservas futuras, el sistema advierte al propietario que debe gestionarlas o cancelarlas antes de retirar el alojamiento (bloquea la acción). |
+| 4. El sistema solicita confirmación de la acción. | |
+| 5. El propietario confirma. | |
+| 6. El sistema cambia el estado del alojamiento a "Retirado". | |
+
+---
+
+### CU-12 — Modificar reserva
+
+| Campo | Detalle |
+| :--- | :--- |
+| **Actor principal** | Huésped |
+| **Descripción** | El huésped cambia las fechas de una reserva ya confirmada. |
+| **Precondiciones** | - Reserva en estado "Confirmada".<br>- Nuevas fechas disponibles. |
+| **Postcondiciones** | - Reserva actualizada con las nuevas fechas.<br>- Notificación enviada. |
+
+| Secuencia Normal | Excepciones |
+| :--- | :--- |
+| 1. El huésped accede a su lista de reservas. | |
+| 2. Selecciona una reserva y elige "Modificar fechas". | |
+| 3. El sistema despliega el calendario (invoca CU-05). | |
+| 4. El huésped selecciona las nuevas fechas. | 4.1 Si las nuevas fechas no están disponibles, el sistema informa que no se puede realizar el cambio. |
+| 5. El sistema valida la disponibilidad e informa si hay cambios en el precio total. | |
+| 6. El huésped confirma la modificación. | |
+| 7. El sistema actualiza la reserva y libera las fechas anteriores. | |
+| 8. El sistema notifica al propietario sobre el cambio. | |
 > Repetir la ficha completa para cada caso de uso del diagrama.
 > Las excepciones se numeran ligadas al paso del que se desvían (ej: 4.1 en la misma fila que el paso 4).

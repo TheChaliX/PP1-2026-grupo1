@@ -99,3 +99,4 @@ La estrategia de ramas evoluciona con las entregas:
 
 - `main` es siempre la versión estable y entregable del proyecto
 
+.
