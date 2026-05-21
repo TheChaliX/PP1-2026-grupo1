@@ -14,7 +14,7 @@
 ## 2. Trazabilidad pantalla ↔ E1
 | Pantalla | CU(s) | HU(s) | Actor |
 |----------|-------|-------|-------|
-| 01 — Login | | | |
+| 01 — Login | huesped/ propietario| | |
 | 02 — [Nombre] | | | |
 | 03 — [Nombre] | | | |
 | 04 — [Nombre] | | | |
