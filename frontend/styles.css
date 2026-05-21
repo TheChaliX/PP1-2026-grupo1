@@ -1,0 +1,140 @@
+/* =========================================
+   1. fondo de pantalla y el centrado general
+   ========================================= */
+/* define el lienzo base de la pagina convierte el body en un contenedor Flexbox 
+   para asegurar que todo su contenido quede perfectamente centrado tanto vertical como horizontalmente
+   en cualquier tamaño de pantalla y dándole un color de fondo neutro. */
+body {
+    display: flex;
+    flex-direction: column; /* Apila el header y el main verticalmente */
+    align-items: center;    /* Centra horizontalmente */
+    justify-content: center;/* Centra verticalmente */
+    min-height: 100vh;      /* Ocupa todo el alto de la pantalla */
+    margin: 0;
+    background-color: #f0f2f5; /* Un gris claro para el fondo */
+    font-family: Arial, sans-serif;
+}
+
+/* =========================================
+   2. estilos del encabezado
+   ========================================= */
+/* agrupa los textos introductorios (titulo y descripcion) que van por fuera 
+   de la tarjeta blanca, centrandolos y ajustando sus tamaños y colores 
+   para jerarquizar la información. */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin-bottom: 5px;
+    font-size: 24px;
+    color: #333;
+}
+
+header p {
+    margin-top: 0;
+    color: #666;
+}
+
+/* =========================================
+   3. la tarjeta blanca principal
+   ========================================= */
+/* crea el contenedor visual principal (el cuadro blanco donde va el formulario)
+   le da forma usando relleno interno (padding) bordes redondeados y una sombra 
+   suave para que "flote" sobre el fondo gris y limita su ancho para que no se deforme. */
+main {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombreado suave */
+    width: 100%;
+    max-width: 350px; /* Ancho máximo para que no se estire de más */
+}
+
+/* =========================================
+   4. el formulario y sus espacios
+   ========================================= */
+/* controla la estructura interna de los campos de texto y apila etiquetas e inputs 
+   en formato de columna y define como se ven las cajas de texto tanto en estado 
+   normal como cuando el usuario hace clic en ellas (estado :focus). */
+form {
+    display: flex;
+    flex-direction: column; /* apila los inputs uno debajo del otro */
+    gap: 12px; /* espacio entre cada elemento del formulario */
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: -8px; /* acerca la etiqueta un poco mas a su input */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #0066cc; /* cambia de color al hacer clic en el input */
+}
+
+/* =========================================
+   5. BOTÓN DE INGRESO
+   ========================================= */
+/* define la apariencia del boton de accion principal y le da un fondo oscuro 
+   que contrasta con la tarjeta blanca y añade una regla ":hover" para 
+   cambiar ligeramente su color cuando el usuario pasa el mouse por encima */
+button {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+/* =========================================
+   6. TEXTOS Y OPCIONES ALTERNATIVAS
+   ========================================= */
+/* le da mas estilo a los elementos adicionales del formulario como el texto divisor 
+   (ej. "o ingresa con") y el contenedor de los botones/íconos de redes sociales y los alinea en fila */
+form p {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin: 15px 0 5px 0;
+}
+
+form div {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* espacio entre los iconos de redes sociales */
+}
+
+form div img {
+    border-radius: 50%; /*  hace redondos los íconos que tienen forma cuadrada */
+}
+
+/* =========================================
+   7.para el enlace de recuperar contraseña
+   ========================================= */
+/* agarra el enlace <a> y lo centra al final de la tarjeta
+y le da un margen superior para separarlo del resto y le aplica un color azul interactivo */
+form > a {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #0066cc; 
+}
