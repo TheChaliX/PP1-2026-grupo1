@@ -11,7 +11,7 @@ body {
     justify-content: center;/* Centra verticalmente */
     min-height: 100vh;      /* Ocupa todo el alto de la pantalla */
     margin: 0;
-    background-color: #f0f2f5; /* Un gris claro para el fondo */
+    background: linear-gradient(135deg, #141e30 0%, #243b55 100%); /* Un gris claro para el fondo */
     font-family: Arial, sans-serif;
 }
 
@@ -27,14 +27,10 @@ header {
 }
 
 header h1 {
-    margin-bottom: 5px;
-    font-size: 24px;
-    color: #333;
+    color: #ffffff;
 }
-
 header p {
-    margin-top: 0;
-    color: #666;
+    color: #b0b8c1;
 }
 
 /* =========================================
