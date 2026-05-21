@@ -25,7 +25,10 @@
 pantalla.
 > Esta sección es clave para la defensa oral del 25/06.
 ### Pantalla 01 — Login
-- (Pendiente — completar cuando se trabaje el wireframe)
+- Se diseño una pantalla simple y sencilla, centrada en el login del proyecto.
+- Permite al usuario, mediante el formulario de dos campos, ingresar con su usuario y contraseña.
+- El usuario puede autentificarse mediante Google, Facebook o Apple.
+- Incluimos un enlace para que el usuario pueda recuperar su cuenta en caso de perdida.
 ### Pantalla 02 — [Nombre]
 - (Pendiente)
 ### Pantalla 03 — [Nombre]
