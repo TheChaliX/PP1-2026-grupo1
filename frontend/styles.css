@@ -113,16 +113,6 @@ form p {
     margin: 15px 0 5px 0;
 }
 
-form div {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* espacio entre los iconos de redes sociales */
-}
-
-form div img {
-    border-radius: 50%; /*  hace redondos los íconos que tienen forma cuadrada */
-}
-
 /* =========================================
    7.para el enlace de recuperar contraseña
    ========================================= */
