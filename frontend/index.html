@@ -5,14 +5,41 @@
 <title>Sistema de reservas de alojamientos — Inicio</title>
 </head>
 <body> 
-<header> 
-<h1>Sistema de Reservas</h1> 
-</header> 
-<main> 
-<h2>Pantallas disponibles</h2> 
-<ul> 
-<li><a href="login.html">Login</a></li> 
-</ul> 
+
+    <header>
+    <nav>   
+         <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="login.html">Iniciar sesion</a></li>
+        </ul>
+    </nav>
+    </header>
+<main>
+    <form>
+        <label for="ubicacion">ubicacion</label>
+        <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: cordoba" required>
+
+         <label for="fecha-entrada">fecha de entrada</label>
+         <input type="date" id="fecha-entrada" name="fecha-entrada" required>
+         <label for="fecha-salida">Fecha de salida</label>
+         <input type="date" id="fecha-salida" name="fecha-salida" required>
+
+           <fieldset>
+           <legend>Servicios</legend>
+           <label><input type="checkbox" name="wifi"> Wi-Fi</label>
+           <label><input type="checkbox" name="desayuno"> Desayuno</label>
+           <label><input type="checkbox" name="pileta"> Pileta</label>
+           <label><input type="checkbox" name="estacionamiento"> Estacionamiento</label>
+           </fieldset>
+          
+           <label for="tarifa-minima">tarifa minima</label>
+           <input type="number" id= "tarifa-minima" name="tarifa-minima" required>
+
+           <label for="tarifa-maxima">tarifa maxima</label>
+           <input type="number" id= "tarifa-maxima" name="tarifa-maxima" required>
+
+           <button type="submit"> Buscar </button>
+    </form>
 </main> 
 <footer> 
 <small>Grupo [N° 1] — PP1 2026</small> 
