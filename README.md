@@ -73,7 +73,16 @@ Todas las entregas de documentación se encuentran en la carpeta `docs/`.
 | Entrega 4 — Backend funcional | Carpeta `backend/` | 15/10/2026 |
 
 Cada entrega se sube a **Moodle** como link al repositorio.
+Decisiones técnicas y observaciones
+Pantalla 02 — Catálogo de alojamientos
 
+Para la pantalla de catálogo elegimos un layout vertical con la barra de navegación en la parte superior, los filtros de búsqueda debajo y las propiedades organizadas en listado. Esta disposición permite que el usuario primero configure los criterios de búsqueda y luego visualice fácilmente los alojamientos disponibles.
+
+Además de los filtros mínimos solicitados por la consigna (ubicación, fechas y servicios), agregamos filtros de tarifa mínima y máxima para permitir búsquedas más específicas según el presupuesto del huésped.
+
+Decidimos no incluir imágenes ni paginación porque priorizamos una estructura simple y semántica alineada con el wireframe realizado previamente.
+
+Esta pantalla cubre el CU-03 — “Buscar alojamiento”, ya que permite aplicar filtros y visualizar resultados disponibles dentro del catálogo.
 ## Convenciones
 
 ### Commits
