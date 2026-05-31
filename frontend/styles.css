@@ -124,3 +124,67 @@ form > a {
     font-size: 14px;
     color: #0066cc; 
 }
+/* ==========================
+   PANTALLA CATÁLOGO
+   ========================== */
+
+/* define la estructura general de la pagina catalogo */
+body.catalogo {
+    display: block;
+    min-height: auto;
+}
+
+/* acomoda el encabezado y le da separacion respecto al resto del contenido */
+body.catalogo header {
+    text-align: left;
+    margin: 20px;
+}
+
+/* establece el ancho y los margenes del contenido principal */
+.catalogo-main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* agrega espacio entre las distintas secciones */
+.catalogo-main section {
+    margin-bottom: 30px;
+}
+
+/* define el aspecto visual de cada alojamiento mostrado */
+.catalogo-main article {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+}
+
+/* ==========================
+   PANTALLA INICIO
+   ========================== */
+
+/* centra el contenido de la pantalla de inicio y aplica el fondo general */
+body.inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+    font-family: Arial, sans-serif;
+}
+
+/* ajusta el tamaño y alineacion del contenido principal */
+body.inicio main {
+    max-width: 400px;
+    text-align: center;
+}
+
+/* organiza los enlaces de navegacion de la pantalla inicio */
+.inicio-links a {
+    display: block;
+    margin: 15px 0;
+}
