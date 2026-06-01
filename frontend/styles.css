@@ -183,8 +183,19 @@ body.inicio main {
     text-align: center;
 }
 
-/* organiza los enlaces de navegacion de la pantalla inicio */
+/* da apariencia de boton a los links */
 .inicio-links a {
     display: block;
     margin: 15px 0;
+    background-color: #222;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* cambia el color cuando se pasa el mouse por encima */
+.inicio-links a:hover {
+    background-color: #444;
 }
