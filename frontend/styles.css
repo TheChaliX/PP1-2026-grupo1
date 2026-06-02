@@ -161,6 +161,13 @@ body.catalogo header {
     background-color: #ffffff;
 }
 
+/* prolijidad en fotos */
+article img { 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
 /* ==========================
    PANTALLA INICIO
    ========================== */
