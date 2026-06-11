@@ -15,7 +15,7 @@
 | Pantalla | CU(s) | HU(s) | Actor |
 |----------|-------|-------|-------|
 | 01 — Login |CU-01, CU-02|HU-01 |Huesped/propietario |
-| 02 — [Catalogo] |CU-03 |HU-03 |Huesped |
+| 02 — Catalogo |CU-03 |HU-03 |Huesped |
 | 03 — [Nombre] | | | |
 | 04 — [Nombre] | | | |
 | 05 — [Nombre] | | | |
