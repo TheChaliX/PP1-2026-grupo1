@@ -28,7 +28,7 @@ pantalla.
 - Se diseño una pantalla simple y sencilla, centrada en el login del proyecto.
 - Permite al usuario, mediante el formulario de dos campos, ingresar con su usuario y contraseña.
 - Incluimos un enlace para que el usuario pueda recuperar su cuenta en caso de perdida.
-### Pantalla 02 — [catalogo]
+### Pantalla 02 — catalogo
 - Para el catálogo elegimos colocar los filtros debajo del navbar y antes del listado, porque es lo más cómodo para el usuario: primero filtra según sus preferencias y luego ve los resultados adaptados a su búsqueda.
 - Agregamos filtros de precio mínimo y máximo, buscador por palabra clave, paginacion visual y imagenes placeholder. 
 - Cubre nuestro CU-03 'Buscar alojamiento'.
@@ -38,3 +38,7 @@ pantalla.
 - (Pendiente)
 ### Pantalla 05 — [Nombre]
 - (Pendiente)
+### Pantalla extra 06 - Recuperar email
+- Realizamos una pantalla que nos permite recuperar el acceso a nuestra cuenta en caso de perdida de datos.
+- Esta pantalla esta vinculada al login. 
+- El usuario ingresa nuevamente el email, una vez ingresado le enviamos un codigo de recuperacion de cuenta. 
