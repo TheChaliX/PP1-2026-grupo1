@@ -69,6 +69,6 @@
 ### Pantalla extra 06 — Recuperar email
 * Realizamos una pantalla que permite recuperar el acceso a una cuenta.
 * Está vinculada directamente con la pantalla de Login.
-* El usuario ingresa su correo electrónico y el sistema envía un código de recuperación de manera simulada.
+* El usuario ingresa su correo electrónico y el sistema envía un código de recuperación de una manera simulada.
 
 ---
