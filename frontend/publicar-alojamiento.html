@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar alojamiento</title>
+</head>
+<body>
+    <main>
+        <h1>Publicar alojamiento</h1>
+
+        <section>
+            <p>Publicar una nueva propiedad:</p>
+
+            <form>
+                <label for="nombreTipo">Nombre y tipo de propiedad:</label>
+                <input type="text" id="nombreTipo" name="Nombre y tipo de propiedad" required>
+
+                <label for="descripcion">Descripción:</label>
+                <input type="textarea" id="descripcion" name="Descripcion" required>
+
+                <label for="ubicacion">Ubicación:</label>
+                <input type="text" id="ubicacion" name="Ubicacion" required>
+
+                <fieldset>
+                    <legend>Precio y capacidad:</legend>
+
+                    <label for="precioNoche">Precio/Noche</label>
+                    <input type="number" id="precio/noche" name="Precio/noche" min="0" required>
+
+                    <label for="huespedes">Huespedes</label>
+                    <input type="number" id="huespedes" name="Huespedes" min="1" required>
+
+                    <label for="habitaciones">Habitaciones</label>
+                    <input type="number" id="habitaciones" name="Habitaciones" min="1" required>
+
+                    <label for="camas">Camas</label>
+                    <input type="number" id="camas" name="Camas" min="1" required>
+                </fieldset>
+
+                <fieldset>
+                    <legend><em>Servicios:</em></legend>
+
+                    <label for="WIFI">
+                    <input type="checkbox" id="WIFI" name="servicios" value="WIFI">
+                    WI-FI
+                    </label>
+
+                    <label for="Cocina">
+                    <input type="checkbox" id="Cocina" name="servicios" value="Cocina">
+                    Cocina
+                    </label>
+
+                    <label for="Pileta">
+                    <input type="checkbox" id="Pileta" name="servicios" value="Pileta">
+                    Pileta
+                    </label>
+
+                    <label for="Estacionamiento">
+                    <input type="checkbox" id="Estacionamiento" name="servicios" value="Estacionamiento">
+                    Estacionamiento
+                    </label>
+                </fieldset>
+
+
+                <label for="fotos">Fotos</label>
+                <input type="file" id="fotos" name="fotos" accept="image/*" multiple required>
+
+                <button type="button">Guardar borrador</button>
+                <button type="submit">Publicar propiedad</button>
+
+            </form>
+        </section>
+    </main>
+
+    <footer>
+    <p>PP1-2026-grupo1</p>
+  </footer>
+
+</body>
+</html>
