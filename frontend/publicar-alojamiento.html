@@ -4,78 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar alojamiento</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <main>
+<body class="publicar">
+
+    <main class="publicar-main">
+
+        <p class="volver">
+            <a href="index.html">← Volver al inicio</a>
+        </p>
+
         <h1>Publicar alojamiento</h1>
 
-        <section>
-            <p>Publicar una nueva propiedad:</p>
+       <form>
 
-            <form>
-                <label for="nombreTipo">Nombre y tipo de propiedad:</label>
-                <input type="text" id="nombreTipo" name="Nombre y tipo de propiedad" required>
+    <label for="nombre">Nombre del alojamiento</label>
+    <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        required
+    >
 
-                <label for="descripcion">Descripción:</label>
-                <input type="textarea" id="descripcion" name="Descripcion" required>
+    <label for="descripcion">Descripción</label>
+    <textarea
+        id="descripcion"
+        name="descripcion"
+        rows="5"
+        required
+    ></textarea>
 
-                <label for="ubicacion">Ubicación:</label>
-                <input type="text" id="ubicacion" name="Ubicacion" required>
+    <label for="ubicacion">Ubicación</label>
+    <input
+        type="text"
+        id="ubicacion"
+        name="ubicacion"
+        required
+    >
+    <label for="tipo">Tipo de alojamiento</label>
+<select
+    id="tipo"
+    name="tipo"
+    required
+>
+    <option value="">Seleccione una opción</option>
+    <option>Cabaña</option>
+    <option>Casa</option>
+    <option>Departamento</option>
+    <option>Hotel</option>
+</select>
 
-                <fieldset>
-                    <legend>Precio y capacidad:</legend>
+    <fieldset>
 
-                    <label for="precioNoche">Precio/Noche</label>
-                    <input type="number" id="precio/noche" name="Precio/noche" min="0" required>
+    <legend>Precio y capacidad</legend>
 
-                    <label for="huespedes">Huespedes</label>
-                    <input type="number" id="huespedes" name="Huespedes" min="1" required>
+    <div class="fila-datos">
 
-                    <label for="habitaciones">Habitaciones</label>
-                    <input type="number" id="habitaciones" name="Habitaciones" min="1" required>
+        <div>
+            <label for="precioNoche">Precio/Noche</label>
+            <input type="number" id="precioNoche" name="precioNoche" min="0" required>
+        </div>
 
-                    <label for="camas">Camas</label>
-                    <input type="number" id="camas" name="Camas" min="1" required>
-                </fieldset>
+        <div>
+            <label for="huespedes">Huéspedes</label>
+            <input type="number" id="huespedes" name="huespedes" min="1" required>
+        </div>
 
-                <fieldset>
-                    <legend><em>Servicios:</em></legend>
+        <div>
+            <label for="habitaciones">Habitaciones</label>
+            <input type="number" id="habitaciones" name="habitaciones" min="1" required>
+        </div>
 
-                    <label for="WIFI">
-                    <input type="checkbox" id="WIFI" name="servicios" value="WIFI">
-                    WI-FI
-                    </label>
+        <div>
+            <label for="camas">Camas</label>
+            <input type="number" id="camas" name="camas" min="1" required>
+        </div>
 
-                    <label for="Cocina">
-                    <input type="checkbox" id="Cocina" name="servicios" value="Cocina">
-                    Cocina
-                    </label>
+    </div>
 
-                    <label for="Pileta">
-                    <input type="checkbox" id="Pileta" name="servicios" value="Pileta">
-                    Pileta
-                    </label>
+    </fieldset>
+    <fieldset>
 
-                    <label for="Estacionamiento">
-                    <input type="checkbox" id="Estacionamiento" name="servicios" value="Estacionamiento">
-                    Estacionamiento
-                    </label>
-                </fieldset>
+        <legend>Servicios</legend>
 
+        <label>
+            <input type="checkbox" name="servicios">
+            Wi-Fi
+        </label>
 
-                <label for="fotos">Fotos</label>
-                <input type="file" id="fotos" name="fotos" accept="image/*" multiple required>
+        <label>
+            <input type="checkbox" name="servicios">
+            Cocina
+        </label>
 
-                <button type="button">Guardar borrador</button>
-                <button type="submit">Publicar propiedad</button>
+        <label>
+            <input type="checkbox" name="servicios">
+            Pileta
+        </label>
 
-            </form>
-        </section>
+        <label>
+            <input type="checkbox" name="servicios">
+            Estacionamiento
+        </label>
+
+    </fieldset>
+
+    <label for="fotos">Cargar imágenes</label>
+    <input
+        type="file"
+        id="fotos"
+        name="fotos"
+        accept="image/*"
+        multiple
+    >
+    
+    <div class="botones-publicar">
+    <button type="submit">
+        Publicar
+    </button>
+</div>
+
+</div>
+
+</form>
+
     </main>
 
     <footer>
-    <p>PP1-2026-grupo1</p>
-  </footer>
+    <small>Grupo 1 — PP1 2026</small>
+</footer>
 
 </body>
+
 </html>

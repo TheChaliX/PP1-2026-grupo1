@@ -238,24 +238,250 @@ body.inicio main {
     border-radius: 8px;
 }
 
-/* distribuye descripcion y servicios uno al lado del otro */
-.detalle-flex {
+/* NUEVO: distribuye Anfitrión y Disponibilidad uno al lado del otro */
+.contenedor-dos-columnas {
     display: flex;
     gap: 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/* cajas de informacion */
+/* NUEVO: hace que las dos columnas (anfitrión y reserva) ocupen la misma mitad */
+.datos-anfitrion,
+.disponibilidad {
+    flex: 1;
+}
+
+/* cajas de informacion (aplica el borde y fondo a TODAS las secciones) */
+.datos-anfitrion,
+.disponibilidad,
 .descripcion,
 .servicios {
-    flex: 1;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
     background-color: #ffffff;
+    margin-bottom: 20px; /* Separación hacia abajo para que no se peguen */
 }
 
-/* boton de reserva */
-.detalle-alojamiento button {
-    margin-top: 20px;
+/* Estilos extra para que el formulario de reserva se vea prolijo */
+.disponibilidad label {
+    font-weight: bold;
+}
+
+.disponibilidad input {
+    display: block;
+    width: 100%; /* Ocupa todo el ancho de su caja */
+    box-sizing: border-box;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Boton de confirmar reserva dentro del formulario */
+.disponibilidad button {
+    width: 100%;
+    padding: 12px;
+    background-color: #222; /* Color oscuro como en la imagen 1 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.disponibilidad button:hover {
+    background-color: #444; /* Cambia un poco al pasar el mouse */
+}
+/* ==========================
+   PANTALLA MIS RESERVAS
+   ========================== */
+
+/* configura la pagina de reservas y evita el centrado usado en login */
+body.reservas {
+    display: block;
+    min-height: auto;
+}
+
+/* define el contenedor principal donde se muestran las reservas */
+.reservas-main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+/* acomoda las pestañas superiores en fila */
+.tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* da apariencia de enlace a las pestañas */
+.tabs a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* organiza cada reserva en columnas usando flexbox */
+.reserva {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* controla el tamaño de la foto del alojamiento */
+.reserva img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* hace que la informacion ocupe el espacio disponible */
+.reserva-info {
+    flex: 1;
+}
+
+/* acomoda los botones uno debajo del otro */
+.acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* estilo para reserva confirmada */
+.confirmado {
+    color: green;
+    font-weight: bold;
+}
+
+/* estilo para reserva pendiente */
+.pendiente {
+    color: orange;
+    font-weight: bold;
+}
+
+/* estilo para reserva cancelada */
+.cancelado {
+    color: red;
+    font-weight: bold;
+}
+/* ==========================
+   ENLACES DE NAVEGACIÓN
+   ========================== */
+
+/* acomoda los enlaces para volver entre pantallas
+   y les da una apariencia simple para facilitar la navegacion */
+.volver {
+    margin-bottom: 20px;
+}
+
+.volver a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.volver a:hover {
+    text-decoration: underline;
+}
+/* hace que los enlaces de accion se vean como botones */
+article a,
+.acciones a {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #222;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* cambia ligeramente el color al pasar el mouse */
+article a:hover,
+.acciones a:hover {
+    background-color: #444;
+}
+/* ==========================
+   PANTALLA PUBLICAR
+   ========================== */
+
+/* adapta la pantalla para mostrar formularios mas grandes */
+body.publicar {
+    display: block;
+    min-height: auto;
+}
+
+/* define el contenedor principal donde se carga la informacion */
+.publicar-main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* controla el tamaño del campo de descripcion y mantiene el estilo de los inputs */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+/* agrega separacion entre los grupos de opciones */
+fieldset {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+/* acomoda el titulo de cada grupo */
+legend {
+    font-weight: bold;
+    color: #444;
+}
+
+/* organiza mejor los checkboxes de servicios */
+fieldset label {
+    display: block;
+    margin-bottom: 10px;
+}
+/* acomoda los campos de precio y capacidad en una misma fila */
+.fila-datos {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.fila-datos div {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* acomoda los botones finales uno al lado del otro */
+.botones-publicar {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
