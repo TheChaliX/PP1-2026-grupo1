@@ -485,3 +485,59 @@ fieldset label {
     gap: 10px;
     margin-top: 15px;
 }
+
+/* diseño RESPONSIVE con media quires para ajustar la pantalla segun el dispositivo */
+
+/*index: ajusta el tamaño de fuente*/
+
+@media (max-width: 400px) {
+    body.inicio main {
+        padding: 0 20px;
+    }
+}
+
+/* login: evita que la tarjeta quede pegada a los bordes en pantallas chicas */
+@media (max-width: 400px) {
+    main {
+        padding: 25px 20px;
+    }
+}
+
+/* catálogo: apila las tarjetas en una sola columna */
+@media (max-width: 600px) {
+    .alojamientos article {
+        flex: 1 1 100%;
+    }
+}
+
+/* detalle: apila las dos columnas */
+@media (max-width: 600px) {
+    .contenedor-dos-columnas {
+        flex-direction: column;
+    }
+}
+
+/* reservas: apila imagen, info y botones */
+@media (max-width: 600px) {
+    .reserva {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .reserva img {
+        width: 100%;
+        height: 180px;
+    }
+
+    .acciones {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+/* publicar: apila los campos de precio y capacidad  */
+@media (max-width: 500px) {
+    .fila-datos {
+        flex-direction: column;
+    }
+}
