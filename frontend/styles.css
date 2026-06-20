@@ -541,3 +541,25 @@ fieldset label {
         flex-direction: column;
     }
 }
+/* TABLET */
+@media (max-width: 768px) {
+
+    /* catálogo */
+    .alojamientos article {
+        flex: 1 1 calc(50% - 20px);
+    }
+
+    /* detalle */
+    .contenedor-dos-columnas {
+        flex-direction: column;
+    }
+
+    /* publicar alojamiento */
+    .fila-datos {
+        flex-wrap: wrap;
+    }
+
+    .fila-datos > div {
+        flex: 1 1 45%;
+    }
+}
