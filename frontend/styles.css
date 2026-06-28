@@ -379,26 +379,6 @@ body.reservas {
     color: red;
     font-weight: bold;
 }
-/* ==========================
-   ENLACES DE NAVEGACIÓN
-   ========================== */
-
-/* acomoda los enlaces para volver entre pantallas
-   y les da una apariencia simple para facilitar la navegacion */
-.volver {
-    margin-bottom: 20px;
-}
-
-.volver a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #0066cc;
-}
-
-.volver a:hover {
-    text-decoration: underline;
-}
-/* hace que los enlaces de accion se vean como botones */
 article a,
 .acciones a {
     display: inline-block;
@@ -562,4 +542,21 @@ fieldset label {
     .fila-datos > div {
         flex: 1 1 45%;
     }
+}
+.navbar{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    padding:15px;
+    background:#1b2940;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.navbar a:hover{
+    text-decoration:underline;
 }
