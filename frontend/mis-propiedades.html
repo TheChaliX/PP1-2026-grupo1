@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis propiedades</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="mis-propiedades">
+
+    <main class="propiedades-main">
+
+        <header>
+            <nav class="navbar">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="reservas.html">Mis reservas</a>
+                <a href="login.html">Login</a>
+                <a href="mis-propiedades.html">Mis propiedades</a>
+            </nav>
+
+            <h1>Panel del anfitrión</h1>
+            <p>Mis propiedades</p>
+        </header>
+
+        <section class="lista-propiedades">
+
+            <article class="propiedad-card">
+                <div class="propiedad-foto">
+                    <img src="img-cordoba.jpg" alt="Casa en las montañas">
+                </div>
+                <h2>Casa en las montañas</h2>
+                <span class="estado publicada">Publicada</span>
+                <div class="acciones-propiedad">
+                    <a href="#editar-1" class="btn-editar">Editar</a>
+                    <button type="button" class="btn-retirar">Retirar</button>
+                </div>
+            </article>
+
+            <article class="propiedad-card">
+                <div class="propiedad-foto">
+                    <img src="img-villacp.webp" alt="Cabaña con pileta">
+                </div>
+                <h2>Cabaña con pileta</h2>
+                <span class="estado retirada">Retirada</span>
+                <div class="acciones-propiedad">
+                    <a href="#editar-2" class="btn-editar">Editar</a>
+                    <button type="button" class="btn-retirar">Reactivar</button>
+                </div>
+            </article>
+
+        </section>
+
+        <div id="editar-1" class="vista-editar">
+            <h2>Editar alojamiento</h2>
+
+            <form>
+                <label for="nombre-1">Nombre del alojamiento</label>
+                <input type="text" id="nombre-1" name="nombre" value="Casa en las montañas" required>
+
+                <label for="descripcion-1">Descripción</label>
+                <textarea id="descripcion-1" name="descripcion" rows="5" required>Casa amplia con vista a las sierras, ideal para grupos familiares.</textarea>
+
+                <label for="ubicacion-1">Ubicación</label>
+                <input type="text" id="ubicacion-1" name="ubicacion" value="Villa Giardino, Córdoba" required>
+
+                <label for="tipo-1">Tipo de alojamiento</label>
+                <select id="tipo-1" name="tipo" required>
+                    <option value="">Seleccione una opción</option>
+                    <option selected>Casa</option>
+                    <option>Cabaña</option>
+                    <option>Departamento</option>
+                    <option>Hotel</option>
+                </select>
+
+                <fieldset>
+                    <legend>Precio y capacidad</legend>
+                    <div class="fila-datos">
+                        <div>
+                            <label for="precioNoche-1">Precio/Noche</label>
+                            <input type="number" id="precioNoche-1" name="precioNoche" min="0" value="18000" required>
+                        </div>
+                        <div>
+                            <label for="huespedes-1">Huéspedes</label>
+                            <input type="number" id="huespedes-1" name="huespedes" min="1" value="6" required>
+                        </div>
+                        <div>
+                            <label for="habitaciones-1">Habitaciones</label>
+                            <input type="number" id="habitaciones-1" name="habitaciones" min="1" value="3" required>
+                        </div>
+                        <div>
+                            <label for="camas-1">Camas</label>
+                            <input type="number" id="camas-1" name="camas" min="1" value="4" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Servicios</legend>
+                    <label><input type="checkbox" name="servicios" checked> Wi-Fi</label>
+                    <label><input type="checkbox" name="servicios" checked> Cocina</label>
+                    <label><input type="checkbox" name="servicios"> Pileta</label>
+                    <label><input type="checkbox" name="servicios" checked> Estacionamiento</label>
+                </fieldset>
+
+                <label for="fotos-1">Cargar imágenes</label>
+                <input type="file" id="fotos-1" name="fotos" accept="image/*" multiple>
+
+                <div class="botones-editar">
+                    <button type="submit">Guardar cambios</button>
+                    <a href="#" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="editar-2" class="vista-editar">
+            <h2>Editar alojamiento</h2>
+
+            <form>
+                <label for="nombre-2">Nombre del alojamiento</label>
+                <input type="text" id="nombre-2" name="nombre" value="Cabaña con pileta" required>
+
+                <label for="descripcion-2">Descripción</label>
+                <textarea id="descripcion-2" name="descripcion" rows="5" required>Cabaña con pileta privada, ideal para el verano.</textarea>
+
+                <label for="ubicacion-2">Ubicación</label>
+                <input type="text" id="ubicacion-2" name="ubicacion" value="La Cumbre, Córdoba" required>
+
+                <label for="tipo-2">Tipo de alojamiento</label>
+                <select id="tipo-2" name="tipo" required>
+                    <option value="">Seleccione una opción</option>
+                    <option selected>Cabaña</option>
+                    <option>Casa</option>
+                    <option>Departamento</option>
+                    <option>Hotel</option>
+                </select>
+
+                <fieldset>
+                    <legend>Precio y capacidad</legend>
+                    <div class="fila-datos">
+                        <div>
+                            <label for="precioNoche-2">Precio/Noche</label>
+                            <input type="number" id="precioNoche-2" name="precioNoche" min="0" value="22000" required>
+                        </div>
+                        <div>
+                            <label for="huespedes-2">Huéspedes</label>
+                            <input type="number" id="huespedes-2" name="huespedes" min="1" value="4" required>
+                        </div>
+                        <div>
+                            <label for="habitaciones-2">Habitaciones</label>
+                            <input type="number" id="habitaciones-2" name="habitaciones" min="1" value="2" required>
+                        </div>
+                        <div>
+                            <label for="camas-2">Camas</label>
+                            <input type="number" id="camas-2" name="camas" min="1" value="2" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Servicios</legend>
+                    <label><input type="checkbox" name="servicios" checked> Wi-Fi</label>
+                    <label><input type="checkbox" name="servicios"> Cocina</label>
+                    <label><input type="checkbox" name="servicios" checked> Pileta</label>
+                    <label><input type="checkbox" name="servicios"> Estacionamiento</label>
+                </fieldset>
+
+                <label for="fotos-2">Cargar imágenes</label>
+                <input type="file" id="fotos-2" name="fotos" accept="image/*" multiple>
+
+                <div class="botones-editar">
+                    <button type="submit">Guardar cambios</button>
+                    <a href="#" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+</body>
+</html>

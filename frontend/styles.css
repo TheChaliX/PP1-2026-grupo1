@@ -560,3 +560,84 @@ fieldset label {
 .navbar a:hover{
     text-decoration:underline;
 }
+
+/* Ocultar los formularios de edición por defecto */
+.vista-editar {
+    display: none;
+}
+
+/* Mostrar el formulario correspondiente cuando su id coincide con el #hash de la URL */
+.vista-editar:target {
+    display: block;
+}
+
+/* Estilos de las cards del listado */
+.lista-propiedades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.propiedad-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    width: 220px;
+}
+
+.propiedad-foto img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.estado {
+    display: inline-block;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.estado.publicada {
+    color: green;
+}
+
+.estado.retirada {
+    color: red;
+}
+
+.acciones-propiedad {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn-editar,
+.btn-retirar {
+    padding: 6px 12px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ==========================
+   PANTALLA MIS PROPIEDADES
+   ========================== */
+
+body.mis-propiedades {
+    display: block;
+    min-height: auto;
+}
+
+.propiedades-main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
