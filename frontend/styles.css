@@ -641,3 +641,123 @@ body.mis-propiedades {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+/* ==========================
+PANTALLA CALENDARIO DISPONIBILIDAD
+   ========================== */
+.contenedor-calendario{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
+}
+
+.contenedor-calendario h2{
+    text-align:center;
+    color:#1d2b44;
+    margin-bottom:30px;
+}
+
+.selector-propiedad{
+    margin-bottom:20px;
+}
+
+.selector-propiedad label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+.selector-propiedad select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.card-calendario{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:25px;
+}
+
+.card-calendario h3{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.calendario{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.calendario th{
+    background:#1d2b44;
+    color:white;
+    padding:12px;
+}
+
+.calendario td{
+    height:70px;
+    text-align:center;
+    border:1px solid #ddd;
+    font-weight:bold;
+}
+
+.libre{
+    background:#bff5c4;
+}
+
+.ocupada{
+    background:#ffb4b4;
+}
+
+.bloqueada{
+    background:#ffe89b;
+}
+
+.leyenda{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    margin-bottom:25px;
+}
+
+.estado{
+    display:inline-block;
+    width:18px;
+    height:18px;
+    border-radius:4px;
+    margin-right:6px;
+}
+
+.formulario-bloqueo{
+    margin-top:25px;
+}
+
+.formulario-bloqueo textarea{
+    width:100%;
+    resize:none;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-top:8px;
+}
+
+.botones-calendario{
+    margin-top:20px;
+    display:flex;
+    gap:15px;
+}
+
+.botones-calendario button{
+    padding:10px 18px;
+    border:none;
+    border-radius:5px;
+    background:#1d2b44;
+    color:white;
+    cursor:pointer;
+}
+
+.botones-calendario button:hover{
+    background:#2d4368;
+}

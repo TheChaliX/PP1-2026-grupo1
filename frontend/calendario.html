@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de disponibilidad</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+        <header>
+            <nav class="navbar">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="reservas.html">Mis reservas</a>
+                <a href="login.html">Login</a>
+                <a href="mis-propiedades.html">Mis propiedades</a>
+                <a href="calendario.html">Calendario</a>
+            </nav>
+        </header>
+
+<main class="contenedor-calendario">
+
+    <h2>Calendario de disponibilidad</h2>
+
+    <div class="selector-propiedad">
+        <label>Propiedad</label>
+
+        <select>
+            <option>Casa en las montañas</option>
+            <option>Cabaña con pileta</option>
+        </select>
+    </div>
+
+    <div class="leyenda">
+        <div><span class="estado libre"></span> Libre</div>
+        <div><span class="estado ocupada"></span> Ocupada</div>
+        <div><span class="estado bloqueada"></span> Bloqueada</div>
+    </div>
+
+    <div class="card-calendario">
+
+        <h3>Agosto 2026</h3>
+
+        <table class="calendario">
+            <thead>
+                <tr>
+                    <th>Lun</th>
+                    <th>Mar</th>
+                    <th>Mié</th>
+                    <th>Jue</th>
+                    <th>Vie</th>
+                    <th>Sáb</th>
+                    <th>Dom</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="libre">1</td>
+                    <td class="ocupada">2</td>
+                    <td class="libre">3</td>
+                    <td class="bloqueada">4</td>
+                    <td class="libre">5</td>
+                </tr>
+
+                <tr>
+                    <td class="libre">6</td>
+                    <td class="libre">7</td>
+                    <td class="ocupada">8</td>
+                    <td class="ocupada">9</td>
+                    <td class="libre">10</td>
+                    <td class="bloqueada">11</td>
+                    <td class="libre">12</td>
+                </tr>
+
+                <tr>
+                    <td class="libre">13</td>
+                    <td class="libre">14</td>
+                    <td class="libre">15</td>
+                    <td class="bloqueada">16</td>
+                    <td class="libre">17</td>
+                    <td class="ocupada">18</td>
+                    <td class="libre">19</td>
+                </tr>
+
+                <tr>
+                    <td class="libre">20</td>
+                    <td class="libre">21</td>
+                    <td class="bloqueada">22</td>
+                    <td class="libre">23</td>
+                    <td class="libre">24</td>
+                    <td class="ocupada">25</td>
+                    <td class="libre">26</td>
+                </tr>
+
+                <tr>
+                    <td class="libre">27</td>
+                    <td class="libre">28</td>
+                    <td class="libre">29</td>
+                    <td class="bloqueada">30</td>
+                    <td class="libre">31</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="formulario-bloqueo">
+
+            <label>Motivo del bloqueo (opcional)</label>
+
+            <textarea rows="3"></textarea>
+
+            <div class="botones-calendario">
+                <button>Bloquear</button>
+                <button>Liberar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
