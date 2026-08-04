@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis propiedades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"> <!-- iconos de bootstrap -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="mis-propiedades">
@@ -25,27 +27,35 @@
 
         <section class="lista-propiedades">
 
-            <article class="propiedad-card">
+            <article class="propiedad-card shadow-sm">
                 <div class="propiedad-foto">
                     <img src="img-cordoba.jpg" alt="Casa en las montañas">
                 </div>
                 <h2>Casa en las montañas</h2>
-                <span class="estado publicada">Publicada</span>
+                <span class="badge estado publicada">Publicada</span>
                 <div class="acciones-propiedad">
-                    <a href="#editar-1" class="btn-editar">Editar</a>
-                    <button type="button" class="btn-retirar">Retirar</button>
+                    <a href="#editar-1" class="btn-editar">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <button type="button" class="btn-retirar">
+                        <i class="bi bi-x-circle"></i> Retirar
+                    </button>
                 </div>
             </article>
 
-            <article class="propiedad-card">
+            <article class="propiedad-card shadow-sm">
                 <div class="propiedad-foto">
                     <img src="img-villacp.webp" alt="Cabaña con pileta">
                 </div>
                 <h2>Cabaña con pileta</h2>
-                <span class="estado retirada">Retirada</span>
+                <span class="badge estado retirada">Retirada</span>
                 <div class="acciones-propiedad">
-                    <a href="#editar-2" class="btn-editar">Editar</a>
-                    <button type="button" class="btn-retirar">Reactivar</button>
+                    <a href="#editar-2" class="btn-editar">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <button type="button" class="btn-retirar">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reactivar
+                    </button>
                 </div>
             </article>
 
@@ -176,6 +186,7 @@
         </div>
 
     </main>
+
 
 </body>
 </html>

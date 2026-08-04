@@ -761,3 +761,24 @@ PANTALLA CALENDARIO DISPONIBILIDAD
 .botones-calendario button:hover{
     background:#2d4368;
 }
+
+/* bootstrap para mis-propiedades */
+
+.estado.publicada {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.estado.retirada {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.propiedad-card {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.propiedad-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
