@@ -811,17 +811,22 @@ body.reservas-recibidas{
     border-radius:5px;
 }
 
-.reserva-recibida{
-    border:1px solid #ccc;
-    border-radius:8px;
-    padding:20px;
-    margin-top:20px;
-    background:#fff;
+.reserva-recibida {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    background: #fff;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 20px; 
 }
-
-.reserva-recibida h3{
-    margin-top:0;
-    color:#1b2940;
+.reserva-recibida img {
+    max-width: 300px; 
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 /* ==========================
