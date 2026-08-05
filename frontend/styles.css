@@ -823,3 +823,125 @@ body.reservas-recibidas{
     margin-top:0;
     color:#1b2940;
 }
+
+/* ==========================
+   PANTALLA REGISTRO
+   ========================== */
+
+.registro-main {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+}
+
+.registro-contenido {
+    margin-top: 24px;
+}
+
+.registro-tarjeta {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px;
+}
+
+.registro-tarjeta form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.registro-tarjeta label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.registro-tarjeta input[type="text"],
+.registro-tarjeta input[type="email"],
+.registro-tarjeta input[type="password"] {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.registro-tarjeta input:invalid:not(:placeholder-shown) {
+    border-color: #b23a3a;
+}
+
+.mensaje-error {
+    color: #b23a3a;
+    font-size: 0.85rem;
+    margin: -8px 0 0;
+}
+
+/* Selector de rol */
+.rol-field {
+    border: none;
+    padding: 0;
+    margin: 4px 0 0;
+}
+
+.rol-field legend {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0 0 8px;
+}
+
+.rol-opcion {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.rol-opcion:has(input:checked) {
+    border-color: #444;
+    background: #f5f5f5;
+}
+
+.rol-desc {
+    width: 100%;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: 24px;
+}
+
+/* Botones */
+.botones-registro {
+    margin-top: 6px;
+}
+
+.btn-crear-cuenta {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-crear-cuenta:hover {
+    background: #000;
+}
+
+.ya-tenes-cuenta {
+    text-align: center;
+    font-size: 0.88rem;
+    color: #666;
+    margin: 4px 0 0;
+}
+
+.ya-tenes-cuenta a {
+    color: #222;
+    font-weight: 600;
+}
