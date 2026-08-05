@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas recibidas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="reservas-recibidas">
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="reservas.html">Mis reservas</a>
+            <a href="publicar-alojamiento.html">Publicar alojamiento</a>
+            <a href="login.html">Login</a>
+            <a href="mis-propiedades.html">Mis propiedades</a>
+            <a href="calendario.html">Calendario</a>
+            <a href="reservas-recibidas.html">Reservas recibidas</a>
+        </nav>
+
+        <h1>Panel del anfitrión</h1>
+        <p>Reservas recibidas</p>
+    </header>
+
+    <main class="reservas-recibidas-main">
+
+        <h2>Reservas recibidas</h2>
+
+        <div class="filtro">
+            <label for="propiedad">Filtrar por propiedad</label>
+
+            <select id="propiedad">
+                <option>Todas</option>
+                <option>Casa en las montañas</option>
+                <option>Cabaña con pileta</option>
+            </select>
+        </div>
+
+        <article class="reserva-recibida">
+
+            <h3>Casa en las montañas</h3>
+
+            <p><strong>Huésped:</strong> Juan Pérez</p>
+
+            <p><strong>Fechas:</strong> 15/07/2026 al 20/07/2026</p>
+
+            <p><strong>Cantidad de huéspedes:</strong> 4</p>
+
+            <p><strong>Estado:</strong>
+                <span class="confirmado">Confirmada</span>
+            </p>
+
+            <p><strong>Solicitud especial:</strong> Check-in después de las 22:00</p>
+
+        </article>
+
+        <article class="reserva-recibida">
+
+            <h3>Cabaña con pileta</h3>
+
+            <p><strong>Huésped:</strong> María Gómez</p>
+
+            <p><strong>Fechas:</strong> 10/08/2026 al 15/08/2026</p>
+
+            <p><strong>Cantidad de huéspedes:</strong> 2</p>
+
+            <p><strong>Estado:</strong>
+                <span class="pendiente">Pendiente de confirmación</span>
+            </p>
+
+            <p><strong>Solicitud especial:</strong> Cuna para bebé</p>
+
+        </article>
+
+    </main>
+
+    <footer>
+        <small>Grupo 1 — PP1 2026</small>
+    </footer>
+
+</body>
+</html>

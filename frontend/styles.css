@@ -782,3 +782,44 @@ PANTALLA CALENDARIO DISPONIBILIDAD
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
+/* ==========================
+   PANTALLA RESERVAS RECIBIDAS
+   ========================== */
+
+body.reservas-recibidas{
+    display:block;
+    min-height:auto;
+}
+
+.reservas-recibidas-main{
+    max-width:900px;
+    margin:20px auto;
+    padding:30px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.filtro{
+    margin:20px 0;
+}
+
+.filtro select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.reserva-recibida{
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:20px;
+    margin-top:20px;
+    background:#fff;
+}
+
+.reserva-recibida h3{
+    margin-top:0;
+    color:#1b2940;
+}
