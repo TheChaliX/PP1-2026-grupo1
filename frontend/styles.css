@@ -153,19 +153,19 @@ body.catalogo header {
     margin-bottom: 30px;
 }
 
-/* acomoda las propiedades en fila */
+/* acomoda las propiedades en fila          CODIGO REEMPLAZADO POR BOOTSTRAP
 .alojamientos {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-/* cada tarjeta ocupa espacio similar */
+/* cada tarjeta ocupa espacio similar 
 .alojamientos article {
     flex: 1 1 300px;
 }
 
-/* define el aspecto visual de cada alojamiento mostrado */
+/* define el aspecto visual de cada alojamiento mostrado 
 .catalogo-main article {
     max-width: 450px;
     border: 1px solid #ccc;
@@ -175,12 +175,15 @@ body.catalogo header {
     background-color: #ffffff;
 }
 
-/* prolijidad en fotos */
+/* prolijidad en fotos 
 article img { 
     width: 100%;
     height: auto;
     border-radius: 8px 8px 0 0;
 }
+*/
+
+
 /* ==========================
    PANTALLA INICIO
    ========================== */
@@ -483,12 +486,12 @@ fieldset label {
     }
 }
 
-/* catálogo: apila las tarjetas en una sola columna */
+/* catálogo: apila las tarjetas en una sola columna 
 @media (max-width: 600px) {
     .alojamientos article {
         flex: 1 1 100%;
     }
-}
+}*/
 
 /* detalle: apila las dos columnas */
 @media (max-width: 600px) {
@@ -834,7 +837,7 @@ body.reservas-recibidas{
    ========================== */
 
 .registro-main {
-    max-width: 480px;
+    max-width: 640px;
     margin: 0 auto;
     padding: 0 16px 48px;
 }
