@@ -953,3 +953,119 @@ body.reservas-recibidas{
     color: #222;
     font-weight: 600;
 }
+/* =========================
+   MI PERFIL
+   ========================= */
+
+.perfil {
+    min-height: 100vh;
+}
+
+.perfil header {
+    width: 100%;
+}
+
+.perfil header h1 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.perfil header > p {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Contenedor principal */
+
+.perfil-main {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* Tarjetas */
+
+.perfil-card {
+    flex: 1;
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.perfil-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Formularios */
+
+.perfil-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.perfil-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.perfil-card button {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+/* Tablet */
+
+@media (max-width: 768px) {
+
+    .perfil-main {
+        width: 90%;
+        flex-direction: column;
+    }
+
+    .perfil-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
+/* Celular */
+
+@media (max-width: 600px) {
+
+    .perfil-main {
+        width: 90%;
+        margin: 20px auto;
+        gap: 20px;
+    }
+
+    .perfil-card {
+        padding: 20px;
+    }
+
+    .perfil header h1 {
+        font-size: 28px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar a {
+        text-align: center;
+    }
+
+}
