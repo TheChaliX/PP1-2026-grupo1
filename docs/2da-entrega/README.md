@@ -71,4 +71,34 @@
 * Está vinculada directamente con la pantalla de Login.
 * El usuario ingresa su correo electrónico y el sistema envía un código de recuperación de una manera simulada.
 
----
+### Pantalla 06 — Mis propiedades/Editar alojamiento
+* Esta pantalla corresponde a la vista del Propietario y permite administrar las propiedades que tiene publicadas.
+* Se utilizó un listado de propiedades en formato de tarjetas para mostrar de manera clara la información de cada alojamiento.
+* Cada tarjeta muestra una imagen, el nombre de la propiedad y su estado, diferenciando entre propiedades Publicadas y Retiradas.
+* Para las propiedades publicadas se incorporó la opción Editar y el botón Retirar, mientras que para las retiradas se muestra la opción Editar y Reactivar.
+* para poder editar las propiedades utilizamos Claudecode (IA) para poder desplegar la vista B del boceto sin utilizar javascript. en vez de utilizar un boton utilizamos un enlace (<a href="#editar-propiedad-1">) que apunta al id de cada card con un :target para css. 
+
+### Pantalla 07 — Calendario de disponibilidad
+* Esta pantalla corresponde a la vista del Propietario y permite administrar la disponibilidad de una propiedad.
+* Se incorporó un selector de propiedad para que el Propietario pueda elegir cuál de sus alojamientos desea administrar.
+* El calendario representa tres estados diferentes: Libre, Ocupada y Bloqueada, acompañados por una leyenda para facilitar su interpretación.
+* Las fechas ocupadas representan períodos que ya cuentan con una reserva y, por lo tanto, no deben poder modificarse.
+* También se agregó un campo opcional de Motivo del bloqueo, permitiendo indicar la razón por la cual una fecha no estará disponible.
+
+### Pantalla 08 — Reservas recibidas
+* Esta pantalla corresponde a la vista del Propietario y funciona como una agenda de las reservas realizadas sobre sus propiedades.
+* Se muestran las reservas en formato de tarjetas para facilitar la lectura de la información.
+* Cada reserva contiene el nombre de la propiedad, el huésped, las fechas de estadía, la cantidad de huéspedes y el estado de la reserva.
+* Se agregó un filtro por propiedad, permitiendo al Propietario consultar las reservas correspondientes a un alojamiento específico.
+* Se incorporó información sobre solicitudes especiales del huésped, como el check-in después de las 22:00 o una cuna para bebé, para brindar 
+
+### Pantalla 09 — Registro
+* Esta pantalla representa el ingreso de un usuario que todavía no posee una cuenta al sistema.
+* El formulario solicita los datos básicos para crear una cuenta: nombre, email y contraseña.
+* Se incorporo una seleccion de husped o anfritriom dependiendo si quiere reservar un alojamiento o si quiere publicar un alojamiento
+
+### Pantalla 10 — Mi perfil
+* Esta pantalla permite que tanto el Huésped como el Propietario puedan consultar y modificar sus datos personales.
+* El formulario muestra los datos actuales del usuario como Nombre, correo y telefono.
+* Se perimite el cambio de contraseña.
+* Se incorporó el botón Guardar cambios como acción principal de la pantalla.
