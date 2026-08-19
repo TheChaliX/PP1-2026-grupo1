@@ -17,29 +17,28 @@
     <a href="mis-propiedades.html">Mis propiedades</a>
     <a href="calendario.html">Calendario</a>
     <a href="reservas-recibidas.html">Reservas recibidas</a>
-            <a href="registro.html">Registro</a>
+    <a href="registro.html">Registro</a>
 </nav>
 
 </header>
 <main class="detalle-alojamiento">
 
-    <h1>Casa en las montañas</h1>
+    <h1 id="nombreAlojamiento">Casa en las montañas</h1>
 
     <section class="galeria">
-        <img src="img/img-cordoba.jpg" alt="Casa en las montañas">
+        <img id="imagenAlojamiento" src="img/img-cordoba.jpg" alt="Casa en las montañas">
     </section>
 
 
     <div class="contenedor-dos-columnas">
         
-    
+
         <section class="datos-anfitrion">
             <h2>Datos del anfitrión</h2>
-            <p><strong>Anfitrión:</strong> Gaspar Pérez</p>
+            <p><strong>Anfitrión:</strong> <span id="anfitrion">Gaspar Pérez</span></p>
             <p>Atención personalizada.</p>
         </section>
         
-        <!-- Tu formulario de disponibilidad se mueve acá adentro -->
         <section class="disponibilidad">
             <h2>Disponibilidad y reserva</h2>
             <form>
@@ -61,10 +60,10 @@
     
     <section class="descripcion">
         <h2>Descripción</h2>
-        <p>Casa ubicada en una zona de montaña ideal para descansar, disfrutar de la naturaleza y pasar unos días de tranquilidad.</p>
-        <p><strong>Ubicación:</strong> Villa General Belgrano</p>
-        <p><strong>Precio:</strong> $45.000 por noche</p>
-        <p><strong>Capacidad:</strong> 6 huéspedes</p>
+        <p id="descripcion">Casa ubicada en una zona de montaña ideal para descansar, disfrutar de la naturaleza y pasar unos días de tranquilidad.</p>
+        <p><strong>Ubicación:</strong> <span id="ubicacion">Villa General Belgrano</span></p>
+        <p><strong>Precio:</strong> $<span id="precio">45.000</span> por noche</p>
+        <p><strong>Capacidad:</strong> <span id="capacidad">6</span> huéspedes</p>
     </section>
 
     
@@ -83,5 +82,7 @@
 <footer>
     <small>Grupo 1 — PP1 2026</small>
 </footer>
+
+<script src="js/detalle.js"></script>
 </body>
 </html>

@@ -19,8 +19,8 @@
     <a href="login.html">Login</a>
     <a href="mis-propiedades.html">Mis propiedades</a>
     <a href="calendario.html">Calendario</a>
-            <a href="reservas-recibidas.html">Reservas Recibidas</a>
-            <a href="registro.html">Registro</a>
+    <a href="reservas-recibidas.html">Reservas Recibidas</a>
+    <a href="registro.html">Registro</a>
 </nav>
 
         <h1>Mis reservas</h1>
@@ -30,17 +30,16 @@
 
         
         <nav class="tabs">
-            <a href="#">Próximas</a>
-            <a href="#">Pasadas</a>
-            <a href="#">Canceladas</a>
+            <a href="#" data-filtro="todas" class="activo">Próximas</a>
+            <a href="#" data-filtro="pendiente">Pasadas</a>
+            <a href="#" data-filtro="cancelado">Canceladas</a>
         </nav>
 
-        <article class="reserva">
+        <article class="reserva confirmado" data-id="cordoba">
 
             <img src="img/img-cordoba.jpg" alt="Casa en las montañas">
 
             <div class="reserva-info">
-
                 <h3>Casa en las montañas</h3>
 
                 <p>15/07/2026 al 20/07/2026 - 4 huéspedes</p>
@@ -53,7 +52,7 @@
 
             <div class="acciones">
 
-                <a href="detalle.html">Ver detalle</a>
+                <a href="detalle.html?id=cordoba">Ver detalle</a>
 
                 <button>Modificar</button>
 
@@ -63,7 +62,7 @@
 
         </article>
 
-        <article class="reserva">
+        <article class="reserva pendiente" data-id="villacp">
 
             <img src="img/img-villacp.webp" alt="Cabaña con pileta">
 
@@ -81,7 +80,7 @@
 
             <div class="acciones">
 
-                <a href="detalle.html">Ver detalle</a>
+                <a href="detalle.html?id=villacp">Ver detalle</a>
 
                 <button>Modificar</button>
 
@@ -91,7 +90,7 @@
 
         </article>
 
-        <article class="reserva">
+        <article class="reserva cancelado" data-id="santafe">
 
             <img src="img/img-santafe.jpg" alt="Casa quinta con pileta">
 
@@ -109,16 +108,14 @@
 
             <div class="acciones">
 
-                <a href="detalle.html">Ver detalle</a>
+                <a href="detalle.html?id=santafe">Ver detalle</a>
 
             </div>
 
         </article>
 
     </main>
-    <footer>
-    <small>Grupo 1 — PP1 2026</small>
-</footer>
+    <script src="js/reservas.js"></script>
 </body>
 
 
