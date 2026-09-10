@@ -1,4 +1,4 @@
-// 1. Referencias al DOM
+
 const contenedorCatalogo = document.querySelector("#contenedor-catalogo");
 const formFiltros = document.querySelector("#formFiltros");
 const inputUbicacion = document.querySelector("#ubicacion");
@@ -7,7 +7,7 @@ const inputTarifaMax = document.querySelector("#tarifa-maxima");
 
 let alojamientos = [];
 
-// 2. Función para crear el HTML de la tarjeta respetando tus clases de Bootstrap
+
 function crearTarjeta(alojamiento) {
   return `
     <div class="col">
@@ -24,7 +24,7 @@ function crearTarjeta(alojamiento) {
   `;
 }
 
-// 3. Renderizado del catálogo (Clase 16)
+
 function renderizarCatalogo(lista) {
   if (!contenedorCatalogo) return;
 
@@ -41,7 +41,7 @@ function renderizarCatalogo(lista) {
   contenedorCatalogo.innerHTML = htmlAcumulado;
 }
 
-// 4. Filtrado dinamico al enviar el formulario (Clase 17)
+
 if (formFiltros) {
   formFiltros.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -61,7 +61,7 @@ if (formFiltros) {
   });
 }
 
-// 5. Carga de datos con Fetch desde el JSON (Clase 18)
+
 async function cargarCatalogo() {
   try {
     const respuesta = await fetch("./data/reservas.json");

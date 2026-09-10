@@ -4,7 +4,7 @@ const tabs = document.querySelectorAll(".tabs a");
 let listaReservas = [];
 let filtroActual = "todas";
 
-// Datos por defecto si falla la carga externa
+
 const reservasRespaldo = [
   {
     id: "cordoba",

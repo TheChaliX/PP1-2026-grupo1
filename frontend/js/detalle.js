@@ -1,4 +1,3 @@
-
 const parametrosURL = new URLSearchParams(window.location.search);
 const idAlojamiento = parametrosURL.get("id");
 
