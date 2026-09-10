@@ -1,33 +1,48 @@
-const form = document.getElementById("formLogin")
-const email = document.getElementById("email")                /*declaro variables que hacen referencias al form*/
-const password = document.getElementById("password")
+// 1. Referencias al DOM
+const formLogin = document.querySelector("#formLogin");
+const inputEmail = document.querySelector("#email");
+const inputPassword = document.querySelector("#password");
+const mensajeError = document.querySelector("#mensajeError");
 
-
-function validarEmail(valor) {
+// 2. Expresión regular para validar el formato de correo
 const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-return regexEmail.test(valor);
-}                                                            /*validacion del campo email y contraseña*/
 
-function validarPassword(valor) {
-return valor.trim().length > 0;
-}
+// 3. Listener del evento Submit
+formLogin.addEventListener("submit", function (evento) {
+  // Previene que la página se recargue al enviar el formulario (Clase 17)
+  evento.preventDefault();
 
+  // Limpiamos mensajes de error previos
+  mensajeError.textContent = "";
+  mensajeError.style.color = "red";
 
-form.addEventListener("submit", function (evento) {
-  evento.preventDefault();                                     //evita que la página se recargue
+  const email = inputEmail.value.trim();
+  const password = inputPassword.value.trim();
 
-const email = inputEmail.value;
-const password = inputPassword.value;
-
-if (!validarEmail(email)) {
-    alert("El email ingresado no es válido.");             //alertas para el usuario
+  // Validación 1: Campos vacíos
+  if (email === "" || password === "") {
+    mensajeError.textContent = "Por favor, completá todos los campos.";
     return;
-}
+  }
 
-if (!validarPassword(password)) {
-    alert("La contraseña no puede estar vacía.");
+  // Validación 2: Formato de Email correcto
+  if (!regexEmail.test(email)) {
+    mensajeError.textContent = "Ingresá un correo electrónico válido.";
     return;
-}
+  }
 
-console.log("Login válido:", email);                  //console.log para conectar luego con el backend
+  // Validación 3: Largo mínimo de contraseña
+  if (password.length < 6) {
+    mensajeError.textContent = "La contraseña debe tener al menos 6 caracteres.";
+    return;
+  }
+
+  // Si todas las validaciones pasan con éxito
+  mensajeError.style.color = "green";
+  mensajeError.textContent = "¡Inicio de sesión exitoso! Redirigiendo...";
+
+  // Simulación de ingreso al sistema
+  setTimeout(() => {
+    window.location.href = "reservas.html";
+  }, 1500);
 });

@@ -1,67 +1,107 @@
-/*
-============================
-1. Datos de los alojamientos 
-============================
-*/ 
-const alojamientos = {
-cordoba: {
-    nombre: "Casa en las montañas",
+
+const parametrosURL = new URLSearchParams(window.location.search);
+const idAlojamiento = parametrosURL.get("id");
+
+
+const elNombre = document.querySelector("#nombreAlojamiento");
+const elImagen = document.querySelector("#imagenAlojamiento");
+const elDescripcion = document.querySelector("#descripcionTexto");
+const elUbicacion = document.querySelector("#ubicacion");
+const elPrecio = document.querySelector("#precio");
+const elCapacidad = document.querySelector("#capacidad");
+const formReserva = document.querySelector("#formReserva");
+const mensajeReserva = document.querySelector("#mensajeReserva");
+
+
+const alojamientos = [
+  {
+    id: "cordoba",
+    titulo: "Casa en las montañas",
     imagen: "img/img-cordoba.jpg",
-    anfitrion: "Gaspar Pérez",
-    descripcion: "Casa ubicada en una zona de montaña ideal para descansar, disfrutar de la naturaleza y pasar unos días de tranquilidad.",
-    ubicacion: "Villa General Belgrano",
-    precio: "45.000",
-    capacidad: 6
-},
-villacp: {
-    nombre: "Cabaña con pileta",
+    descripcion: "Hermosa casa ubicada en las sierras, ideal para descansar y conectar con la naturaleza.",
+    ubicacion: "Córdoba Capital",
+    precio: 45000,
+    capacidad: 4,
+    anfitrion: "Gaspar Pérez"
+  },
+  {
+    id: "villacp",
+    titulo: "Cabaña con pileta",
     imagen: "img/img-villacp.webp",
-    anfitrion: "Nombre del anfitrión",
-    descripcion: "Descripción de la cabaña con pileta.",
-    ubicacion: "Ubicación pendiente",
-    precio: "12.000",
-    capacidad: 2
-},
-santafe: {
-    nombre: "Casa quinta con pileta",
+    descripcion: "Cabaña totalmente equipada con pileta privada y excelente vista al lago.",
+    ubicacion: "Villa Carlos Paz",
+    precio: 70000,
+    capacidad: 6,
+    anfitrion: "María González"
+  },
+  {
+    id: "santafe",
+    titulo: "Casa quinta con pileta",
     imagen: "img/img-santafe.jpg",
-    anfitrion: "Nombre del anfitrión",
-    descripcion: "Descripción de la casa quinta.",
-    ubicacion: "Ubicación pendiente",
-    precio: "18.000",
-    capacidad: 6
+    descripcion: "Amplia casa quinta ideal para familias numerosas o grupos de amigos.",
+    ubicacion: "Santa Fe",
+    precio: 78000,
+    capacidad: 8,
+    anfitrion: "Lucas Fernández"
+  }
+];
+
+
+function cargarDetalle() {
+
+  const encontrado = alojamientos.find((item) => item.id === idAlojamiento);
+
+  if (encontrado) {
+    elNombre.textContent = encontrado.titulo;
+    elImagen.src = encontrado.imagen;
+    elImagen.alt = encontrado.titulo;
+    elDescripcion.textContent = encontrado.descripcion;
+    elUbicacion.textContent = encontrado.ubicacion;
+    elPrecio.textContent = encontrado.precio.toLocaleString("es-AR");
+    elCapacidad.textContent = encontrado.capacidad;
+  } else {
+    
+    const porDefecto = alojamientos[0];
+    elNombre.textContent = porDefecto.titulo;
+    elImagen.src = porDefecto.imagen;
+    elImagen.alt = porDefecto.titulo;
+    elDescripcion.textContent = porDefecto.descripcion;
+    elUbicacion.textContent = porDefecto.ubicacion;
+    elPrecio.textContent = porDefecto.precio.toLocaleString("es-AR");
+    elCapacidad.textContent = porDefecto.capacidad;
+  }
 }
-};
 
-// Leer el id de la URL
-const parametros = new URLSearchParams(window.location.search);
-const idAlojamiento = parametros.get("id");
-const datos = alojamientos[idAlojamiento];
 
-//Referencias al form
-const elementoNombre = document.getElementById("nombreAlojamiento");
-const elementoImagen = document.getElementById("imagenAlojamiento");
-const elementoAnfitrion = document.getElementById("anfitrion");
-const elementoDescripcion = document.getElementById("descripcion");
-const elementoUbicacion = document.getElementById("ubicacion");
-const elementoPrecio = document.getElementById("precio");
-const elementoCapacidad = document.getElementById("capacidad");
+if (formReserva) {
+  formReserva.addEventListener("submit", function (evento) {
+    evento.preventDefault();
 
-//Función que vuelca los datos en el HTML
-function mostrarAlojamiento(alojamiento) {
-elementoNombre.textContent = alojamiento.nombre;
-elementoImagen.src = alojamiento.imagen;
-elementoImagen.alt = alojamiento.nombre;
-elementoAnfitrion.textContent = alojamiento.anfitrion;
-elementoDescripcion.textContent = alojamiento.descripcion;
-elementoUbicacion.textContent = alojamiento.ubicacion;
-elementoPrecio.textContent = alojamiento.precio;
-elementoCapacidad.textContent = alojamiento.capacidad;
+    mensajeReserva.textContent = "";
+    mensajeReserva.style.color = "red";
+
+    const entrada = document.querySelector("#entrada").value;
+    const salida = document.querySelector("#salida").value;
+    const huespedes = document.querySelector("#huespedes").value;
+
+    if (!entrada || !salida || !huespedes) {
+      mensajeReserva.textContent = "Por favor, elegí las fechas y cantidad de huéspedes.";
+      return;
+    }
+
+    if (new Date(entrada) >= new Date(salida)) {
+      mensajeReserva.textContent = "La fecha de salida debe ser posterior a la de entrada.";
+      return;
+    }
+
+    mensajeReserva.style.color = "green";
+    mensajeReserva.textContent = "¡Reserva realizada con éxito! Redirigiendo a Mis Reservas...";
+
+    setTimeout(() => {
+      window.location.href = "reservas.html";
+    }, 1500);
+  });
 }
 
-//Ejecutar, con control de error si el id no existe
-if (datos) {
-mostrarAlojamiento(datos);
-} else {
-elementoNombre.textContent = "Alojamiento no encontrado";
-}
+
+cargarDetalle();

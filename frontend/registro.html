@@ -4,78 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"> <!-- iconos de bootstrap -->
+    <!-- Ruta corregida a tu hoja de estilos -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="registro">
 
-    <main class="registro-main">
-
-        <header>
-            <nav class="navbar">
-                <a href="index.html">Inicio</a>
-                <a href="catalogo.html">Catálogo</a>
-                <a href="reservas.html">Mis reservas</a>
-                <a href="login.html">Login</a>
-                <a href="mis-propiedades.html">Mis propiedades</a>
-                <a href="calendario.html">Calendario</a>
-                <a href="reservas-recibidas.html">Reservas recibidas</a>
+    <header>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="reservas.html">Mis reservas</a>
+            <a href="login.html">Login</a>
+            <a href="mis-propiedades.html">Mis propiedades</a>
+            <a href="calendario.html">Calendario</a>
+            <a href="reservas-recibidas.html">Reservas recibidas</a>
             <a href="registro.html">Registro</a>
-            </nav>
+        </nav>
 
-            <h1>Crear cuenta</h1>
-            <p>Registrate como huésped o como anfitrión</p>
-        </header>
+        <h1>Crear cuenta</h1>
+        <p>Registrate como huésped o como anfitrión</p>
+    </header>
 
-        <section class="registro-contenido">
+    <main class="registro-main">
+        <form id="registerForm" novalidate>
+            <label for="fullName">Nombre completo</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Como en tu documento">
 
-            <div class="registro-tarjeta shadow-sm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="vos@ejemplo.com">
 
-            
-                <form id="registerForm" novalidate>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres">
 
-                    <label for="fullName">Nombre completo</label>
-                    <input type="text" id="fullName" name="fullName" autocomplete="name" minlength="2" placeholder="Como en tu documento" required>
+            <label for="confirmPassword">Confirmar contraseña</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repetí tu contraseña">
 
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" autocomplete="email" placeholder="vos@ejemplo.com" required>
+            <fieldset class="rol-field">
+                <legend>¿Cómo querés operar?</legend>
 
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" pattern="(?=.*[A-Za-z])(?=.*\d).{8,}" title="Mínimo 8 caracteres, con al menos una letra y un número" placeholder="Mínimo 8 caracteres" required>
+                <label class="rol-opcion">
+                    <input type="radio" id="roleGuest" name="rol" value="huesped" checked>
+                    Huésped — Quiero reservar alojamientos
+                </label>
 
-                    <label for="confirmPassword">Confirmar contraseña</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" minlength="8" data-js="validate-match" placeholder="Repetí tu contraseña" required>
-                    <p id="passwordMismatch" class="mensaje-error" hidden>Las contraseñas no coinciden.</p>
+                <label class="rol-opcion">
+                    <input type="radio" id="roleHost" name="rol" value="anfitrion">
+                    Anfitrión — Quiero publicar mi alojamiento
+                </label>
+            </fieldset>
 
-                    <fieldset class="rol-field">
-                        <legend>¿Cómo querés operar?</legend>
+            <!-- Mensaje de error / éxito cargado desde JS -->
+            <p id="mensajeError" class="mensaje-error"></p>
 
-                        <label class="rol-opcion">
-                            <input type="radio" id="roleGuest" name="rol" value="huesped" checked required>
-                            <i class="bi bi-suitcase-lg"></i> Huésped
-                            <span class="rol-desc">Quiero reservar alojamientos</span>
-                        </label>
-
-                        <label class="rol-opcion">
-                            <input type="radio" id="roleHost" name="rol" value="anfitrion">
-                            <i class="bi bi-house-door"></i> Anfitrión
-                            <span class="rol-desc">Quiero publicar mi alojamiento</span>
-                        </label>
-                    </fieldset>
-
-                    <div class="botones-registro">
-                        <button type="submit" class="btn-crear-cuenta">Crear cuenta</button>
-                    </div>
-
-                    <p class="ya-tenes-cuenta">¿Ya tenés cuenta? <a href="login.html">Iniciar sesión</a></p>
-                </form>
-
+            <div class="botones-registro">
+                <button type="submit" class="btn-crear-cuenta">Crear cuenta</button>
             </div>
 
-        </section>
-
+            <p class="ya-tenes-cuenta">¿Ya tenés cuenta? <a href="login.html">Iniciar sesión</a></p>
+        </form>
     </main>
 
+    <script src="js/registro.js"></script>
 </body>
 </html>
