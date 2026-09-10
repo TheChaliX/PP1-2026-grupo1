@@ -1069,3 +1069,16 @@ body.reservas-recibidas{
     }
 
 }
+#contenedor-reservas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+.mensaje-error {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+  min-height: 1.2em;
+}
