@@ -1,0 +1,29 @@
+[
+  {
+    "id": "cordoba",
+    "titulo": "Casa en las montañas",
+    "imagen": "img/img-cordoba.jpg",
+    "fechas": "15/07/2026 al 20/07/2026",
+    "huespedes": 4,
+    "estado": "confirmado",
+    "estadoTexto": "Confirmado"
+  },
+  {
+    "id": "villacp",
+    "titulo": "Cabaña con pileta",
+    "imagen": "img/img-villacp.webp",
+    "fechas": "10/08/2026 al 15/08/2026",
+    "huespedes": 2,
+    "estado": "pendiente",
+    "estadoTexto": "Pendiente de confirmacion"
+  },
+  {
+    "id": "santafe",
+    "titulo": "Casa quinta con pileta",
+    "imagen": "img/img-santafe.jpg",
+    "fechas": "05/06/2026 al 08/06/2026",
+    "huespedes": 6,
+    "estado": "cancelado",
+    "estadoTexto": "Cancelado"
+  }
+]
