@@ -1082,3 +1082,30 @@ body.reservas-recibidas{
   text-align: center;
   min-height: 1.2em;
 }
+
+/* ============================
+   ESTILOS GENERALES / COMPARTIDOS DEL CATALOGO
+   ============================ */
+
+.mensaje {
+  text-align: center;
+  padding: 40px 24px;
+  border-radius: 12px;
+}
+
+.mensaje.cargando {
+  background: #fdf2f2;
+  color: #a86b6b;
+}
+
+.mensaje.vacio {
+  background: #f5c6c6;
+  color: #8a3a3a;
+}
+
+.mensaje.error {
+  background: #f5b7b1;
+  color: #78281f;
+  font-weight: bold;
+}
+

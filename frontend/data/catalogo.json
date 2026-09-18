@@ -1,0 +1,23 @@
+[
+  {
+    "id": "cordoba",
+    "titulo": "Casa en las montañas",
+    "ubicacion": "Córdoba Capital",
+    "precioNoche": 45000,
+    "imagen": "img/img-cordoba.jpg"
+  },
+  {
+    "id": "villacp",
+    "titulo": "Cabaña con pileta",
+    "ubicacion": "Villa Carlos Paz",
+    "precioNoche": 70000,
+    "imagen": "img/img-villacp.webp"
+  },
+  {
+    "id": "santafe",
+    "titulo": "Casa quinta con pileta",
+    "ubicacion": "Santa Fe",
+    "precioNoche": 78000,
+    "imagen": "img/img-santafe.jpg"
+  }
+]

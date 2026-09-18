@@ -29,7 +29,7 @@ function renderizarCatalogo(lista) {
   if (!contenedorCatalogo) return;
 
   if (lista.length === 0) {
-    contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-muted">No se encontraron alojamientos que coincidan con la búsqueda.</p>`;
+    mostrarMensaje("No se encontraron alojamientos que coincidan con la búsqueda.", "vacio");
     return;
   }
 
@@ -61,26 +61,33 @@ if (formFiltros) {
   });
 }
 
+function mostrarMensaje(texto, tipo) {
+  if (!contenedorCatalogo) return;
+  contenedorCatalogo.innerHTML = `<p class="col-12 text-center mensaje ${tipo}">${texto}</p>`;
+}
 
 async function cargarCatalogo() {
+
+  mostrarMensaje('cargando alojamientos..', 'Cargando');
   try {
-    const respuesta = await fetch("./data/reservas.json");
-    if (!respuesta.ok) throw new Error("Error al cargar JSON");
+    const respuesta = await fetch("./data/catalogo.json");
+    if (!respuesta.ok) throw new Error("Error al cargar pagina, intenta recargar");
 
     const datos = await respuesta.json();
     
-    // Mapeamos los datos para adaptarlos al formato del catálogo
-    alojamientos = datos.map((item) => ({
-      id: item.id,
-      nombre: item.titulo,
-      ubicacion: item.titulo.includes("montañas") ? "Córdoba Capital" : item.titulo.includes("Cabaña") ? "Villa Carlos Paz" : "Santa Fe",
-      precioNoche: item.id === "cordoba" ? 45000 : item.id === "villacp" ? 70000 : 78000,
-      imagen: item.imagen
-    }));
+    
+    alojamientos = datos.map((item) => ({                 //simplificamos .map , los datos vienen directos del json
+  id: item.id,
+  nombre: item.titulo,
+  ubicacion: item.ubicacion,
+  precioNoche: item.precioNoche,
+  imagen: item.imagen
+}));
 
     renderizarCatalogo(alojamientos);
   } catch (error) {
     console.error("Error al obtener catálogo:", error);
+    mostrarMensaje('no pudimos cargar el catalogo. Proba recargar la pagina', 'error');
   }
 }
 
