@@ -26,95 +26,17 @@
         <h1>Mis reservas</h1>
     </header>
 
-    <main class="reservas-main">
+   <main class="reservas-main">
+    <nav class="tabs">
+        <a href="#" data-filtro="todas" class="activo">Todas</a>
+        <a href="#" data-filtro="confirmado">Confirmadas</a>
+        <a href="#" data-filtro="pendiente">Pendientes</a>
+        <a href="#" data-filtro="cancelado">Canceladas</a>
+    </nav>
 
-        
-        <nav class="tabs">
-            <a href="#" data-filtro="todas" class="activo">Próximas</a>
-            <a href="#" data-filtro="pendiente">Pasadas</a>
-            <a href="#" data-filtro="cancelado">Canceladas</a>
-        </nav>
-
-        <article class="reserva confirmado" data-id="cordoba">
-
-            <img src="img/img-cordoba.jpg" alt="Casa en las montañas">
-
-            <div class="reserva-info">
-                <h3>Casa en las montañas</h3>
-
-                <p>15/07/2026 al 20/07/2026 - 4 huéspedes</p>
-
-                <span class="estado confirmado">
-                    Confirmado
-                </span>
-
-            </div>
-
-            <div class="acciones">
-
-                <a href="detalle.html?id=cordoba">Ver detalle</a>
-
-                <button>Modificar</button>
-
-                <button>Cancelar</button>
-
-            </div>
-
-        </article>
-
-        <article class="reserva pendiente" data-id="villacp">
-
-            <img src="img/img-villacp.webp" alt="Cabaña con pileta">
-
-            <div class="reserva-info">
-
-                <h3>Cabaña con pileta</h3>
-
-                <p>10/08/2026 al 15/08/2026 - 2 huéspedes</p>
-
-                <span class="estado pendiente">
-                    Pendiente de confirmacion
-                </span>
-
-            </div>
-
-            <div class="acciones">
-
-                <a href="detalle.html?id=villacp">Ver detalle</a>
-
-                <button>Modificar</button>
-
-                <button>Cancelar</button>
-
-            </div>
-
-        </article>
-
-        <article class="reserva cancelado" data-id="santafe">
-
-            <img src="img/img-santafe.jpg" alt="Casa quinta con pileta">
-
-            <div class="reserva-info">
-
-                <h3>Casa quinta con pileta</h3>
-
-                <p> 05/06/2026 al 08/06/2026 - 6 huéspedes</p>
-
-                <span class="estado cancelado">
-                    Cancelado
-                </span>
-
-            </div>
-
-            <div class="acciones">
-
-                <a href="detalle.html?id=santafe">Ver detalle</a>
-
-            </div>
-
-        </article>
-
-    </main>
+    <!-- Contenedor donde JS inyecta las tarjetas -->
+    <div id="contenedor-reservas"></div>
+</main>
     <script src="js/reservas.js"></script>
 </body>
 

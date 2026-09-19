@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cordoba",
+    "titulo": "Casa en las montañas",
+    "ubicacion": "Córdoba Capital",
+    "precioNoche": 45000,
+    "imagen": "img/img-cordoba.jpg",
+    "descripcion": "Hermosa casa ubicada en las sierras, ideal para descansar y conectar con la naturaleza.",
+    "capacidad": 4,
+    "anfitrion": "Gaspar Pérez"
+  },
+  {
+    "id": "villacp",
+    "titulo": "Cabaña con pileta",
+    "ubicacion": "Villa Carlos Paz",
+    "precioNoche": 70000,
+    "imagen": "img/img-villacp.webp",
+    "descripcion": "Cabaña totalmente equipada con pileta privada y excelente vista al lago.",
+    "capacidad": 6,
+    "anfitrion": "María González"
+  },
+  {
+    "id": "santafe",
+    "titulo": "Casa quinta con pileta",
+    "ubicacion": "Santa Fe",
+    "precioNoche": 78000,
+    "imagen": "img/img-santafe.jpg",
+    "descripcion": "Amplia casa quinta ideal para familias numerosas o grupos de amigos.",
+    "capacidad": 8,
+    "anfitrion": "Lucas Fernández"
+  }
+]
