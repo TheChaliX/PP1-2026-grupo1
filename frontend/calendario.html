@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario de disponibilidad</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -20,19 +20,22 @@
                 <a href="reservas-recibidas.html">Reservas recibidas</a>
             <a href="registro.html">Registro</a>
             </nav>
+            <h1>Panel del anfitrión</h1>
+<p>Calendario de disponibilidad</p>
         </header>
 
 <main class="contenedor-calendario">
 
-    <h2>Calendario de disponibilidad</h2>
+    <h2>Gestionar disponibilidad</h2>
 
     <div class="selector-propiedad">
-        <label>Propiedad</label>
+        <label for="propiedad">Propiedad</label>
 
-        <select>
-            <option>Casa en las montañas</option>
-            <option>Cabaña con pileta</option>
-        </select>
+       
+    <select id="propiedad" name="propiedad">
+        <option value="casa-montanas">Casa en las montañas</option>
+        <option value="cabana-pileta">Cabaña con pileta</option>
+    </select>
     </div>
 
     <div class="leyenda">

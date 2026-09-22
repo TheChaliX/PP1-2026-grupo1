@@ -3,38 +3,6 @@ const tabs = document.querySelectorAll(".tabs a");
 
 let listaReservas = [];
 let filtroActual = "todas";
-
-// Datos por defecto si falla la carga externa
-const reservasRespaldo = [
-  {
-    id: "cordoba",
-    titulo: "Casa en las montañas",
-    imagen: "img/img-cordoba.jpg",
-    fechas: "15/07/2026 al 20/07/2026",
-    huespedes: 4,
-    estado: "confirmado",
-    estadoTexto: "Confirmado"
-  },
-  {
-    id: "villacp",
-    titulo: "Cabaña con pileta",
-    imagen: "img/img-villacp.webp",
-    fechas: "10/08/2026 al 15/08/2026",
-    huespedes: 2,
-    estado: "pendiente",
-    estadoTexto: "Pendiente de confirmacion"
-  },
-  {
-    id: "santafe",
-    titulo: "Casa quinta con pileta",
-    imagen: "img/img-santafe.jpg",
-    fechas: "05/06/2026 al 08/06/2026",
-    huespedes: 6,
-    estado: "cancelado",
-    estadoTexto: "Cancelado"
-  }
-];
-
 function crearTarjetaReserva(reserva) {
   const accionesHtml = reserva.estado !== "cancelado" 
     ? `
@@ -46,9 +14,14 @@ function crearTarjetaReserva(reserva) {
       <a href="detalle.html?id=${reserva.id}">Ver detalle</a>
     `;
 
+  
+  const htmlImagen = reserva.imagen 
+    ? `<img src="${reserva.imagen}" alt="${reserva.titulo}">` 
+    : `<div class="reserva-sin-imagen" style="width: 150px; height: 100px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #666; font-size: 0.8rem;">Sin imagen</div>`;
+
   return `
     <article class="reserva ${reserva.estado}" data-id="${reserva.id}">
-      <img src="${reserva.imagen}" alt="${reserva.titulo}">
+      ${htmlImagen}
 
       <div class="reserva-info">
         <h3>${reserva.titulo}</h3>
@@ -72,6 +45,11 @@ function renderizarReservas() {
     return filtroActual === "todas" || reserva.estado === filtroActual;
   });
 
+  if (reservasFiltradas.length === 0) {
+    contenedorReservas.innerHTML = "<p class='mensaje-vacio'>No se encontraron reservas en esta sección.</p>";
+    return;
+  }
+
   let htmlAcumulado = "";
   reservasFiltradas.forEach((reserva) => {
     htmlAcumulado += crearTarjetaReserva(reserva);
@@ -81,11 +59,7 @@ function renderizarReservas() {
   escucharEventosAcciones();
 }
 
-function modificarReserva(idReserva) {
-  window.location.href = `detalle.html?id=${idReserva}`;
-}
-
-function cancelarReserva(idReserva) {
+async function cancelarReserva(idReserva) {
   const confirmar = confirm("¿Seguro que querés cancelar esta reserva?");
 
   if (confirmar) {
@@ -93,9 +67,22 @@ function cancelarReserva(idReserva) {
     if (reserva) {
       reserva.estado = "cancelado";
       reserva.estadoTexto = "Cancelado";
+
+      
+      const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
+      const indexLocal = datosLocalStorage.findIndex((r) => r.id === idReserva);
+      if (indexLocal !== -1) {
+        datosLocalStorage[indexLocal].estado = "cancelado";
+        datosLocalStorage[indexLocal].estadoTexto = "Cancelado";
+        localStorage.setItem("alojamientosPublicados", JSON.stringify(datosLocalStorage));
+      }
     }
     renderizarReservas();
   }
+}
+
+function modificarReserva(idReserva) {
+  window.location.href = `detalle.html?id=${idReserva}`;
 }
 
 function escucharEventosAcciones() {
@@ -130,16 +117,26 @@ tabs.forEach((tab) => {
 });
 
 async function obtenerReservas() {
+  if (!contenedorReservas) return;
+
+  contenedorReservas.innerHTML = "<p class='mensaje-cargando'>Cargando reservas...</p>";
+
   try {
-    const respuesta = await fetch("./data/reservas.json");
-    if (!respuesta.ok) throw new Error("Error al consultar el JSON");
+    const respuesta = await fetch("data/reservas.json");
+    if (!respuesta.ok) throw new Error("Error al consultar el servidor local");
     
-    listaReservas = await respuesta.json();
+    const datosJson = await respuesta.json();
+    
+    
+    const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
+
+    
+    listaReservas = [...datosLocalStorage, ...datosJson];
+    
     renderizarReservas();
   } catch (error) {
-    console.warn("Cargando datos locales de respaldo...", error);
-    listaReservas = reservasRespaldo;
-    renderizarReservas();
+    console.error("Error al cargar JSON:", error);
+    contenedorReservas.innerHTML = "<p class='mensaje-error'>Ocurrió un error al cargar las reservas. Intente nuevamente más tarde.</p>";
   }
 }
 

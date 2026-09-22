@@ -1,4 +1,3 @@
-// 1. Referencias al DOM
 const contenedorCatalogo = document.querySelector("#contenedor-catalogo");
 const formFiltros = document.querySelector("#formFiltros");
 const inputUbicacion = document.querySelector("#ubicacion");
@@ -7,7 +6,6 @@ const inputTarifaMax = document.querySelector("#tarifa-maxima");
 
 let alojamientos = [];
 
-// 2. Función para crear el HTML de la tarjeta respetando tus clases de Bootstrap
 function crearTarjeta(alojamiento) {
   return `
     <div class="col">
@@ -16,7 +14,7 @@ function crearTarjeta(alojamiento) {
         <div class="card-body d-flex flex-column">
           <h3 class="card-title h5">${alojamiento.nombre}</h3>
           <p class="card-text mb-1"><strong>Ubicación:</strong> ${alojamiento.ubicacion}</p>
-          <p class="card-text"><strong>Tarifa:</strong> $${alojamiento.precioNoche} por noche</p>
+          <p class="card-text"><strong>Tarifa:</strong> $${alojamiento.precioNoche.toLocaleString("es-AR")} por noche</p>
           <a href="detalle.html?id=${alojamiento.id}" class="btn btn-dark mt-auto">Ver detalle</a>
         </div>
       </div>
@@ -24,10 +22,10 @@ function crearTarjeta(alojamiento) {
   `;
 }
 
-// 3. Renderizado del catálogo (Clase 16)
 function renderizarCatalogo(lista) {
   if (!contenedorCatalogo) return;
 
+  
   if (lista.length === 0) {
     contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-muted">No se encontraron alojamientos que coincidan con la búsqueda.</p>`;
     return;
@@ -41,7 +39,6 @@ function renderizarCatalogo(lista) {
   contenedorCatalogo.innerHTML = htmlAcumulado;
 }
 
-// 4. Filtrado dinamico al enviar el formulario (Clase 17)
 if (formFiltros) {
   formFiltros.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -61,26 +58,45 @@ if (formFiltros) {
   });
 }
 
-// 5. Carga de datos con Fetch desde el JSON (Clase 18)
 async function cargarCatalogo() {
+  if (!contenedorCatalogo) return;
+
+  
+  contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-info">Cargando catálogo de alojamientos...</p>`;
+
   try {
-    const respuesta = await fetch("./data/reservas.json");
+    const respuesta = await fetch("data/reservas.json");
     if (!respuesta.ok) throw new Error("Error al cargar JSON");
 
     const datos = await respuesta.json();
+
     
-    // Mapeamos los datos para adaptarlos al formato del catálogo
-    alojamientos = datos.map((item) => ({
-      id: item.id,
-      nombre: item.titulo,
-      ubicacion: item.titulo.includes("montañas") ? "Córdoba Capital" : item.titulo.includes("Cabaña") ? "Villa Carlos Paz" : "Santa Fe",
-      precioNoche: item.id === "cordoba" ? 45000 : item.id === "villacp" ? 70000 : 78000,
-      imagen: item.imagen
-    }));
+    alojamientos = datos.map((item) => {
+      let ubicacion = "Santa Fe";
+      const titulo = item.titulo.toLowerCase();
+
+      if (titulo.includes("montañas") || titulo.includes("sierras")) ubicacion = "Córdoba Capital";
+      else if (titulo.includes("cabaña") || titulo.includes("pileta")) ubicacion = "Villa Carlos Paz";
+      else if (titulo.includes("río") || titulo.includes("rosario")) ubicacion = "Rosario";
+      else if (titulo.includes("lago") || titulo.includes("bariloche")) ubicacion = "Bariloche";
+      else if (titulo.includes("viñedos") || titulo.includes("mendoza")) ubicacion = "Mendoza";
+      else if (titulo.includes("colonial") || titulo.includes("salta")) ubicacion = "Salta";
+      else if (titulo.includes("playa") || titulo.includes("duplex")) ubicacion = "Mar del Plata";
+
+      return {
+        id: item.id,
+        nombre: item.titulo,
+        ubicacion: ubicacion,
+        precioNoche: (item.huespedes || 3) * 15000, // Calcula un precio dinámico coherente por cantidad de huéspedes
+        imagen: item.imagen
+      };
+    });
 
     renderizarCatalogo(alojamientos);
   } catch (error) {
+    
     console.error("Error al obtener catálogo:", error);
+    contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-danger">Ocurrió un error al cargar el catálogo. Por favor, intentá nuevamente más tarde.</p>`;
   }
 }
 

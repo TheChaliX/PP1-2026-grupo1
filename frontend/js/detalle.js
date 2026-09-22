@@ -1,7 +1,5 @@
-
 const parametrosURL = new URLSearchParams(window.location.search);
 const idAlojamiento = parametrosURL.get("id");
-
 
 const elNombre = document.querySelector("#nombreAlojamiento");
 const elImagen = document.querySelector("#imagenAlojamiento");
@@ -12,66 +10,63 @@ const elCapacidad = document.querySelector("#capacidad");
 const formReserva = document.querySelector("#formReserva");
 const mensajeReserva = document.querySelector("#mensajeReserva");
 
+async function cargarDetalle() {
+  if (elNombre) elNombre.textContent = "Cargando detalle del alojamiento...";
 
-const alojamientos = [
-  {
-    id: "cordoba",
-    titulo: "Casa en las montañas",
-    imagen: "img/img-cordoba.jpg",
-    descripcion: "Hermosa casa ubicada en las sierras, ideal para descansar y conectar con la naturaleza.",
-    ubicacion: "Córdoba Capital",
-    precio: 45000,
-    capacidad: 4,
-    anfitrion: "Gaspar Pérez"
-  },
-  {
-    id: "villacp",
-    titulo: "Cabaña con pileta",
-    imagen: "img/img-villacp.webp",
-    descripcion: "Cabaña totalmente equipada con pileta privada y excelente vista al lago.",
-    ubicacion: "Villa Carlos Paz",
-    precio: 70000,
-    capacidad: 6,
-    anfitrion: "María González"
-  },
-  {
-    id: "santafe",
-    titulo: "Casa quinta con pileta",
-    imagen: "img/img-santafe.jpg",
-    descripcion: "Amplia casa quinta ideal para familias numerosas o grupos de amigos.",
-    ubicacion: "Santa Fe",
-    precio: 78000,
-    capacidad: 8,
-    anfitrion: "Lucas Fernández"
-  }
-];
+  try {
+    const respuesta = await fetch("data/reservas.json");
+    if (!respuesta.ok) throw new Error("Error al obtener los datos del servidor");
 
+    const datosJson = await respuesta.json();
 
-function cargarDetalle() {
+    // Obtenemos publicaciones guardadas en localStorage por el usuario
+    const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
 
-  const encontrado = alojamientos.find((item) => item.id === idAlojamiento);
+    // Combinamos las publicaciones de localStorage con las del JSON
+    const todosLosDatos = [...datosLocalStorage, ...datosJson];
 
-  if (encontrado) {
-    elNombre.textContent = encontrado.titulo;
-    elImagen.src = encontrado.imagen;
-    elImagen.alt = encontrado.titulo;
-    elDescripcion.textContent = encontrado.descripcion;
-    elUbicacion.textContent = encontrado.ubicacion;
-    elPrecio.textContent = encontrado.precio.toLocaleString("es-AR");
-    elCapacidad.textContent = encontrado.capacidad;
-  } else {
-    
-    const porDefecto = alojamientos[0];
-    elNombre.textContent = porDefecto.titulo;
-    elImagen.src = porDefecto.imagen;
-    elImagen.alt = porDefecto.titulo;
-    elDescripcion.textContent = porDefecto.descripcion;
-    elUbicacion.textContent = porDefecto.ubicacion;
-    elPrecio.textContent = porDefecto.precio.toLocaleString("es-AR");
-    elCapacidad.textContent = porDefecto.capacidad;
+    const alojamientos = todosLosDatos.map((item) => ({
+      id: String(item.id),
+      titulo: item.titulo || item.nombre,
+      imagen: item.imagen || "", // Si no tiene imagen, guarda cadena vacía
+      descripcion: item.descripcion || "Excelente alojamiento completamente equipado para disfrutar de una estadía cómoda.",
+      ubicacion: item.ubicacion || (item.titulo && item.titulo.includes("montañas") ? "Córdoba Capital" : "Santa Fe"),
+      precio: item.precioNoche || item.precio || 45000,
+      capacidad: item.huespedes || 4
+    }));
+
+    // Buscamos coincidencia exacta de ID
+    let encontrado = alojamientos.find((item) => item.id === String(idAlojamiento));
+
+    // Si no encuentra por ID directo, toma el primero disponible
+    if (!encontrado) {
+      encontrado = alojamientos[0];
+    }
+
+    if (encontrado) {
+      if (elNombre) elNombre.textContent = encontrado.titulo;
+      
+      // Manejo de imagen: si tiene ruta/base64 la muestra, de lo contrario oculta la etiqueta
+      if (elImagen) {
+        if (encontrado.imagen && encontrado.imagen.trim() !== "") {
+          elImagen.src = encontrado.imagen;
+          elImagen.alt = encontrado.titulo;
+          elImagen.style.display = "block";
+        } else {
+          elImagen.style.display = "none";
+        }
+      }
+
+      if (elDescripcion) elDescripcion.textContent = encontrado.descripcion;
+      if (elUbicacion) elUbicacion.textContent = encontrado.ubicacion;
+      if (elPrecio) elPrecio.textContent = Number(encontrado.precio).toLocaleString("es-AR");
+      if (elCapacidad) elCapacidad.textContent = encontrado.capacidad;
+    }
+  } catch (error) {
+    console.error("Error al cargar el detalle:", error);
+    if (elNombre) elNombre.textContent = "Error al cargar la información del alojamiento.";
   }
 }
-
 
 if (formReserva) {
   formReserva.addEventListener("submit", function (evento) {
@@ -102,6 +97,5 @@ if (formReserva) {
     }, 1500);
   });
 }
-
 
 cargarDetalle();
