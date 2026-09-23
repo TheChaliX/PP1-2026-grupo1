@@ -14,39 +14,30 @@ async function cargarDetalle() {
   if (elNombre) elNombre.textContent = "Cargando detalle del alojamiento...";
 
   try {
-    const respuesta = await fetch("data/reservas.json");
+    const respuesta = await fetch("data/catalogo.json");
     if (!respuesta.ok) throw new Error("Error al obtener los datos del servidor");
 
     const datosJson = await respuesta.json();
 
-    // Obtenemos publicaciones guardadas en localStorage por el usuario
     const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
 
-    // Combinamos las publicaciones de localStorage con las del JSON
     const todosLosDatos = [...datosLocalStorage, ...datosJson];
 
     const alojamientos = todosLosDatos.map((item) => ({
       id: String(item.id),
       titulo: item.titulo || item.nombre,
-      imagen: item.imagen || "", // Si no tiene imagen, guarda cadena vacía
+      imagen: item.imagen || "",
       descripcion: item.descripcion || "Excelente alojamiento completamente equipado para disfrutar de una estadía cómoda.",
-      ubicacion: item.ubicacion || (item.titulo && item.titulo.includes("montañas") ? "Córdoba Capital" : "Santa Fe"),
+      ubicacion: item.ubicacion || "Santa Fe",
       precio: item.precioNoche || item.precio || 45000,
-      capacidad: item.huespedes || 4
+      capacidad: item.capacidad || item.huespedes || 4
     }));
 
-    // Buscamos coincidencia exacta de ID
-    let encontrado = alojamientos.find((item) => item.id === String(idAlojamiento));
-
-    // Si no encuentra por ID directo, toma el primero disponible
-    if (!encontrado) {
-      encontrado = alojamientos[0];
-    }
+    const encontrado = alojamientos.find((item) => item.id === String(idAlojamiento));
 
     if (encontrado) {
       if (elNombre) elNombre.textContent = encontrado.titulo;
-      
-      // Manejo de imagen: si tiene ruta/base64 la muestra, de lo contrario oculta la etiqueta
+
       if (elImagen) {
         if (encontrado.imagen && encontrado.imagen.trim() !== "") {
           elImagen.src = encontrado.imagen;
@@ -61,6 +52,9 @@ async function cargarDetalle() {
       if (elUbicacion) elUbicacion.textContent = encontrado.ubicacion;
       if (elPrecio) elPrecio.textContent = Number(encontrado.precio).toLocaleString("es-AR");
       if (elCapacidad) elCapacidad.textContent = encontrado.capacidad;
+    } else {
+      if (elNombre) elNombre.textContent = "No se encontró el alojamiento solicitado.";
+      console.error("No se encontró un alojamiento con id:", idAlojamiento);
     }
   } catch (error) {
     console.error("Error al cargar el detalle:", error);

@@ -6,12 +6,12 @@ let filtroActual = "todas";
 function crearTarjetaReserva(reserva) {
   const accionesHtml = reserva.estado !== "cancelado" 
     ? `
-      <a href="detalle.html?id=${reserva.id}">Ver detalle</a>
+      <a href="detalle.html?id=${reserva.alojamientoId}">Ver detalle</a>
       <button class="btn-modificar">Modificar</button>
       <button class="btn-cancelar">Cancelar</button>
     ` 
     : `
-      <a href="detalle.html?id=${reserva.id}">Ver detalle</a>
+      <a href="detalle.html?id=${reserva.alojamientoId}">Ver detalle</a>
     `;
 
   
@@ -20,7 +20,7 @@ function crearTarjetaReserva(reserva) {
     : `<div class="reserva-sin-imagen" style="width: 150px; height: 100px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #666; font-size: 0.8rem;">Sin imagen</div>`;
 
   return `
-    <article class="reserva ${reserva.estado}" data-id="${reserva.id}">
+    <article class="reserva ${reserva.estado}" data-id="${reserva.id}" data-alojamiento-id="${reserva.alojamientoId}">
       ${htmlImagen}
 
       <div class="reserva-info">
@@ -81,8 +81,8 @@ async function cancelarReserva(idReserva) {
   }
 }
 
-function modificarReserva(idReserva) {
-  window.location.href = `detalle.html?id=${idReserva}`;
+function modificarReserva(idAlojamiento) {
+  window.location.href = `detalle.html?id=${idAlojamiento}`;
 }
 
 function escucharEventosAcciones() {
@@ -92,7 +92,7 @@ function escucharEventosAcciones() {
   botonesModificar.forEach((boton) => {
     boton.addEventListener("click", () => {
       const tarjeta = boton.closest(".reserva");
-      modificarReserva(tarjeta.dataset.id);
+      modificarReserva(tarjeta.dataset.alojamientoId);
     });
   });
 
@@ -122,17 +122,33 @@ async function obtenerReservas() {
   contenedorReservas.innerHTML = "<p class='mensaje-cargando'>Cargando reservas...</p>";
 
   try {
-    const respuesta = await fetch("data/reservas.json");
-    if (!respuesta.ok) throw new Error("Error al consultar el servidor local");
-    
-    const datosJson = await respuesta.json();
-    
-    
+    const [respuestaReservas, respuestaCatalogo] = await Promise.all([
+      fetch("data/reservas.json"),
+      fetch("data/catalogo.json")
+    ]);
+
+    if (!respuestaReservas.ok || !respuestaCatalogo.ok) {
+      throw new Error("Error al consultar el servidor local");
+    }
+
+    const datosReservas = await respuestaReservas.json();
+    const datosCatalogo = await respuestaCatalogo.json();
+
     const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
 
-    
-    listaReservas = [...datosLocalStorage, ...datosJson];
-    
+    const reservasCombinadas = [...datosLocalStorage, ...datosReservas];
+
+    // Unimos cada reserva con los datos de su alojamiento (titulo, imagen)
+    listaReservas = reservasCombinadas.map((reserva) => {
+      const alojamiento = datosCatalogo.find((a) => a.id === reserva.alojamientoId);
+
+      return {
+        ...reserva,
+        titulo: reserva.titulo || (alojamiento ? alojamiento.titulo : "Alojamiento no disponible"),
+        imagen: reserva.imagen || (alojamiento ? alojamiento.imagen : "")
+      };
+    });
+
     renderizarReservas();
   } catch (error) {
     console.error("Error al cargar JSON:", error);
