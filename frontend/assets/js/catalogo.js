@@ -63,10 +63,13 @@ async function cargarCatalogo() {
   contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-info">Cargando catálogo de alojamientos...</p>`;
 
   try {
-    const respuesta = await fetch("data/catalogo.json");
+        const respuesta = await fetch("data/catalogo.json");
     if (!respuesta.ok) throw new Error("Error al cargar catalogo");
 
-    const datos = await respuesta.json();
+    const datosJson = await respuesta.json();
+
+    const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
+    const datos = [...datosLocalStorage.reverse(), ...datosJson];
 
     alojamientos = datos.map((item) => ({
       id: item.id,

@@ -22,45 +22,5 @@
     "huespedes": 6,
     "estado": "cancelado",
     "estadoTexto": "Cancelado"
-  },
-  {
-    "id": "reserva-004",
-    "alojamientoId": "rosario",
-    "fechas": "01/09/2026 al 07/09/2026",
-    "huespedes": 3,
-    "estado": "confirmado",
-    "estadoTexto": "Confirmado"
-  },
-  {
-    "id": "reserva-005",
-    "alojamientoId": "bariloche",
-    "fechas": "12/10/2026 al 18/10/2026",
-    "huespedes": 5,
-    "estado": "confirmado",
-    "estadoTexto": "Confirmado"
-  },
-  {
-    "id": "reserva-006",
-    "alojamientoId": "mendoza",
-    "fechas": "20/11/2026 al 25/11/2026",
-    "huespedes": 4,
-    "estado": "pendiente",
-    "estadoTexto": "Pendiente de confirmación"
-  },
-  {
-    "id": "reserva-007",
-    "alojamientoId": "salta",
-    "fechas": "02/12/2026 al 09/12/2026",
-    "huespedes": 2,
-    "estado": "confirmado",
-    "estadoTexto": "Confirmado"
-  },
-  {
-    "id": "reserva-008",
-    "alojamientoId": "mar-del-plata",
-    "fechas": "10/01/2027 al 20/01/2027",
-    "huespedes": 6,
-    "estado": "cancelado",
-    "estadoTexto": "Cancelado"
   }
 ]

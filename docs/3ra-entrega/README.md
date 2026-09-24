@@ -1,39 +1,67 @@
-# Reporte Técnico: 3ra Entrega - Lógica e Interactividad con JavaScript
 
-**Materia:** Práctica Profesionalizante I  
-**Proyecto:** Sistema de Reservas de Alojamiento  
-**Año:** 2026  
+# Entrega 3: Frontend codificado
 
----
+**Materia:** Práctica Profesionalizante I (PP1) — 2026  
+**Proyecto:** Sistema de reservas de alojamientos (TP Reservas)  
+**Grupo:** Grupo 1 — [Sarco Thiago, Nanzer Benjamin, Chalita Antonio y Hernandes German Mateo]  
+**Fecha de entrega:** 24/09/2026
 
-## 1. Tabla de Capacidades JS y Trazabilidad de Casos de Uso (CU)
+## Cómo probarlo
 
-A continuación se detalla cómo se relacionan los Casos de Uso definidos en la Entrega 1 con la implementación técnica en JavaScript solicitada para la Entrega 3:
+El frontend se prueba **servido con Live Server** (VS Code), no abriendo el HTML con doble clic, porque `fetch` no funciona con `file://`. Punto de partida: `frontend/index.html`.
 
-| Capacidad Requerida | Caso de Uso (CU) Relacionado | Implementación Técnica en Código |
-| :--- | :--- | :--- |
-| **1. Login y Registro Validados** | CU01 - Iniciar Sesión / Registro | Captura del evento `submit` con `preventDefault()`. Validaciones de campos vacíos, longitud de contraseña y formato de email mediante Expresión Regular (`regex`). Los errores se despliegan en el DOM (`#mensajeError`) sin utilizar `alert()`. |
-| **2. Listado Dinámico (`fetch`)** | CU02 - Consultar Catálogo / Mis Reservas | Consumo asíncrono de `data/reservas.json` usando `async/await`. Renderizado dinámico de tarjetas/filas en el DOM mediante manipulación de `innerHTML` e interpolación de plantillas (`template literals`). |
-| **3. Acción del Usuario sobre los Datos** | CU03 - Publicar / Cancelar Reserva | Manejo de eventos sobre colecciones en memoria. Implementación de una función `async` independiente (`guardarAlojamiento`) para agregar nuevos registros persistidos en `localStorage` y actualización del estado de reserva sin recargar la página. |
-| **4. Manejo de los 3 Estados de Interfaz** | CU02 - Consultar Catálogo | Control explícito de la UI contemplando los 3 estados: **Cargando** (mensaje previo mientras se resuelve la promesa), **Vacío** (mensaje personalizado cuando un filtro no arroja resultados) y **Error** (captura de excepciones con `try...catch` y mensaje descriptivo en el DOM). |
+## Organización del código
 
----
+```text
+frontend/
+├── assets/
+│   ├── css/styles.css
+│   ├── img/
+│   └── js/         un .js por pantalla
+├── data/           catalogo.json, reservas.json, catalogo-vacio.json
+├── index.html
+└── *.html
+```
 
-## 2. Decisiones Técnicas del Grupo
+## Capacidades implementadas
 
-* **Arquitectura de Scripts Modular:** Se separó la lógica en archivos JavaScript independientes por cada vista dentro de `frontend/js/` (`login.js`, `catalogo.js`, `reservas.js`, `publicar-alojamiento.js`, `detalle.js`, `registro.js`) para garantizar la mantenibilidad y desacoplar responsabilidades.
-* **Persistencia Local con `localStorage`:** Para simular la persistencia de datos exigida en la publicación de nuevos alojamientos sin depender de un servidor backend, combinamos los datos provenientes de `data/reservas.json` con las publicaciones almacenadas dinámicamente en el `localStorage` del navegador.
-* **Procesamiento de Imágenes con `FileReader`:** En el formulario de publicación se implementó la API de `FileReader` para convertir los archivos seleccionados por el usuario en cadenas Base64. De este modo, las imágenes subidas localmente pueden visualizarse directamente en el catálogo y en la vista de detalle.
-* **Uso de HTML Semántico y Flexbox/Bootstrap:** Se mantuvieron los principios de HTML semántico definidos en entregas previas y la estructuración responsiva mediante CSS Flexbox y Bootstrap para los componentes de tarjetas y controles de formulario.
+| Capacidad | Pantalla | Archivo JS | CU de E1 | Qué hace |
+|---|---|---|---|---|
+| 1. Login validado | `login.html` | `assets/js/login.js` | CU-XX | Con `preventDefault()` evita el envío. Valida campos vacíos, formato de email (regex) y largo de la contraseña. Muestra el error en el DOM (no usa `alert()`) y, si todo es válido, redirige a `catalogo.html`. |
+| 2. Listado desde datos | `catalogo.html` | `assets/js/catalogo.js` | CU-XX | Trae `data/catalogo.json` con `fetch`, transforma los datos con `map` y dibuja las tarjetas con `crearTarjeta()` en `#contenedor-catalogo` (vacío en el HTML). Filtra por ubicación y rango de tarifa. |
+| 3. Acción del usuario | `detalle.html` | `assets/js/detalle.js` | CU-XX | Lee las fechas y los huéspedes, valida (campos vacíos y salida posterior a entrada) y guarda la reserva con `guardarReserva()`, una función aparte que hoy escribe en memoria. La reserva se agrega con estado "Confirmado" a la lista "Reservas realizadas" de la misma pantalla, sin recargar. |
+| 4. Estados de interfaz | `catalogo.html` | `assets/js/catalogo.js` | CU-XX | **Cargando:** mensaje mientras espera el `fetch`. **Vacío:** mensaje cuando la lista no tiene ítems. **Error:** mensaje legible en el `catch` si el `fetch` falla. |
+| 5. Pantalla del anfitrión | `publicar-alojamiento.html` | `assets/js/publicar-alojamiento.js` | CU-XX | Formulario validado (textos vacíos y valores numéricos mayores a cero). Convierte la imagen a Base64, guarda con `guardarAlojamiento()` y redirige al catálogo, donde aparece el alojamiento publicado. |
 
----
+### Otras pantallas con JavaScript
 
-## 3. Declaración del Uso de Inteligencia Artificial (IA)
+| Pantalla | Archivo JS | Qué hace |
+|---|---|---|
+| `registro.html` | `assets/js/registro.js` | Valida campos vacíos, email, largo y coincidencia de contraseñas. |
+| `reservas.html` | `assets/js/reservas.js` | Dibuja las reservas desde `data/reservas.json` (unidas con el catálogo por `alojamientoId`), con filtros por estado y cancelación. |
 
-En cumplimiento con las pautas de evaluación y ética académica de la institución, declaramos el uso de herramientas de **IA Generativa** (Gemini / ChatGPT) bajo los siguientes términos:
+### Pantallas estáticas por ahora
 
-1. **Campos de Aplicación:**
-   * Apoyo en la optimización de sintaxis asíncrona (`async/await`) y manejo de promesas con `fetch`.
-   * Estructuración del lector de archivos en Base64 mediante `FileReader`.
-   * Revisión y auditoría de la lista de chequeo frente a los requisitos obligatorios de la consigna.
-2. **Supervisión y Validación Humana:** Todo el código y la documentación sugeridos por la herramienta de IA fueron revisados, probados localmente mediante la extensión **Live Server** en VS Code, adaptados a la semántica particular de nuestro proyecto y validados por los integrantes del equipo.
+`index.html`, `mis-propiedades.html`, `calendario.html`, `reservas-recibidas.html`, `perfil.html` y `recuperar.html`. Reciben JavaScript en las etapas siguientes, junto con la conexión al backend.
+
+## Cómo demostrar los tres estados
+
+- **Vacío:** en `catalogo.js`, cambiar la ruta del `fetch` a `data/catalogo-vacio.json` (antes ejecutar `localStorage.clear()` en la consola, porque el catálogo también muestra lo publicado).
+- **Error:** cambiar la ruta del `fetch` por una que no exista, por ejemplo `data/xxx.json`.
+- **Cargando:** se ve un instante al abrir la página; se nota más con la red de DevTools en modo lento.
+
+## Decisiones del grupo
+
+- **Un `.js` por pantalla**, todos en `assets/js/` y cargados al final del `<body>`. Cada archivo tiene una responsabilidad, y así se ve qué código pertenece a cada pantalla.
+- **Capacidad 5: Publicar alojamiento.** Se eligió porque es la acción central del anfitrión (CU-XX): crea el alojamiento que después el huésped ve en el catálogo. Cumple con un formulario con validación que actualiza la pantalla siguiente. [Ajustar la justificación contra el CU de E1.]
+- **Datos:** `catalogo.json` (8 alojamientos) y `reservas.json`. `alojamientoId` en `reservas.json` referencia al `id` del catálogo. `catalogo-vacio.json` es un archivo auxiliar solo para demostrar el estado vacío.
+- **Uso de `localStorage` (distinto de lo pedido).** La consigna no lo pide. Se usó en `publicar-alojamiento.js` para que el alojamiento publicado aparezca en el catálogo después de la redirección, ya que sin backend los datos no persisten entre pantallas. Es código provisorio: al conectar el backend cambia solo el cuerpo de `guardarAlojamiento()` (pasa a un `fetch` con POST).
+- **Reserva en memoria.** En `detalle.js` la reserva vive en un array. Al cambiar de pantalla se pierde, y "Mis reservas" se dibuja desde su propio `reservas.json`, como indica la consigna.
+
+## Declaración de uso de IA
+
+Modo asistido. Se consultó a un asistente de IA (Claude) para:
+
+- Interpretar errores de la consola (por ejemplo, un `SyntaxError` en `catalogo.js`).
+- Depurar rutas relativas de CSS e imágenes en `calendario.html`, `reservas-recibidas.html` y `mis-propiedades.html`, y un choque de nombres de clase (`.estado`) en `styles.css`.
+- Resolver problemas de git: commit, merge, conflictos y `revert`.

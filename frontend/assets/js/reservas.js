@@ -134,9 +134,7 @@ async function obtenerReservas() {
     const datosReservas = await respuestaReservas.json();
     const datosCatalogo = await respuestaCatalogo.json();
 
-    const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
-
-    const reservasCombinadas = [...datosLocalStorage, ...datosReservas];
+    const reservasCombinadas = datosReservas;
 
     // Unimos cada reserva con los datos de su alojamiento (titulo, imagen)
     listaReservas = reservasCombinadas.map((reserva) => {

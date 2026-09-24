@@ -89,12 +89,12 @@ if (formPublicar) {
     await guardarAlojamiento(nuevoAlojamiento);
 
     mensajeFormulario.style.color = "green";
-    mensajeFormulario.textContent = "¡Alojamiento publicado y guardado con éxito! Redirigiendo a Mis Reservas...";
+    mensajeFormulario.textContent = "¡Alojamiento publicado y guardado con éxito! Redirigiendo al catálogo...";
 
     formPublicar.reset();
 
     setTimeout(() => {
-      window.location.href = "reservas.html";
+      window.location.href = "catalogo.html";
     }, 1500);
   });
 }
