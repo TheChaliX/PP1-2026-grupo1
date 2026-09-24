@@ -43,6 +43,6 @@ formLogin.addEventListener("submit", function (evento) {
 
   
   setTimeout(() => {
-    window.location.href = "catalogo.html";
+    window.location.href = "reservas.html";
   }, 1500);
 });
