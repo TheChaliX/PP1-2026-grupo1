@@ -22,6 +22,7 @@
     "huespedes": 6,
     "estado": "cancelado",
     "estadoTexto": "Cancelado"
+
   },
   {
     "id": "reserva-004",
@@ -62,5 +63,6 @@
     "huespedes": 6,
     "estado": "cancelado",
     "estadoTexto": "Cancelado"
+
   }
 ]
