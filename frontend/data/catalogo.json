@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cordoba",
+    "titulo": "Casa en las montañas",
+    "ubicacion": "Córdoba Capital",
+    "precioNoche": 45000,
+    "imagen": "assets/img/img-cordoba.jpg",
+    "descripcion": "Hermosa casa ubicada en las sierras, ideal para descansar y conectar con la naturaleza.",
+    "capacidad": 4,
+    "anfitrion": "Gaspar Pérez"
+  },
+  {
+    "id": "villacp",
+    "titulo": "Cabaña con pileta",
+    "ubicacion": "Villa Carlos Paz",
+    "precioNoche": 70000,
+    "imagen": "assets/img/img-villacp.webp",
+    "descripcion": "Cabaña totalmente equipada con pileta privada y excelente vista al lago.",
+    "capacidad": 6,
+    "anfitrion": "María González"
+  },
+  {
+    "id": "santafe",
+    "titulo": "Casa quinta con pileta",
+    "ubicacion": "Santa Fe",
+    "precioNoche": 78000,
+    "imagen": "assets/img/img-santafe.jpg",
+    "descripcion": "Amplia casa quinta ideal para familias numerosas o grupos de amigos.",
+    "capacidad": 8,
+    "anfitrion": "Lucas Fernández"
+  },
+  {
+    "id": "rosario",
+    "titulo": "Departamento con vista al río",
+    "ubicacion": "Rosario",
+    "precioNoche": 55000,
+    "imagen": "assets/img/img-rosario.avif",
+    "descripcion": "Cómodo departamento con vista al río Paraná, ideal para escapadas de fin de semana.",
+    "capacidad": 3,
+    "anfitrion": "Por definir"
+  },
+  {
+    "id": "bariloche",
+    "titulo": "Cabaña frente al lago",
+    "ubicacion": "Bariloche",
+    "precioNoche": 85000,
+    "imagen": "assets/img/bariloche.jpg",
+    "descripcion": "Cabaña de montaña con acceso directo al lago, ideal para desconectar en un entorno natural.",
+    "capacidad": 5,
+    "anfitrion": "Por definir"
+  },
+  {
+    "id": "mendoza",
+    "titulo": "Chalet en los viñedos",
+    "ubicacion": "Mendoza",
+    "precioNoche": 65000,
+    "imagen": "assets/img/mendoza.avif",
+    "descripcion": "Chalet rodeado de viñedos, perfecto para disfrutar de la tranquilidad y el paisaje cuyano.",
+    "capacidad": 4,
+    "anfitrion": "Por definir"
+  },
+  {
+    "id": "salta",
+    "titulo": "Cabaña colonial",
+    "ubicacion": "Salta",
+    "precioNoche": 50000,
+    "imagen": "assets/img/salta.jfif",
+    "descripcion": "Cabaña de estilo colonial en el corazón del norte argentino, con encanto histórico y confort moderno.",
+    "capacidad": 2,
+    "anfitrion": "Por definir"
+  },
+  {
+    "id": "mar-del-plata",
+    "titulo": "Departamento dúplex playa",
+    "ubicacion": "Mar del Plata",
+    "precioNoche": 72000,
+    "imagen": "assets/img/mardelplata.jpg",
+    "descripcion": "Dúplex a metros de la playa, ideal para grupos grandes que buscan sol y mar.",
+    "capacidad": 6,
+    "anfitrion": "Por definir"
+  }
+]

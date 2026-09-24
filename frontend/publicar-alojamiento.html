@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar alojamiento</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="publicar">
+
+    <main class="publicar-main">
+        <header>
+            <nav class="navbar">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="reservas.html">Mis reservas</a>
+                <a href="login.html">Login</a>
+                <a href="mis-propiedades.html">Mis propiedades</a>
+                <a href="calendario.html">Calendario</a>
+                <a href="reservas-recibidas.html">Reservas recibidas</a>
+                <a href="registro.html">Registro</a>
+            </nav>
+
+            <h1>Panel del anfitrión</h1>
+        </header>
+
+        <form id="formPublicar" novalidate>
+            <label for="nombre">Nombre del alojamiento</label>
+            <input type="text" id="nombre" name="nombre">
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="5"></textarea>
+
+            <label for="ubicacion">Ubicación</label>
+            <input type="text" id="ubicacion" name="ubicacion">
+
+            <label for="tipo">Tipo de alojamiento</label>
+            <select id="tipo" name="tipo">
+                <option value="">Seleccione una opción</option>
+                <option value="Cabaña">Cabaña</option>
+                <option value="Casa">Casa</option>
+                <option value="Departamento">Departamento</option>
+                <option value="Hotel">Hotel</option>
+            </select>
+
+            <fieldset>
+                <legend>Precio y capacidad</legend>
+                <div class="fila-datos">
+                    <div>
+                        <label for="precioNoche">Precio/Noche ($)</label>
+                        <input type="number" id="precioNoche" name="precioNoche" min="0">
+                    </div>
+
+                    <div>
+                        <label for="huespedes">Huéspedes</label>
+                        <input type="number" id="huespedes" name="huespedes" min="1">
+                    </div>
+
+                    <div>
+                        <label for="habitaciones">Habitaciones</label>
+                        <input type="number" id="habitaciones" name="habitaciones" min="1">
+                    </div>
+
+                    <div>
+                        <label for="camas">Camas</label>
+                        <input type="number" id="camas" name="camas" min="1">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Servicios</legend>
+                <label>
+                    <input type="checkbox" name="servicios" value="Wi-Fi"> Wi-Fi
+                </label>
+                <label>
+                    <input type="checkbox" name="servicios" value="Cocina"> Cocina
+                </label>
+                <label>
+                    <input type="checkbox" name="servicios" value="Pileta"> Pileta
+                </label>
+                <label>
+                    <input type="checkbox" name="servicios" value="Estacionamiento"> Estacionamiento
+                </label>
+            </fieldset>
+
+            <label for="fotos">Cargar imágenes</label>
+            <input type="file" id="fotos" name="fotos" accept="image/*">
+
+            <!-- Contenedor para mostrar mensajes en pantalla sin alert -->
+            <p id="mensajeFormulario" class="mensaje-error"></p>
+
+            <div class="botones-publicar">
+                <button type="submit">Publicar</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <small>Grupo 1 — PP1 2026</small>
+    </footer>
+
+    <script src="assets/js/publicar-alojamiento.js"></script>
+</body>
+</html>

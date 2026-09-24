@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Alojamiento</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="reservas.html">Mis reservas</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="publicar-alojamiento.html">Publicar alojamiento</a>
+            <a href="login.html">Login</a>
+            <a href="mis-propiedades.html">Mis propiedades</a>
+            <a href="calendario.html">Calendario</a>
+            <a href="reservas-recibidas.html">Reservas recibidas</a>
+            <a href="registro.html">Registro</a>
+        </nav>
+    </header>
+
+    <div id="mensajeEstado"></div>
+
+    <main class="detalle-alojamiento" id="contenidoDetalle">
+        <h1 id="nombreAlojamiento">Cargando alojamiento...</h1>
+
+        <section class="galeria">
+            <img id="imagenAlojamiento" src="" alt="Alojamiento">
+        </section>
+
+        <div class="contenedor-dos-columnas">
+            <section class="datos-anfitrion">
+                <h2>Datos del anfitrión</h2>
+                <p><strong>Anfitrión:</strong> <span id="anfitrion">Gaspar Pérez</span></p>
+                <p>Atención personalizada.</p>
+            </section>
+            
+            <section class="disponibilidad">
+                <h2>Disponibilidad y reserva</h2>
+                <form id="formReserva" novalidate>
+                    <label for="entrada">Fecha de entrada</label>
+                    <input type="date" id="entrada" name="entrada" required>
+
+                    <label for="salida">Fecha de salida</label>
+                    <input type="date" id="salida" name="salida" required>
+
+                    <label for="huespedes">Huéspedes</label>
+                    <input type="number" id="huespedes" name="huespedes" min="1" max="10" required>
+
+                    <p id="mensajeReserva" class="mensaje-error"></p>
+
+                    <button type="submit">Confirmar reserva</button>
+                </form>
+            </section>
+        </div> 
+
+        <section class="reservas-realizadas">
+            <h2>Reservas realizadas</h2>
+            <div id="listaReservas"></div>
+        </section>
+
+        <section class="descripcion">
+            <h2>Descripción</h2>
+            <p id="descripcionTexto"></p>
+            <p><strong>Ubicación:</strong> <span id="ubicacion"></span></p>
+            <p><strong>Precio:</strong> $<span id="precio"></span> por noche</p>
+            <p><strong>Capacidad:</strong> <span id="capacidad"></span> huéspedes</p>
+        </section>
+
+        <section class="servicios">
+            <h2>Servicios y referencias</h2>
+            <ul id="listaServicios">
+                <li>Wi-Fi</li>
+                <li>Estacionamiento</li>
+                <li>Parrilla</li>
+                <li>Vista panorámica</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <small>Grupo 1 — PP1 2026</small>
+    </footer>
+
+    <script src="assets/js/detalle.js"></script>
+</body>
+</html>

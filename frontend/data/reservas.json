@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reserva-001",
+    "alojamientoId": "cordoba",
+    "fechas": "15/07/2026 al 20/07/2026",
+    "huespedes": 4,
+    "estado": "confirmado",
+    "estadoTexto": "Confirmado"
+  },
+  {
+    "id": "reserva-002",
+    "alojamientoId": "villacp",
+    "fechas": "10/08/2026 al 15/08/2026",
+    "huespedes": 2,
+    "estado": "pendiente",
+    "estadoTexto": "Pendiente de confirmación"
+  },
+  {
+    "id": "reserva-003",
+    "alojamientoId": "santafe",
+    "fechas": "05/06/2026 al 08/06/2026",
+    "huespedes": 6,
+    "estado": "cancelado",
+    "estadoTexto": "Cancelado"
+  }
+]

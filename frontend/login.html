@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sistema de Reservas - Login</title>
+    </head>
+<body class="login">
+    <header>    
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="reservas.html">Mis reservas</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="publicar-alojamiento.html">Publicar alojamiento</a>
+            <a href="login.html">Login</a>
+            <a href="mis-propiedades.html">Mis propiedades</a>
+            <a href="calendario.html">Calendario</a>
+            <a href="reservas-recibidas.html">Reservas recibidas</a>
+            <a href="registro.html">Registro</a>
+        </nav>
+        <h1>Sistema de reservas</h1>
+        <p>Inicia sesión</p>
+    </header>
+
+    <main>
+        <!-- novalidate para manejar la validación manualmente con JS -->
+        <form id="formLogin" novalidate>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Ingresa tu email">
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña">
+
+            <!-- Contenedor para mostrar mensajes de error dinámicos -->
+            <p id="mensajeError" class="mensaje-error"></p>
+
+            <button type="submit">Ingresar</button>
+            <a href="recuperar.html">¿Perdiste el acceso a tu e-mail?</a> 
+        </form>
+    </main>
+
+<script src="assets/js/login.js"></script>
+</body>
+</html>
