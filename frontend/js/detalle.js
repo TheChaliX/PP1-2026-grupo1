@@ -15,7 +15,7 @@ async function cargarDetalle() {
 
   try {
     const respuesta = await fetch("data/catalogo.json");
-    if (!respuesta.ok) throw new Error("Error al obtener los datos del servidor");
+    if (!respuesta.ok) throw new Error("Error al obtener los datos del catalogo");
 
     const datosJson = await respuesta.json();
 

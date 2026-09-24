@@ -17,7 +17,7 @@ async function guardarAlojamiento(nuevoAlojamiento) {
   localStorage.setItem("alojamientosPublicados", JSON.stringify(publicaciones));
 }
 
-// Función para leer la imagen seleccionada en Base64
+
 function leerImagenComoBase64(archivo) {
   return new Promise((resolve) => {
     if (!archivo) {
@@ -64,7 +64,7 @@ if (formPublicar) {
       return;
     }
 
-    // Lee el archivo si el usuario subió uno; si no, queda como cadena vacía ""
+    
     const archivoSeleccionado = inputImagen && inputImagen.files.length > 0 ? inputImagen.files[0] : null;
     const imagenFinal = await leerImagenComoBase64(archivoSeleccionado);
 
@@ -80,7 +80,7 @@ if (formPublicar) {
       habitaciones: habitaciones,
       camas: camas,
       servicios: serviciosSeleccionados,
-      imagen: imagenFinal, // Si no subió foto, almacena ""
+      imagen: imagenFinal, 
       fechas: "Disponibilidad inmediata",
       estado: "confirmado",
       estadoTexto: "Confirmado"
