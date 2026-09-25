@@ -1,13 +1,17 @@
-[
+﻿[
   {
     "id": "cordoba",
     "titulo": "Casa en las montañas",
     "ubicacion": "Córdoba Capital",
     "precioNoche": 45000,
     "imagen": "assets/img/img-cordoba.jpg",
-    "descripcion": "Hermosa casa ubicada en las sierras, ideal para descansar y conectar con la naturaleza.",
+    "descripcion": "Refugio perfecto en las sierras cordobesas. Despertá con el canto de los pájaros y disfrutá de atardeceres únicos desde la galería.",
     "capacidad": 4,
-    "anfitrion": "Gaspar Pérez"
+    "anfitrion": "Martín y Sofía",
+    "calificacion": 4.8,
+    "resenas": 132,
+    "servicios": ["Wi-Fi", "Estacionamiento", "Parrilla", "Vista panorámica"],
+    "destacado": "top"
   },
   {
     "id": "villacp",
@@ -15,9 +19,13 @@
     "ubicacion": "Villa Carlos Paz",
     "precioNoche": 70000,
     "imagen": "assets/img/img-villacp.webp",
-    "descripcion": "Cabaña totalmente equipada con pileta privada y excelente vista al lago.",
+    "descripcion": "Exclusiva cabaña a minutos del centro, rodeada de verde. Ideal para relajarse en la pileta privada con vistas al lago San Roque.",
     "capacidad": 6,
-    "anfitrion": "María González"
+    "anfitrion": "Valeria",
+    "calificacion": 4.6,
+    "resenas": 98,
+    "servicios": ["Wi-Fi", "Pileta", "Estacionamiento", "Parrilla"],
+    "destacado": "oferta"
   },
   {
     "id": "santafe",
@@ -25,9 +33,13 @@
     "ubicacion": "Santa Fe",
     "precioNoche": 78000,
     "imagen": "assets/img/img-santafe.jpg",
-    "descripcion": "Amplia casa quinta ideal para familias numerosas o grupos de amigos.",
+    "descripcion": "Amplio parque arbolado, quincho techado y pileta enorme. El lugar definitivo para desconectar el fin de semana en familia.",
     "capacidad": 8,
-    "anfitrion": "Lucas Fernández"
+    "anfitrion": "Esteban",
+    "calificacion": 4.3,
+    "resenas": 54,
+    "servicios": ["Wi-Fi", "Pileta", "Cocina", "Estacionamiento"],
+    "destacado": null
   },
   {
     "id": "rosario",
@@ -35,9 +47,13 @@
     "ubicacion": "Rosario",
     "precioNoche": 55000,
     "imagen": "assets/img/img-rosario.avif",
-    "descripcion": "Cómodo departamento con vista al río Paraná, ideal para escapadas de fin de semana.",
+    "descripcion": "Moderno loft en pleno centro con balcón aterrazado mirando al río Paraná. Cerca de los mejores bares y restaurantes de la ciudad.",
     "capacidad": 3,
-    "anfitrion": "Por definir"
+    "anfitrion": "Lucía",
+    "calificacion": 4.1,
+    "resenas": 27,
+    "servicios": ["Wi-Fi", "Cocina", "Vista panorámica"],
+    "destacado": null
   },
   {
     "id": "bariloche",
@@ -45,9 +61,13 @@
     "ubicacion": "Bariloche",
     "precioNoche": 85000,
     "imagen": "assets/img/bariloche.jpg",
-    "descripcion": "Cabaña de montaña con acceso directo al lago, ideal para desconectar en un entorno natural.",
+    "descripcion": "Cálida cabaña patagónica construida en madera y piedra. Bajada directa a la playa del lago Nahuel Huapi y estufa a leña.",
     "capacidad": 5,
-    "anfitrion": "Por definir"
+    "anfitrion": "Familia Rossi",
+    "calificacion": 4.9,
+    "resenas": 201,
+    "servicios": ["Wi-Fi", "Parrilla", "Vista panorámica", "Cocina"],
+    "destacado": "top"
   },
   {
     "id": "mendoza",
@@ -55,9 +75,13 @@
     "ubicacion": "Mendoza",
     "precioNoche": 65000,
     "imagen": "assets/img/mendoza.avif",
-    "descripcion": "Chalet rodeado de viñedos, perfecto para disfrutar de la tranquilidad y el paisaje cuyano.",
+    "descripcion": "Rodeado de cepas de Malbec, este chalet ofrece una experiencia vitivinícola completa. Incluye degustación de bienvenida para los huéspedes.",
     "capacidad": 4,
-    "anfitrion": "Por definir"
+    "anfitrion": "Bodega Los Álamos",
+    "calificacion": 4.5,
+    "resenas": 76,
+    "servicios": ["Wi-Fi", "Pileta", "Estacionamiento", "Cocina"],
+    "destacado": null
   },
   {
     "id": "salta",
@@ -65,9 +89,13 @@
     "ubicacion": "Salta",
     "precioNoche": 50000,
     "imagen": "assets/img/salta.jfif",
-    "descripcion": "Cabaña de estilo colonial en el corazón del norte argentino, con encanto histórico y confort moderno.",
+    "descripcion": "Alojamiento con arquitectura tradicional salteña a metros de las principales peñas folclóricas. Sentí el verdadero espíritu del norte.",
     "capacidad": 2,
-    "anfitrion": "Por definir"
+    "anfitrion": "Doña Rosa",
+    "calificacion": 4.2,
+    "resenas": 39,
+    "servicios": ["Wi-Fi", "Aire acondicionado", "Cocina"],
+    "destacado": "oferta"
   },
   {
     "id": "mar-del-plata",
@@ -75,8 +103,12 @@
     "ubicacion": "Mar del Plata",
     "precioNoche": 72000,
     "imagen": "assets/img/mardelplata.jpg",
-    "descripcion": "Dúplex a metros de la playa, ideal para grupos grandes que buscan sol y mar.",
+    "descripcion": "Dúplex luminoso y súper moderno a solo dos cuadras del mar. Balcón terraza equipado para disfrutar las noches de verano al aire libre.",
     "capacidad": 6,
-    "anfitrion": "Por definir"
+    "anfitrion": "Gastón",
+    "calificacion": 4.4,
+    "resenas": 88,
+    "servicios": ["Wi-Fi", "Estacionamiento", "Cocina", "Vista panorámica"],
+    "destacado": null
   }
 ]

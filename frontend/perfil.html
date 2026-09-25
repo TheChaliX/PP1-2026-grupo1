@@ -1,123 +1,77 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi perfil</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi perfil — AlojAR</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
-
 <body class="perfil">
 
-    <header>
-        <nav class="navbar">
-            <a href="index.html">Inicio</a>
-            <a href="catalogo.html">Catálogo</a>
-            <a href="reservas.html">Mis reservas</a>
-            <a href="publicar-alojamiento.html">Publicar alojamiento</a>
-            <a href="perfil.html">Mi perfil</a>
-            <a href="reservas-recibidas.html">Reservas recibidas</a>
-            <a href="registro.html">Registro</a>
-        </nav>
+  <div id="navbar-dinamica"></div>
 
-        <h1>Mi perfil</h1>
-<p>Datos de tu cuenta</p>
-    </header>
+  <header class="page-header">
+    <h1><i class="bi bi-person-circle"></i> Mi perfil</h1>
+    <p>Datos de tu cuenta</p>
+  </header>
 
-    <main class="perfil-main">
+  <main class="perfil-main">
+    <section class="perfil-card">
+      <h2><i class="bi bi-person-lines-fill"></i> Datos de la cuenta</h2>
+      <p class="text-muted mb-4">Actualizá tu información personal y de seguridad.</p>
+      
+      <form id="formPerfil">
+        <div class="campo-grupo">
+          <label for="nombre">Nombre completo</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-person-fill input-icono"></i>
+            <input type="text" id="nombre" name="nombre" value="" required>
+          </div>
+        </div>
 
-        <section class="perfil-card">
+        <div class="campo-grupo">
+          <label for="email">Correo electrónico</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-envelope-fill input-icono"></i>
+            <input type="email" id="email" name="email" value="" readonly style="background-color: #f5f5f5; cursor: not-allowed;">
+          </div>
+        </div>
 
-            <h2>Datos personales</h2>
+        <h3 class="mt-4 mb-3" style="font-size: 1.1rem;"><i class="bi bi-shield-lock"></i> Seguridad</h3>
+        
+        <div class="campo-grupo">
+          <label for="password">Nueva contraseña</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-key-fill input-icono"></i>
+            <input type="password" id="password" name="password" placeholder="Ingresá una nueva contraseña">
+          </div>
+        </div>
 
-            <form>
+        <div class="campo-grupo">
+          <label for="password-confirm">Confirmar nueva contraseña</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-key-fill input-icono"></i>
+            <input type="password" id="password-confirm" name="password-confirm" placeholder="Repetí la nueva contraseña">
+          </div>
+        </div>
 
-                <label for="nombre">
-                    Nombre completo
-                </label>
+        <button type="button" class="btn-reserve mt-3" onclick="mostrarModal('Información guardada con éxito', 'exito')"><i class="bi bi-check2-circle"></i> Guardar cambios</button>
+      </form>
+    </section>
+  </main>
 
-                <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value="Thiago Sarco"
-                    required
-                >
+  <footer><small>Grupo 1 — PP1 2026</small></footer>
 
-                <label for="email">
-                    Correo electrónico
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="thiago@example.com"
-                    required
-                >
-
-                <label for="telefono">
-                    Teléfono
-                </label>
-
-                <input
-                    type="tel"
-                    id="telefono"
-                    name="telefono"
-                    value="342 555 1234" required
-                >
-
-                <button type="submit">
-                    Guardar cambios
-                </button>
-
-            </form>
-
-        </section>
-
-        <section class="perfil-card">
-
-            <h2>Seguridad</h2>
-
-            <form>
-
-                <label for="password">
-                    Nueva contraseña
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Ingresá una nueva contraseña"
-                >
-
-                <label for="password-confirm">
-                    Confirmar nueva contraseña
-                </label>
-
-                <input
-                    type="password"
-                    id="password-confirm"
-                    name="password-confirm"
-                    placeholder="Repetí la nueva contraseña"
-                >
-
-                <button type="submit">
-                    Cambiar contraseña
-                </button>
-
-            </form>
-
-        </section>
-
-    </main>
-
-    <footer>
-        <small>Grupo 1 — PP1 2026</small>
-    </footer>
-
+  <script src="assets/js/sesion.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    // Llenar datos
+    const usuario = requerirSesion();
+    if (usuario) {
+      document.getElementById('email').value = usuario.email;
+    }
+  </script>
 </body>
-
 </html>

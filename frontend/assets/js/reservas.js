@@ -1,157 +1,393 @@
+﻿// reservas.js — Frontend Mockup PP1 2026
+
 const contenedorReservas = document.querySelector("#contenedor-reservas");
 const tabs = document.querySelectorAll(".tabs a");
 
 let listaReservas = [];
+let listaAlojamientos = [];
+
 let filtroActual = "todas";
+
+
+// ======================================================
+// CREAR TARJETA DE RESERVA
+// ======================================================
+
 function crearTarjetaReserva(reserva) {
-  const accionesHtml = reserva.estado !== "cancelado" 
+
+  // Buscar el alojamiento correspondiente en el catálogo
+  const alojamiento = listaAlojamientos.find(
+    alojamiento => alojamiento.id === reserva.alojamientoId
+  );
+
+  // Si por algún motivo no existe el alojamiento
+  if (!alojamiento) {
+    console.warn(
+      `No se encontró el alojamiento: ${reserva.alojamientoId}`
+    );
+    return "";
+  }
+
+
+  // -----------------------------
+  // Botones de acción
+  // -----------------------------
+
+  const accionesHtml = reserva.estado !== "cancelado"
+
     ? `
-      <a href="detalle.html?id=${reserva.alojamientoId}">Ver detalle</a>
-      <button class="btn-modificar">Modificar</button>
-      <button class="btn-cancelar">Cancelar</button>
-    ` 
+      <a 
+        href="detalle.html?id=${reserva.alojamientoId}" 
+        class="btn-secundario"
+      >
+        <i class="bi bi-eye"></i>
+        Ver detalle
+      </a>
+
+      <button 
+        class="btn-cancelar-reserva" 
+        data-id="${reserva.id}"
+      >
+        <i class="bi bi-x-circle"></i>
+        Cancelar
+      </button>
+    `
+
     : `
-      <a href="detalle.html?id=${reserva.alojamientoId}">Ver detalle</a>
+      <a 
+        href="detalle.html?id=${reserva.alojamientoId}" 
+        class="btn-secundario"
+      >
+        <i class="bi bi-eye"></i>
+        Ver detalle
+      </a>
     `;
 
-  
-  const htmlImagen = reserva.imagen 
-    ? `<img src="${reserva.imagen}" alt="${reserva.titulo}">` 
-    : `<div class="reserva-sin-imagen" style="width: 150px; height: 100px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #666; font-size: 0.8rem;">Sin imagen</div>`;
+
+  // -----------------------------
+  // Imagen del alojamiento
+  // -----------------------------
+
+  const imgHtml = alojamiento.imagen
+
+    ? `
+      <img 
+        src="${alojamiento.imagen}" 
+        alt="${alojamiento.titulo}" 
+        class="reserva-img"
+      >
+    `
+
+    : `
+      <div class="reserva-img reserva-sin-imagen">
+        <i class="bi bi-image"></i>
+      </div>
+    `;
+
+
+  // -----------------------------
+  // Tarjeta completa
+  // -----------------------------
 
   return `
-    <article class="reserva ${reserva.estado}" data-id="${reserva.id}" data-alojamiento-id="${reserva.alojamientoId}">
-      ${htmlImagen}
+    <article 
+      class="reserva ${reserva.estado}" 
+      data-id="${reserva.id}"
+    >
+
+      ${imgHtml}
 
       <div class="reserva-info">
-        <h3>${reserva.titulo}</h3>
-        <p>${reserva.fechas} - ${reserva.huespedes} huéspedes</p>
-        <span class="estado ${reserva.estado}">
-          ${reserva.estadoTexto}
+
+        <h3>
+          ${alojamiento.titulo}
+        </h3>
+
+        <p>
+          <i class="bi bi-calendar-event"></i>
+          ${reserva.fechas}
+        </p>
+
+        <p>
+          <i class="bi bi-people"></i>
+          ${reserva.huespedes} huésped(es)
+        </p>
+
+        <span class="badge-estado ${reserva.estado}">
+          ${reserva.estadoTexto || "Reserva"}
         </span>
+
       </div>
 
       <div class="acciones">
         ${accionesHtml}
       </div>
+
     </article>
   `;
 }
 
+
+// ======================================================
+// MOSTRAR RESERVAS
+// ======================================================
+
 function renderizarReservas() {
+
   if (!contenedorReservas) return;
 
-  const reservasFiltradas = listaReservas.filter((reserva) => {
-    return filtroActual === "todas" || reserva.estado === filtroActual;
-  });
 
-  if (reservasFiltradas.length === 0) {
-    contenedorReservas.innerHTML = "<p class='mensaje-vacio'>No se encontraron reservas en esta sección.</p>";
+  const filtradas =
+    filtroActual === "todas"
+      ? listaReservas
+      : listaReservas.filter(
+          reserva => reserva.estado === filtroActual
+        );
+
+
+  // Si no hay reservas
+  if (filtradas.length === 0) {
+
+    contenedorReservas.innerHTML = `
+      <div class="reservas-vacio">
+
+        <i class="bi bi-calendar-x"></i>
+
+        <p>
+          No hay reservas ${
+            filtroActual !== "todas"
+              ? "en esta categoría"
+              : "aún"
+          }.
+        </p>
+
+        <a 
+          href="catalogo.html" 
+          class="btn-reserve"
+        >
+          Buscar alojamientos
+        </a>
+
+      </div>
+    `;
+
     return;
   }
 
-  let htmlAcumulado = "";
-  reservasFiltradas.forEach((reserva) => {
-    htmlAcumulado += crearTarjetaReserva(reserva);
-  });
 
-  contenedorReservas.innerHTML = htmlAcumulado;
-  escucharEventosAcciones();
-}
+  // Crear tarjetas
+  contenedorReservas.innerHTML = filtradas
+    .map(crearTarjetaReserva)
+    .join("");
 
-async function cancelarReserva(idReserva) {
-  const confirmar = confirm("¿Seguro que querés cancelar esta reserva?");
 
-  if (confirmar) {
-    const reserva = listaReservas.find((r) => r.id === idReserva);
-    if (reserva) {
-      reserva.estado = "cancelado";
-      reserva.estadoTexto = "Cancelado";
+  // ====================================================
+  // BOTONES CANCELAR
+  // ====================================================
 
-      
-      const datosLocalStorage = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
-      const indexLocal = datosLocalStorage.findIndex((r) => r.id === idReserva);
-      if (indexLocal !== -1) {
-        datosLocalStorage[indexLocal].estado = "cancelado";
-        datosLocalStorage[indexLocal].estadoTexto = "Cancelado";
-        localStorage.setItem("alojamientosPublicados", JSON.stringify(datosLocalStorage));
-      }
-    }
-    renderizarReservas();
-  }
-}
+  document
+    .querySelectorAll(".btn-cancelar-reserva")
+    .forEach(btn => {
 
-function modificarReserva(idAlojamiento) {
-  window.location.href = `detalle.html?id=${idAlojamiento}`;
-}
+      btn.addEventListener("click", () => {
 
-function escucharEventosAcciones() {
-  const botonesModificar = document.querySelectorAll(".acciones .btn-modificar");
-  const botonesCancelar = document.querySelectorAll(".acciones .btn-cancelar");
+        if (
+          confirm(
+            "¿Seguro que querés cancelar esta reserva?"
+          )
+        ) {
 
-  botonesModificar.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const tarjeta = boton.closest(".reserva");
-      modificarReserva(tarjeta.dataset.alojamientoId);
+          const id = btn.dataset.id;
+
+          const reserva = listaReservas.find(
+            r => r.id === id
+          );
+
+
+          if (reserva) {
+
+            reserva.estado = "cancelado";
+            reserva.estadoTexto = "Cancelado";
+
+          }
+
+
+          renderizarReservas();
+        }
+
+      });
+
     });
-  });
 
-  botonesCancelar.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const tarjeta = boton.closest(".reserva");
-      cancelarReserva(tarjeta.dataset.id);
-    });
-  });
 }
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", (evento) => {
-    evento.preventDefault();
 
-    tabs.forEach((t) => t.classList.remove("activo"));
+// ======================================================
+// FILTROS
+// ======================================================
+
+tabs.forEach(tab => {
+
+  tab.addEventListener("click", e => {
+
+    e.preventDefault();
+
+
+    tabs.forEach(t =>
+      t.classList.remove("activo")
+    );
+
+
     tab.classList.add("activo");
 
-    filtroActual = tab.dataset.filtro;
+
+    filtroActual =
+      tab.dataset.filtro;
+
+
     renderizarReservas();
+
   });
+
 });
 
-async function obtenerReservas() {
+
+// ======================================================
+// CARGAR DATOS
+// ======================================================
+
+async function cargarReservas() {
+
   if (!contenedorReservas) return;
 
-  contenedorReservas.innerHTML = "<p class='mensaje-cargando'>Cargando reservas...</p>";
+
+  // -----------------------------
+  // Usuario activo
+  // -----------------------------
+
+  const usuario = obtenerUsuarioActivo();
+
+
+  if (
+    !usuario ||
+    usuario.rol === "anfitrion"
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return;
+  }
+
+
+  // -----------------------------
+  // Bienvenida
+  // -----------------------------
+
+  const elBienvenida =
+    document.querySelector(
+      "#bienvenida-usuario"
+    );
+
+
+  if (elBienvenida) {
+
+    elBienvenida.textContent =
+      usuario.nombre ||
+      usuario.email;
+
+  }
+
+
+  // -----------------------------
+  // Mensaje de carga
+  // -----------------------------
+
+  contenedorReservas.innerHTML = `
+    <p class="mensaje-cargando">
+      <i class="bi bi-arrow-repeat spin"></i>
+      Cargando reservas...
+    </p>
+  `;
+
 
   try {
-    const [respuestaReservas, respuestaCatalogo] = await Promise.all([
+
+    // Cargar ambos JSON al mismo tiempo
+    const [
+      respuestaReservas,
+      respuestaCatalogo
+    ] = await Promise.all([
+
       fetch("data/reservas.json"),
+
       fetch("data/catalogo.json")
+
     ]);
 
-    if (!respuestaReservas.ok || !respuestaCatalogo.ok) {
-      throw new Error("Error al consultar el servidor local");
+
+    if (
+      !respuestaReservas.ok ||
+      !respuestaCatalogo.ok
+    ) {
+
+      throw new Error(
+        "No se pudieron cargar los archivos JSON"
+      );
+
     }
 
-    const datosReservas = await respuestaReservas.json();
-    const datosCatalogo = await respuestaCatalogo.json();
 
-    const reservasCombinadas = datosReservas;
+    // Convertir respuestas a JSON
+    listaReservas =
+      await respuestaReservas.json();
 
-    // Unimos cada reserva con los datos de su alojamiento (titulo, imagen)
-    listaReservas = reservasCombinadas.map((reserva) => {
-      const alojamiento = datosCatalogo.find((a) => a.id === reserva.alojamientoId);
+    listaAlojamientos =
+      await respuestaCatalogo.json();
 
-      return {
-        ...reserva,
-        titulo: reserva.titulo || (alojamiento ? alojamiento.titulo : "Alojamiento no disponible"),
-        imagen: reserva.imagen || (alojamiento ? alojamiento.imagen : "")
-      };
-    });
 
+    console.log(
+      "Reservas cargadas:",
+      listaReservas
+    );
+
+    console.log(
+      "Alojamientos cargados:",
+      listaAlojamientos
+    );
+
+
+    // Mostrar reservas
     renderizarReservas();
-  } catch (error) {
-    console.error("Error al cargar JSON:", error);
-    contenedorReservas.innerHTML = "<p class='mensaje-error'>Ocurrió un error al cargar las reservas. Intente nuevamente más tarde.</p>";
+
+
+  } catch (err) {
+
+    console.error(
+      "Error al cargar reservas:",
+      err
+    );
+
+
+    contenedorReservas.innerHTML = `
+      <div class="reservas-vacio">
+
+        <i class="bi bi-exclamation-triangle"></i>
+
+        <p>
+          Error al cargar las reservas.
+        </p>
+
+      </div>
+    `;
+
   }
+
 }
 
-obtenerReservas();
+
+// ======================================================
+// INICIAR
+// ======================================================
+
+cargarReservas();

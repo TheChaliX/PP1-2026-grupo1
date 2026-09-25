@@ -1,45 +1,37 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis reservas</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis reservas — AlojAR</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
-
 <body class="reservas">
 
-    <header>
+  <div id="navbar-dinamica"></div>
 
-<nav class="navbar">
-    <a href="index.html">Inicio</a>
-    <a href="reservas.html">Mis reservas</a>
-    <a href="catalogo.html">Catálogo</a>
-    <a href="publicar-alojamiento.html">Publicar alojamiento</a>
-    <a href="login.html">Login</a>
-    <a href="mis-propiedades.html">Mis propiedades</a>
-    <a href="calendario.html">Calendario</a>
-    <a href="reservas-recibidas.html">Reservas Recibidas</a>
-    <a href="registro.html">Registro</a>
-</nav>
+  <header class="page-header">
+    <h1><i class="bi bi-calendar-check"></i> Mis reservas</h1>
+    <p>Hola, <strong id="bienvenida-usuario"></strong> — estas son tus reservas</p>
+  </header>
 
-        <h1>Mis reservas</h1>
-    </header>
-
-   <main class="reservas-main">
-    <nav class="tabs">
-        <a href="#" data-filtro="todas" class="activo">Todas</a>
-        <a href="#" data-filtro="confirmado">Confirmadas</a>
-        <a href="#" data-filtro="pendiente">Pendientes</a>
-        <a href="#" data-filtro="cancelado">Canceladas</a>
+  <main class="reservas-main">
+    <nav class="tabs" aria-label="Filtrar reservas">
+      <a href="#" data-filtro="todas" class="activo"><i class="bi bi-list-ul"></i> Todas</a>
+      <a href="#" data-filtro="confirmado"><i class="bi bi-check-circle"></i> Confirmadas</a>
+      <a href="#" data-filtro="pendiente"><i class="bi bi-hourglass-split"></i> Pendientes</a>
+      <a href="#" data-filtro="cancelado"><i class="bi bi-x-circle"></i> Canceladas</a>
     </nav>
 
-    <!-- Contenedor donde JS inyecta las tarjetas -->
     <div id="contenedor-reservas"></div>
-</main>
-    <script src="assets/js/reservas.js"></script>
+  </main>
+
+  <footer><small>Grupo 1 — PP1 2026</small></footer>
+
+  <script src="assets/js/sesion.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/reservas.js"></script>
 </body>
-
-
 </html>

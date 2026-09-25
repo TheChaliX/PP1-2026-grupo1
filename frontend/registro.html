@@ -1,69 +1,118 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear cuenta</title>
-    <!-- Ruta corregida a tu hoja de estilos -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear cuenta — AlojAR</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body class="registro">
 
-    <header>
-        <nav class="navbar">
-            <a href="index.html">Inicio</a>
-            <a href="catalogo.html">Catálogo</a>
-            <a href="reservas.html">Mis reservas</a>
-            <a href="login.html">Login</a>
-            <a href="mis-propiedades.html">Mis propiedades</a>
-            <a href="calendario.html">Calendario</a>
-            <a href="reservas-recibidas.html">Reservas recibidas</a>
-            <a href="registro.html">Registro</a>
-        </nav>
+  <div id="navbar-dinamica"></div>
 
-        <h1>Crear cuenta</h1>
-        <p>Registrate como huésped o como anfitrión</p>
-    </header>
+  <main class="auth-main auth-main--registro">
+    <div class="auth-header">
+      <div class="auth-logo"><i class="bi bi-house-heart-fill"></i></div>
+      <h1>Crear cuenta</h1>
+      <p>Registrate como huésped o como anfitrión</p>
+    </div>
 
-    <main class="registro-main">
-        <form id="registerForm" novalidate>
-            <label for="fullName">Nombre completo</label>
-            <input type="text" id="fullName" name="fullName" placeholder="Como en tu documento">
+    <form id="registerForm" novalidate>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="vos@ejemplo.com">
+      <div class="campo-grupo">
+        <label for="fullName"><i class="bi bi-person"></i> Nombre completo</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-person-fill input-icono"></i>
+          <input type="text" id="fullName" name="fullName" placeholder="Como en tu documento" autocomplete="name">
+        </div>
+        <span class="campo-error" id="err-nombre"></span>
+      </div>
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres">
+      <div class="campo-grupo">
+        <label for="email"><i class="bi bi-envelope"></i> Email</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-envelope-fill input-icono"></i>
+          <input type="email" id="email" name="email" placeholder="vos@ejemplo.com" autocomplete="email">
+        </div>
+        <span class="campo-error" id="err-email"></span>
+      </div>
 
-            <label for="confirmPassword">Confirmar contraseña</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repetí tu contraseña">
+      <div class="campo-grupo">
+        <label for="password"><i class="bi bi-lock"></i> Contraseña</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-lock-fill input-icono"></i>
+          <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+          <button type="button" class="btn-toggle-pass" data-target="password" aria-label="Mostrar contraseña" tabindex="-1">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <span class="campo-error" id="err-password"></span>
+      </div>
 
-            <fieldset class="rol-field">
-                <legend>¿Cómo querés operar?</legend>
+      <div class="campo-grupo">
+        <label for="confirmPassword"><i class="bi bi-lock-fill"></i> Confirmar contraseña</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-lock-fill input-icono"></i>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repetí tu contraseña" autocomplete="new-password">
+          <button type="button" class="btn-toggle-pass" data-target="confirmPassword" aria-label="Mostrar contraseña" tabindex="-1">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <span class="campo-error" id="err-confirmPassword"></span>
+      </div>
 
-                <label class="rol-opcion">
-                    <input type="radio" id="roleGuest" name="rol" value="huesped" checked>
-                    Huésped — Quiero reservar alojamientos
-                </label>
+      <fieldset class="rol-field">
+        <legend><i class="bi bi-person-badge"></i> ¿Cómo querés usar AlojAR?</legend>
 
-                <label class="rol-opcion">
-                    <input type="radio" id="roleHost" name="rol" value="anfitrion">
-                    Anfitrión — Quiero publicar mi alojamiento
-                </label>
-            </fieldset>
+        <label class="rol-opcion">
+          <input type="radio" id="roleGuest" name="rol" value="huesped" checked>
+          <div class="rol-card">
+            <i class="bi bi-backpack2-fill"></i>
+            <span class="rol-titulo">Huésped</span>
+            <span class="rol-desc">Quiero reservar alojamientos</span>
+          </div>
+        </label>
 
-            <!-- Mensaje de error / éxito cargado desde JS -->
-            <p id="mensajeError" class="mensaje-error"></p>
+        <label class="rol-opcion">
+          <input type="radio" id="roleHost" name="rol" value="anfitrion">
+          <div class="rol-card">
+            <i class="bi bi-house-door-fill"></i>
+            <span class="rol-titulo">Anfitrión</span>
+            <span class="rol-desc">Quiero publicar mi alojamiento</span>
+          </div>
+        </label>
+      </fieldset>
 
-            <div class="botones-registro">
-                <button type="submit" class="btn-crear-cuenta">Crear cuenta</button>
-            </div>
+      <button type="submit" class="btn-auth">
+        <i class="bi bi-person-check"></i> Crear cuenta
+      </button>
 
-            <p class="ya-tenes-cuenta">¿Ya tenés cuenta? <a href="login.html">Iniciar sesión</a></p>
-        </form>
-    </main>
+      <p class="auth-separador">¿Ya tenés cuenta? <a href="login.html">Iniciar sesión</a></p>
+    </form>
+  </main>
 
-    <script src="assets/js/registro.js"></script>
+  <footer><small>Grupo 1 — PP1 2026</small></footer>
+
+  <script src="assets/js/sesion.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    document.querySelectorAll(".btn-toggle-pass").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const targetId = this.dataset.target;
+        const input    = document.getElementById(targetId);
+        const icon     = this.querySelector("i");
+        if (input.type === "password") {
+          input.type = "text";
+          icon.className = "bi bi-eye-slash";
+        } else {
+          input.type = "password";
+          icon.className = "bi bi-eye";
+        }
+      });
+    });
+  </script>
+  <script src="assets/js/registro.js"></script>
 </body>
 </html>

@@ -1,100 +1,57 @@
-const formPublicar = document.querySelector("#formPublicar");
-const inputNombre = document.querySelector("#nombre");
-const inputDescripcion = document.querySelector("#descripcion");
-const inputUbicacion = document.querySelector("#ubicacion");
-const selectTipo = document.querySelector("#tipo");
-const inputPrecio = document.querySelector("#precioNoche");
-const inputHuespedes = document.querySelector("#huespedes");
-const inputHabitaciones = document.querySelector("#habitaciones");
-const inputCamas = document.querySelector("#camas");
-const inputImagen = document.querySelector('input[type="file"]');
-const mensajeFormulario = document.querySelector("#mensajeFormulario");
+﻿// publicar-alojamiento.js — Frontend Mockup PP1 2026
+const formPublicar      = document.querySelector("#formPublicar");
+const inputNombre       = document.querySelector("#nombre");
+const inputDescripcion  = document.querySelector("#descripcion");
+const inputUbicacion    = document.querySelector("#ubicacion");
+const selectTipo        = document.querySelector("#tipo");
+const inputPrecio       = document.querySelector("#precioNoche");
 
-let publicaciones = JSON.parse(localStorage.getItem("alojamientosPublicados")) || [];
-
-async function guardarAlojamiento(nuevoAlojamiento) {
-  publicaciones.push(nuevoAlojamiento);
-  localStorage.setItem("alojamientosPublicados", JSON.stringify(publicaciones));
+function limpiarErrores() {
+  document.querySelectorAll(".campo-error").forEach(el => el.textContent = "");
+  document.querySelectorAll(".input-invalido").forEach(el => el.classList.remove("input-invalido"));
 }
 
-// Función para leer la imagen seleccionada en Base64
-function leerImagenComoBase64(archivo) {
-  return new Promise((resolve) => {
-    if (!archivo) {
-      resolve("");
-      return;
-    }
-    const lector = new FileReader();
-    lector.onload = function (e) {
-      resolve(e.target.result);
-    };
-    lector.readAsDataURL(archivo);
-  });
+function marcarError(input, idError, mensaje) {
+  if (input) input.classList.add("input-invalido");
+  const errSpan = document.querySelector("#" + idError);
+  if (errSpan) errSpan.textContent = mensaje;
 }
 
 if (formPublicar) {
-  formPublicar.addEventListener("submit", async function (evento) {
-    evento.preventDefault();
+  formPublicar.addEventListener("submit", function (e) {
+    e.preventDefault();
+    limpiarErrores();
 
-    mensajeFormulario.textContent = "";
-    mensajeFormulario.style.color = "red";
+    let hayError = false;
 
-    const nombre = inputNombre.value.trim();
-    const descripcion = inputDescripcion.value.trim();
-    const ubicacion = inputUbicacion.value.trim();
-    const tipo = selectTipo.value;
-    const precio = Number(inputPrecio.value);
-    const huespedes = Number(inputHuespedes.value);
-    const habitaciones = Number(inputHabitaciones.value);
-    const camas = Number(inputCamas.value);
+    if (!inputNombre.value.trim()) {
+      marcarError(inputNombre, "err-nombre", "El nombre es obligatorio.");
+      hayError = true;
+    }
+    if (!inputDescripcion.value.trim()) {
+      marcarError(inputDescripcion, "err-descripcion", "Describí el alojamiento.");
+      hayError = true;
+    }
+    if (!inputUbicacion.value.trim()) {
+      marcarError(inputUbicacion, "err-ubicacion", "La ubicación es obligatoria.");
+      hayError = true;
+    }
+    if (!selectTipo.value) {
+      marcarError(selectTipo, "err-tipo", "Seleccioná el tipo de alojamiento.");
+      hayError = true;
+    }
+    if (!inputPrecio.value || Number(inputPrecio.value) <= 0) {
+      marcarError(inputPrecio, "err-precio", "El precio debe ser mayor a 0.");
+      hayError = true;
+    }
 
-    const checkboxesServicios = document.querySelectorAll('input[name="servicios"]:checked');
-    const serviciosSeleccionados = [];
-    checkboxesServicios.forEach((checkbox) => {
-      serviciosSeleccionados.push(checkbox.value);
-    });
-
-    if (!nombre || !descripcion || !ubicacion || !tipo) {
-      mensajeFormulario.textContent = "Por favor, completá todos los campos de texto y el tipo de alojamiento.";
+    if (hayError) {
+      mostrarModal("Hay campos con errores. Corregílos antes de publicar.", "error");
       return;
     }
 
-    if (precio <= 0 || huespedes <= 0 || habitaciones <= 0 || camas <= 0) {
-      mensajeFormulario.textContent = "Los valores numéricos de precio y capacidad deben ser mayores a cero.";
-      return;
-    }
-
-    // Lee el archivo si el usuario subió uno; si no, queda como cadena vacía ""
-    const archivoSeleccionado = inputImagen && inputImagen.files.length > 0 ? inputImagen.files[0] : null;
-    const imagenFinal = await leerImagenComoBase64(archivoSeleccionado);
-
-    const nuevoAlojamiento = {
-      id: "pub-" + Date.now(), 
-      titulo: nombre,
-      nombre: nombre,
-      descripcion: descripcion,
-      ubicacion: ubicacion,
-      tipo: tipo,
-      precioNoche: precio,
-      huespedes: huespedes,
-      habitaciones: habitaciones,
-      camas: camas,
-      servicios: serviciosSeleccionados,
-      imagen: imagenFinal, // Si no subió foto, almacena ""
-      fechas: "Disponibilidad inmediata",
-      estado: "confirmado",
-      estadoTexto: "Confirmado"
-    };
-
-    await guardarAlojamiento(nuevoAlojamiento);
-
-    mensajeFormulario.style.color = "green";
-    mensajeFormulario.textContent = "¡Alojamiento publicado y guardado con éxito! Redirigiendo al catálogo...";
-
+    mostrarModal("¡Alojamiento enviado para revisión! Redirigiendo...", "exito");
     formPublicar.reset();
-
-    setTimeout(() => {
-      window.location.href = "catalogo.html";
-    }, 1500);
+    setTimeout(() => { window.location.href = "mis-propiedades.html"; }, 1500);
   });
 }

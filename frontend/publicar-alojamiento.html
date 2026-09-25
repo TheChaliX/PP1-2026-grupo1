@@ -1,104 +1,141 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publicar alojamiento</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publicar alojamiento — AlojAR</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body class="publicar">
 
-    <main class="publicar-main">
-        <header>
-            <nav class="navbar">
-                <a href="index.html">Inicio</a>
-                <a href="catalogo.html">Catálogo</a>
-                <a href="reservas.html">Mis reservas</a>
-                <a href="login.html">Login</a>
-                <a href="mis-propiedades.html">Mis propiedades</a>
-                <a href="calendario.html">Calendario</a>
-                <a href="reservas-recibidas.html">Reservas recibidas</a>
-                <a href="registro.html">Registro</a>
-            </nav>
+  <div id="navbar-dinamica"></div>
 
-            <h1>Panel del anfitrión</h1>
-        </header>
+  <main class="publicar-main">
+    <header class="page-header">
+      <h1><i class="bi bi-plus-circle-fill"></i> Publicar alojamiento</h1>
+      <p>Completá los datos para que los huéspedes puedan encontrarte</p>
+    </header>
 
-        <form id="formPublicar" novalidate>
-            <label for="nombre">Nombre del alojamiento</label>
-            <input type="text" id="nombre" name="nombre">
+    <form id="formPublicar" class="form-publicar" novalidate>
+      <div class="campo-grupo">
+        <label for="nombre"><i class="bi bi-tag"></i> Nombre del alojamiento</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-house-door-fill input-icono"></i>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej: Cabaña del lago">
+        </div>
+        <span class="campo-error" id="err-nombre"></span>
+      </div>
 
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" rows="5"></textarea>
+      <div class="campo-grupo">
+        <label for="descripcion"><i class="bi bi-file-text"></i> Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="5" placeholder="Contá los detalles más atractivos de tu espacio..."></textarea>
+        <span class="campo-error" id="err-descripcion"></span>
+      </div>
 
-            <label for="ubicacion">Ubicación</label>
-            <input type="text" id="ubicacion" name="ubicacion">
+      <div class="campo-grupo">
+        <label for="ubicacion"><i class="bi bi-geo-alt"></i> Ubicación</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-geo-alt-fill input-icono"></i>
+          <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Villa Carlos Paz, Córdoba">
+        </div>
+        <span class="campo-error" id="err-ubicacion"></span>
+      </div>
 
-            <label for="tipo">Tipo de alojamiento</label>
-            <select id="tipo" name="tipo">
-                <option value="">Seleccione una opción</option>
-                <option value="Cabaña">Cabaña</option>
-                <option value="Casa">Casa</option>
-                <option value="Departamento">Departamento</option>
-                <option value="Hotel">Hotel</option>
-            </select>
+      <div class="campo-grupo">
+        <label for="tipo"><i class="bi bi-building"></i> Tipo de alojamiento</label>
+        <select id="tipo" name="tipo">
+          <option value="">Seleccione una opción</option>
+          <option value="Cabaña">Cabaña</option>
+          <option value="Casa">Casa</option>
+          <option value="Departamento">Departamento</option>
+          <option value="Hotel">Hotel</option>
+        </select>
+        <span class="campo-error" id="err-tipo"></span>
+      </div>
 
-            <fieldset>
-                <legend>Precio y capacidad</legend>
-                <div class="fila-datos">
-                    <div>
-                        <label for="precioNoche">Precio/Noche ($)</label>
-                        <input type="number" id="precioNoche" name="precioNoche" min="0">
-                    </div>
-
-                    <div>
-                        <label for="huespedes">Huéspedes</label>
-                        <input type="number" id="huespedes" name="huespedes" min="1">
-                    </div>
-
-                    <div>
-                        <label for="habitaciones">Habitaciones</label>
-                        <input type="number" id="habitaciones" name="habitaciones" min="1">
-                    </div>
-
-                    <div>
-                        <label for="camas">Camas</label>
-                        <input type="number" id="camas" name="camas" min="1">
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Servicios</legend>
-                <label>
-                    <input type="checkbox" name="servicios" value="Wi-Fi"> Wi-Fi
-                </label>
-                <label>
-                    <input type="checkbox" name="servicios" value="Cocina"> Cocina
-                </label>
-                <label>
-                    <input type="checkbox" name="servicios" value="Pileta"> Pileta
-                </label>
-                <label>
-                    <input type="checkbox" name="servicios" value="Estacionamiento"> Estacionamiento
-                </label>
-            </fieldset>
-
-            <label for="fotos">Cargar imágenes</label>
-            <input type="file" id="fotos" name="fotos" accept="image/*">
-
-            <!-- Contenedor para mostrar mensajes en pantalla sin alert -->
-            <p id="mensajeFormulario" class="mensaje-error"></p>
-
-            <div class="botones-publicar">
-                <button type="submit">Publicar</button>
+      <fieldset class="campo-fieldset">
+        <legend><i class="bi bi-info-square"></i> Precio y capacidad</legend>
+        <div class="fila-datos">
+          <div class="campo-grupo">
+            <label for="precioNoche">Precio/Noche ($)</label>
+            <div class="input-icono-wrapper">
+              <i class="bi bi-currency-dollar input-icono"></i>
+              <input type="number" id="precioNoche" name="precioNoche" min="0">
             </div>
-        </form>
-    </main>
-    <footer>
-        <small>Grupo 1 — PP1 2026</small>
-    </footer>
+            <span class="campo-error" id="err-precio"></span>
+          </div>
 
-    <script src="assets/js/publicar-alojamiento.js"></script>
+          <div class="campo-grupo">
+            <label for="huespedes">Huéspedes</label>
+            <div class="input-icono-wrapper">
+              <i class="bi bi-people-fill input-icono"></i>
+              <input type="number" id="huespedes" name="huespedes" min="1">
+            </div>
+            <span class="campo-error" id="err-huespedes"></span>
+          </div>
+
+          <div class="campo-grupo">
+            <label for="habitaciones">Habitaciones</label>
+            <div class="input-icono-wrapper">
+              <i class="bi bi-door-open-fill input-icono"></i>
+              <input type="number" id="habitaciones" name="habitaciones" min="1">
+            </div>
+            <span class="campo-error" id="err-habitaciones"></span>
+          </div>
+
+          <div class="campo-grupo">
+            <label for="camas">Camas</label>
+            <div class="input-icono-wrapper">
+              <i class="bi bi-moon-stars-fill input-icono"></i>
+              <input type="number" id="camas" name="camas" min="1">
+            </div>
+            <span class="campo-error" id="err-camas"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="campo-fieldset filtro-servicios">
+        <legend><i class="bi bi-star"></i> Servicios</legend>
+        <div class="servicios-grid">
+          <label class="servicio-check">
+            <input type="checkbox" name="servicios" value="Wi-Fi">
+            <span><i class="bi bi-wifi"></i> Wi-Fi</span>
+          </label>
+          <label class="servicio-check">
+            <input type="checkbox" name="servicios" value="Cocina">
+            <span><i class="bi bi-cup-hot"></i> Cocina</span>
+          </label>
+          <label class="servicio-check">
+            <input type="checkbox" name="servicios" value="Pileta">
+            <span><i class="bi bi-water"></i> Pileta</span>
+          </label>
+          <label class="servicio-check">
+            <input type="checkbox" name="servicios" value="Estacionamiento">
+            <span><i class="bi bi-p-circle"></i> Estacionamiento</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="campo-grupo">
+        <label for="fotos"><i class="bi bi-camera"></i> Cargar imágenes</label>
+        <input type="file" id="fotos" name="fotos" accept="image/*">
+      </div>
+
+      <div class="botones-publicar mt-3">
+        <button type="submit" class="btn-reserve"><i class="bi bi-cloud-arrow-up"></i> Publicar alojamiento</button>
+      </div>
+    </form>
+  </main>
+
+  <footer><small>Grupo 1 — PP1 2026</small></footer>
+
+  <script src="assets/js/sesion.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/publicar-alojamiento.js"></script>
+  <script>
+    requerirSesion("anfitrion");
+  </script>
 </body>
 </html>
