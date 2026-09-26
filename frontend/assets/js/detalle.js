@@ -3,7 +3,6 @@ const parametrosURL  = new URLSearchParams(window.location.search);
 const idAlojamiento  = parametrosURL.get("id");
 
 const elNombre         = document.querySelector("#nombreAlojamiento");
-const elImagen         = document.querySelector("#imagenAlojamiento");
 const elDescripcion    = document.querySelector("#descripcionTexto");
 const elUbicacion      = document.querySelector("#ubicacion");
 const elPrecio         = document.querySelector("#precio");
@@ -69,10 +68,94 @@ async function cargarDetalle() {
     if (elCapacidad)   elCapacidad.textContent = encontrado.capacidad || 1;
     if (elAnfitrion)   elAnfitrion.textContent = encontrado.anfitrion || "Anfitrión";
 
-    if (elImagen && encontrado.imagen) {
-      elImagen.src = encontrado.imagen;
-      elImagen.style.display = "block";
+    const galeria = document.querySelector(".galeria");
+
+if (galeria) {
+
+    // Si el alojamiento todavía no tiene cargado el array "imagenes"
+    // (galería completa), usamos su foto de portada ("imagen") como
+    // única foto en vez de dejar la galería vacía.
+    const todasLasImagenes = (encontrado.imagenes && encontrado.imagenes.length)
+        ? encontrado.imagenes
+        : (encontrado.imagen ? [encontrado.imagen] : []);
+
+    const imagenes = todasLasImagenes.slice(0, 5);
+    const fotosRestantes = todasLasImagenes.length - imagenes.length;
+
+    galeria.innerHTML = "";
+    galeria.className = "galeria cant-" + Math.max(imagenes.length, 1);
+
+    imagenes.forEach((imagen, index) => {
+
+        const img = document.createElement("img");
+
+        img.src = imagen;
+        img.alt = `${encontrado.titulo || "Alojamiento"} - foto ${index + 1}`;
+
+        img.className = "imagen-galeria";
+
+        if (index === 0) {
+            img.loading = "eager";
+        } else {
+            img.loading = "lazy";
+        }
+
+        img.addEventListener("error", () => {
+            console.error("No se pudo cargar la imagen:", imagen);
+            img.style.display = "none";
+        });
+
+        img.addEventListener("click", () => {
+
+            const visor = document.createElement("div");
+
+            visor.className = "visor-imagen";
+
+            visor.innerHTML = `
+                <button class="cerrar-visor">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <img 
+                    src="${imagen}" 
+                    alt="${img.alt}"
+                >
+            `;
+
+            document.body.appendChild(visor);
+
+            visor.addEventListener("click", (e) => {
+
+                if (
+                    e.target === visor ||
+                    e.target.closest(".cerrar-visor")
+                ) {
+                    visor.remove();
+                }
+
+            });
+
+        });
+
+        galeria.appendChild(img);
+    });
+
+    // Si hay más de 5 fotos, mostramos un "+N" sobre la última
+    // miniatura (en la misma celda de la grilla) en vez de agregar
+    // más casilleros.
+    if (fotosRestantes > 0) {
+        const ultimaImagen = galeria.lastElementChild;
+        const contadorExtra = document.createElement("div");
+        contadorExtra.className = "galeria-mas-fotos";
+        contadorExtra.textContent = `+${fotosRestantes} fotos`;
+
+        const estiloUltima = getComputedStyle(ultimaImagen);
+        contadorExtra.style.gridColumn = estiloUltima.gridColumn;
+        contadorExtra.style.gridRow = estiloUltima.gridRow;
+
+        galeria.appendChild(contadorExtra);
     }
+}
 
     crearRating(encontrado);
     crearListaServicios(encontrado.servicios);
@@ -95,11 +178,127 @@ async function cargarDetalle() {
   }
 }
 
+const inputEntrada = document.querySelector("#entrada");
+const inputSalida = document.querySelector("#salida");
+const inputHuespedes = document.querySelector("#huespedes");
+const mensajeReserva = document.querySelector("#mensajeReserva");
+const errorEntrada = document.querySelector("#err-entrada");
+const errorSalida = document.querySelector("#err-salida");
+const errorHuespedes = document.querySelector("#err-huespedes");
+
+
+// La fecha de salida no puede ser anterior ni igual a la entrada
+if (inputEntrada && inputSalida) {
+  inputEntrada.addEventListener("change", function () {
+    if (inputEntrada.value) {
+      inputSalida.min = inputEntrada.value;
+
+      // Si la salida ya elegida es inválida, la limpiamos
+      if (inputSalida.value && inputSalida.value <= inputEntrada.value) {
+        inputSalida.value = "";
+      }
+    }
+  });
+}
+
+
 if (formReserva && usuario && usuario.rol === "huesped") {
+
   formReserva.addEventListener("submit", function (e) {
     e.preventDefault();
-    mostrarModal("¡Reserva solicitada! Redirigiendo a Mis Reservas...", "exito");
-    setTimeout(() => { window.location.href = "reservas.html"; }, 1500);
+
+    // Limpiar mensajes anteriores
+    if (mensajeReserva) mensajeReserva.textContent = "";
+    if (errorEntrada) errorEntrada.textContent = "";
+    if (errorSalida) errorSalida.textContent = "";
+    if (errorHuespedes) errorHuespedes.textContent = "";
+
+    const fechaEntrada = inputEntrada.value;
+    const fechaSalida = inputSalida.value;
+    const cantidadHuespedes = Number(inputHuespedes.value);
+
+    let hayError = false;
+
+
+    // ==========================================
+    // VALIDAR FECHA DE ENTRADA
+    // ==========================================
+
+    if (!fechaEntrada) {
+      if (errorEntrada) {
+        errorEntrada.textContent = "Seleccioná una fecha de entrada.";
+      }
+
+      hayError = true;
+    }
+
+
+    // ==========================================
+    // VALIDAR FECHA DE SALIDA
+    // ==========================================
+
+    if (!fechaSalida) {
+      if (errorSalida) {
+        errorSalida.textContent = "Seleccioná una fecha de salida.";
+      }
+
+      hayError = true;
+    }
+
+
+    // ==========================================
+    // VALIDAR ORDEN DE LAS FECHAS
+    // ==========================================
+
+    if (
+      fechaEntrada &&
+      fechaSalida &&
+      fechaSalida <= fechaEntrada
+    ) {
+      if (errorSalida) {
+        errorSalida.textContent =
+          "La fecha de salida debe ser posterior a la fecha de entrada.";
+      }
+
+      hayError = true;
+    }
+
+
+    // ==========================================
+    // VALIDAR CANTIDAD DE HUÉSPEDES
+    // ==========================================
+
+    if (!cantidadHuespedes || cantidadHuespedes < 1) {
+      if (errorHuespedes) {
+        errorHuespedes.textContent =
+          "Ingresá una cantidad válida de huéspedes.";
+      }
+
+      hayError = true;
+    }
+
+
+    // ==========================================
+    // SI HAY ERROR, NO SE REALIZA LA RESERVA
+    // ==========================================
+
+    if (hayError) {
+      return;
+    }
+
+
+    // ==========================================
+    // RESERVA CORRECTA
+    // ==========================================
+
+    mostrarModal(
+      "¡Reserva solicitada! Redirigiendo a Mis Reservas...",
+      "exito"
+    );
+
+    setTimeout(() => {
+      window.location.href = "reservas.html";
+    }, 1500);
   });
 }
 

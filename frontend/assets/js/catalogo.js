@@ -135,8 +135,9 @@ async function cargarCatalogo() {
       nombre:       item.titulo || item.nombre,
       ubicacion:    item.ubicacion,
       precioNoche:  item.precioNoche,
-      imagen:       item.imagen,
-      calificacion: item.calificacion || null,
+     imagen: item.imagen,
+imagenes: item.imagenes || [item.imagen],
+calificacion: item.calificacion || null,
       resenas:      item.resenas || 0,
       servicios:    item.servicios || [],
       destacado:    item.destacado || null

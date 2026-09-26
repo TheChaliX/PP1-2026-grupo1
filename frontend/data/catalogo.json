@@ -1,24 +1,42 @@
-﻿[
-  {
-    "id": "cordoba",
-    "titulo": "Casa en las montañas",
-    "ubicacion": "Córdoba Capital",
-    "precioNoche": 45000,
-    "imagen": "assets/img/img-cordoba.jpg",
-    "descripcion": "Refugio perfecto en las sierras cordobesas. Despertá con el canto de los pájaros y disfrutá de atardeceres únicos desde la galería.",
-    "capacidad": 4,
-    "anfitrion": "Martín y Sofía",
-    "calificacion": 4.8,
-    "resenas": 132,
-    "servicios": ["Wi-Fi", "Estacionamiento", "Parrilla", "Vista panorámica"],
-    "destacado": "top"
-  },
+﻿[{
+  "id": "cordoba",
+  "titulo": "Casa en las montañas",
+  "ubicacion": "Córdoba Capital",
+  "precioNoche": 45000,
+  "imagen": "assets/img/img-cordoba.jpg",
+  "imagenes": [
+    "assets/img/img-cordoba.jpg",
+    "assets/img/cordoba-living.jpg",
+    "assets/img/cordoba-habitacion.jpg",
+    "assets/img/cordoba-cocina.jpg",
+    "assets/img/cordoba-comedor.jpg"
+  ],
+  "descripcion": "Refugio perfecto en las sierras cordobesas. Despertá con el canto de los pájaros y disfrutá de atardeceres únicos desde la galería.",
+  "capacidad": 4,
+  "anfitrion": "Martín y Sofía",
+  "calificacion": 4.8,
+  "resenas": 132,
+  "servicios": [
+    "Wi-Fi",
+    "Estacionamiento",
+    "Parrilla",
+    "Vista panorámica"
+  ],
+  "destacado": "top"
+},
   {
     "id": "villacp",
     "titulo": "Cabaña con pileta",
     "ubicacion": "Villa Carlos Paz",
     "precioNoche": 70000,
-    "imagen": "assets/img/img-villacp.webp",
+    "imagen": "assets/img/cabañaconpileta.jpg",
+     "imagenes": [
+    "assets/img/cabañaconpileta.jpg",
+    "assets/img/living-pileta.jpg",
+    "assets/img/habitacion-pileta.jpg",
+    "assets/img/cocina-pileta.jpg",
+    "assets/img/comedor-pileta.jpg"
+  ],
     "descripcion": "Exclusiva cabaña a minutos del centro, rodeada de verde. Ideal para relajarse en la pileta privada con vistas al lago San Roque.",
     "capacidad": 6,
     "anfitrion": "Valeria",
@@ -33,6 +51,13 @@
     "ubicacion": "Santa Fe",
     "precioNoche": 78000,
     "imagen": "assets/img/img-santafe.jpg",
+    "imagenes": [
+    "assets/img/img-santafe.jpg",
+    "assets/img/santafe-living.jpg",
+    "assets/img/santafe-habitacion.jpg",
+    "assets/img/santafe-cocina.jpg",
+    "assets/img/santafe-baño.jpg"
+  ],
     "descripcion": "Amplio parque arbolado, quincho techado y pileta enorme. El lugar definitivo para desconectar el fin de semana en familia.",
     "capacidad": 8,
     "anfitrion": "Esteban",
@@ -46,7 +71,14 @@
     "titulo": "Departamento con vista al río",
     "ubicacion": "Rosario",
     "precioNoche": 55000,
-    "imagen": "assets/img/img-rosario.avif",
+    "imagen": "assets/img/departamento.jpg",
+    "imagenes": [
+    "assets/img/departamento.jpg",
+    "assets/img/departamento-living.jpg",
+    "assets/img/departamento-habitacion.jpg",
+    "assets/img/departamento-cocina.jpg",
+    "assets/img/departamento-baño.jpg"
+  ],
     "descripcion": "Moderno loft en pleno centro con balcón aterrazado mirando al río Paraná. Cerca de los mejores bares y restaurantes de la ciudad.",
     "capacidad": 3,
     "anfitrion": "Lucía",
@@ -60,7 +92,14 @@
     "titulo": "Cabaña frente al lago",
     "ubicacion": "Bariloche",
     "precioNoche": 85000,
-    "imagen": "assets/img/bariloche.jpg",
+    "imagen": "assets/img/cabañalago.jpg",
+    "imagenes": [
+      "assets/img/cabañalago.jpg",
+      "assets/img/cabaña-living.jpg",
+      "assets/img/cabaña-habitacion.jpg",
+      "assets/img/cabaña-comedor.jpg",
+      "assets/img/cabaña-baño.jpg"
+    ],
     "descripcion": "Cálida cabaña patagónica construida en madera y piedra. Bajada directa a la playa del lago Nahuel Huapi y estufa a leña.",
     "capacidad": 5,
     "anfitrion": "Familia Rossi",
@@ -74,7 +113,14 @@
     "titulo": "Chalet en los viñedos",
     "ubicacion": "Mendoza",
     "precioNoche": 65000,
-    "imagen": "assets/img/mendoza.avif",
+    "imagen": "assets/img/chalet.jpg",
+    "imagenes": [
+      "assets/img/chalet.jpg",
+      "assets/img/chalet-living.jpg",
+      "assets/img/chalet-habitacion.jpg",
+      "assets/img/chalet-comedor.jpg",
+      "assets/img/chalet-baño.jpg"
+    ],
     "descripcion": "Rodeado de cepas de Malbec, este chalet ofrece una experiencia vitivinícola completa. Incluye degustación de bienvenida para los huéspedes.",
     "capacidad": 4,
     "anfitrion": "Bodega Los Álamos",
@@ -88,7 +134,14 @@
     "titulo": "Cabaña colonial",
     "ubicacion": "Salta",
     "precioNoche": 50000,
-    "imagen": "assets/img/salta.jfif",
+    "imagen": "assets/img/colonial.jpg",
+    "imagenes": [
+      "assets/img/colonial.jpg",
+      "assets/img/colonial-living.jpg",
+      "assets/img/colonial-habitacion.jpg",
+      "assets/img/colonial-cocina.jpg",
+      "assets/img/colonial-patio.jpg"
+    ],
     "descripcion": "Alojamiento con arquitectura tradicional salteña a metros de las principales peñas folclóricas. Sentí el verdadero espíritu del norte.",
     "capacidad": 2,
     "anfitrion": "Doña Rosa",
@@ -102,7 +155,14 @@
     "titulo": "Departamento dúplex playa",
     "ubicacion": "Mar del Plata",
     "precioNoche": 72000,
-    "imagen": "assets/img/mardelplata.jpg",
+    "imagen": "assets/img/duplex.jpg",
+    "imagenes": [
+      "assets/img/duplex.jpg",
+      "assets/img/duplex-habitacion.jpg",
+      "assets/img/duplex-cocina.jpg",
+      "assets/img/duplex-baño.jpg",
+      "assets/img/duplex-comedor.jpg"
+    ],
     "descripcion": "Dúplex luminoso y súper moderno a solo dos cuadras del mar. Balcón terraza equipado para disfrutar las noches de verano al aire libre.",
     "capacidad": 6,
     "anfitrion": "Gastón",
