@@ -6,6 +6,22 @@
   <title>Mi perfil — AlojAR</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    /* Override del main genérico para perfil */
+    body.perfil {
+      display: block;
+      min-height: 100vh;
+      background: var(--blanco-arena);
+    }
+    body.perfil main {
+      width: min(100% - 40px, 660px);
+      margin: 30px auto 60px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+  </style>
 </head>
 <body class="perfil">
 
@@ -16,47 +32,61 @@
     <p>Datos de tu cuenta</p>
   </header>
 
-  <main class="perfil-main">
+  <main>
     <section class="perfil-card">
       <h2><i class="bi bi-person-lines-fill"></i> Datos de la cuenta</h2>
-      <p class="text-muted mb-4">Actualizá tu información personal y de seguridad.</p>
-      
-      <form id="formPerfil">
+      <p style="color: var(--gris-texto); margin-bottom: 24px; font-size: 0.95rem;">
+        Actualizá tu información personal. Si no querés cambiar la contraseña, dejá esos campos en blanco.
+      </p>
+
+      <form id="formPerfil" novalidate>
+
         <div class="campo-grupo">
           <label for="nombre">Nombre completo</label>
           <div class="input-icono-wrapper">
             <i class="bi bi-person-fill input-icono"></i>
-            <input type="text" id="nombre" name="nombre" value="" required>
+            <input type="text" id="nombre" name="nombre" autocomplete="name">
           </div>
+          <span class="campo-error" id="err-nombre"></span>
         </div>
 
         <div class="campo-grupo">
           <label for="email">Correo electrónico</label>
           <div class="input-icono-wrapper">
             <i class="bi bi-envelope-fill input-icono"></i>
-            <input type="email" id="email" name="email" value="" readonly style="background-color: #f5f5f5; cursor: not-allowed;">
+            <input type="email" id="email" name="email" readonly style="background:#f5f5f5; cursor:not-allowed;">
           </div>
+          <small style="color:var(--gris-texto); font-size:0.78rem; margin-top:4px; display:block;">
+            El email no puede modificarse desde aquí.
+          </small>
         </div>
 
-        <h3 class="mt-4 mb-3" style="font-size: 1.1rem;"><i class="bi bi-shield-lock"></i> Seguridad</h3>
-        
+        <div class="perfil-divider"><span><i class="bi bi-shield-lock"></i> Cambiar contraseña</span></div>
+
         <div class="campo-grupo">
           <label for="password">Nueva contraseña</label>
           <div class="input-icono-wrapper">
             <i class="bi bi-key-fill input-icono"></i>
-            <input type="password" id="password" name="password" placeholder="Ingresá una nueva contraseña">
+            <input type="password" id="password" name="password" placeholder="Dejá vacío para no cambiarla" autocomplete="new-password">
+            <button type="button" class="btn-toggle-pass" data-target="password" tabindex="-1"><i class="bi bi-eye"></i></button>
           </div>
+          <span class="campo-error" id="err-password"></span>
         </div>
 
         <div class="campo-grupo">
           <label for="password-confirm">Confirmar nueva contraseña</label>
           <div class="input-icono-wrapper">
             <i class="bi bi-key-fill input-icono"></i>
-            <input type="password" id="password-confirm" name="password-confirm" placeholder="Repetí la nueva contraseña">
+            <input type="password" id="password-confirm" name="password-confirm" placeholder="Repetí la nueva contraseña" autocomplete="new-password">
+            <button type="button" class="btn-toggle-pass" data-target="password-confirm" tabindex="-1"><i class="bi bi-eye"></i></button>
           </div>
+          <span class="campo-error" id="err-password-confirm"></span>
         </div>
 
-        <button type="button" class="btn-reserve mt-3" onclick="mostrarModal('Información guardada con éxito', 'exito')"><i class="bi bi-check2-circle"></i> Guardar cambios</button>
+        <button type="submit" class="btn-reserve" style="margin-top: 24px; width: 100%;">
+          <i class="bi bi-check2-circle"></i> Guardar cambios
+        </button>
+
       </form>
     </section>
   </main>
@@ -67,11 +97,15 @@
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
   <script>
-    // Llenar datos
-    const usuario = requerirSesion();
-    if (usuario) {
-      document.getElementById('email').value = usuario.email;
-    }
+    document.querySelectorAll(".btn-toggle-pass").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const input = document.getElementById(this.dataset.target);
+        const icon  = this.querySelector("i");
+        input.type  = input.type === "password" ? "text" : "password";
+        icon.className = input.type === "password" ? "bi bi-eye" : "bi bi-eye-slash";
+      });
+    });
   </script>
+  <script src="assets/js/perfil.js"></script>
 </body>
 </html>

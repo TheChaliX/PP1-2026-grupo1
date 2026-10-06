@@ -1,58 +1,58 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar acceso</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar contraseña — AlojAR</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
-
 <body class="login">
 
-    <header>
+  <div id="navbar-dinamica"></div>
 
-        <h1>Sistema de reservas</h1>
+  <main class="auth-main">
+    <div class="auth-header">
+      <div class="auth-logo"><i class="bi bi-envelope-open-heart-fill"></i></div>
+      <h1>Recuperar contraseña</h1>
+      <p>Ingresá tu email y te enviaremos las instrucciones</p>
+    </div>
 
-        <p>Recuperación de acceso</p>
+    <!-- Paso 1: ingresar email -->
+    <form id="formRecuperar" novalidate>
+      <div class="campo-grupo">
+        <label for="email"><i class="bi bi-envelope"></i> Email de tu cuenta</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-envelope-fill input-icono"></i>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email">
+        </div>
+        <span class="campo-error" id="err-email"></span>
+      </div>
 
-    </header>
+      <button type="submit" class="btn-auth">
+        <i class="bi bi-send-fill"></i> Enviar instrucciones
+      </button>
+    </form>
 
-    <main>
+    <!-- Paso 2: mensaje de éxito (oculto hasta enviar) -->
+    <div id="mensajeEnviado" class="recuperar-exito" style="display: none;">
+      <div class="recuperar-exito-icono"><i class="bi bi-check-circle-fill"></i></div>
+      <h2>¡Correo enviado!</h2>
+      <p>Si existe una cuenta con ese email, recibirás un correo con el enlace para restablecer tu contraseña en los próximos minutos.</p>
+      <p style="font-size: 0.85rem; color: var(--gris-texto);">Revisá también tu carpeta de spam.</p>
+      <a href="login.html" class="btn-reserve" style="margin-top: 20px; display: inline-flex;">
+        <i class="bi bi-arrow-left"></i> Volver al inicio de sesión
+      </a>
+    </div>
 
-        <form>
-            <p>
-                Ingresá tu correo electrónico y te enviaremos
-                instrucciones para recuperar el acceso.
-            </p>
+    <p class="auth-separador"><a href="login.html"><i class="bi bi-arrow-left"></i> Volver al login</a></p>
+  </main>
 
-            <label for="email">
-                Correo electrónico
-            </label>
+  <footer><small>Grupo 1 — PP1 2026</small></footer>
 
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Ingresa tu correo"
-                required
-            >
-
-            <button type="submit">
-                Recuperar acceso
-            </button>
-
-            <a href="login.html">
-                Volver al inicio de sesión
-            </a>
-
-        </form>
-
-    </main>
-    <footer>
-    <small>Grupo 1 — PP1 2026</small>
-</footer>
-
+  <script src="assets/js/sesion.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/recuperar.js"></script>
 </body>
-
 </html>

@@ -12,45 +12,38 @@
   <div id="navbar-dinamica"></div>
 
   <header class="page-header">
-    <h1><i class="bi bi-inbox-fill"></i> Panel del anfitrión</h1>
-    <p>Reservas recibidas</p>
+    <h1><i class="bi bi-inbox-fill"></i> Reservas recibidas</h1>
+    <p>Gestioná las solicitudes de tus huéspedes</p>
   </header>
 
   <main class="reservas-recibidas-main">
-    <h2><i class="bi bi-list-check"></i> Próximos huéspedes</h2>
 
-    <div class="filtro">
-      <label for="propiedad"><i class="bi bi-house"></i> Filtrar por propiedad</label>
-      <select id="propiedad" class="input-select">
-          <option>Todas</option>
-          <option>Casa en las montañas</option>
-          <option>Cabaña con pileta</option>
-      </select>
+    <div class="filtros-recibidas">
+      <div class="filtro-item">
+        <label for="filtro-texto"><i class="bi bi-search"></i> Buscar huésped</label>
+        <input type="text" id="filtro-texto" placeholder="Nombre del huésped...">
+      </div>
+      <div class="filtro-item">
+        <label for="filtro-propiedad"><i class="bi bi-house"></i> Propiedad</label>
+        <select id="filtro-propiedad">
+          <option value="todas">Todas las propiedades</option>
+          <option value="casa-montanas">Casa en las montañas</option>
+          <option value="cabana-pileta">Cabaña con pileta</option>
+        </select>
+      </div>
+      <div class="filtro-item">
+        <label for="filtro-estado"><i class="bi bi-funnel"></i> Estado</label>
+        <select id="filtro-estado">
+          <option value="todos">Todos los estados</option>
+          <option value="confirmado">Confirmadas</option>
+          <option value="pendiente">Pendientes</option>
+          <option value="cancelado">Canceladas / Rechazadas</option>
+        </select>
+      </div>
     </div>
 
-    <article class="reserva-recibida">
-        <div class="info-reserva">
-            <h3><i class="bi bi-geo-alt-fill text-danger"></i> Casa en las montañas</h3>
-            <p><strong><i class="bi bi-person"></i> Huésped:</strong> Juan Pérez</p>
-            <p><strong><i class="bi bi-calendar"></i> Fechas:</strong> 15/07/2026 al 20/07/2026</p>
-            <p><strong><i class="bi bi-people"></i> Cantidad:</strong> 4 huéspedes</p>
-            <p><strong><i class="bi bi-info-circle"></i> Estado:</strong> <span class="badge-estado confirmado">Confirmada</span></p>
-            <p class="reserva-solicitud"><i class="bi bi-chat-left-text"></i> <em>Check-in después de las 22:00</em></p>
-        </div>
-        <img src="assets/img/img-cordoba.jpg" alt="casa en las montañas">
-    </article>
+    <div id="contenedor-reservas-recibidas"></div>
 
-    <article class="reserva-recibida">
-        <div class="info-reserva">
-            <h3><i class="bi bi-geo-alt-fill text-danger"></i> Cabaña con pileta</h3>
-            <p><strong><i class="bi bi-person"></i> Huésped:</strong> María Gómez</p>
-            <p><strong><i class="bi bi-calendar"></i> Fechas:</strong> 10/08/2026 al 15/08/2026</p>
-            <p><strong><i class="bi bi-people"></i> Cantidad:</strong> 2 huéspedes</p>
-            <p><strong><i class="bi bi-info-circle"></i> Estado:</strong> <span class="badge-estado confirmado">Confirmada</span></p>
-            <p class="reserva-solicitud"><i class="bi bi-chat-left-text"></i> <em>Cuna para bebé</em></p>
-        </div>
-        <img src="assets/img/img-villacp.webp" alt="cabaña con pileta">
-    </article>
   </main>
 
   <footer><small>Grupo 1 — PP1 2026</small></footer>
@@ -58,9 +51,6 @@
   <script src="assets/js/sesion.js"></script>
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
-  <script>
-    // Proteger ruta
-    requerirSesion("anfitrion");
-  </script>
+  <script src="assets/js/reservas-recibidas.js"></script>
 </body>
 </html>

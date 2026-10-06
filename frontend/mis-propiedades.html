@@ -18,35 +18,48 @@
       <p>Administrá tus propiedades publicadas</p>
     </header>
 
+    <div class="propiedades-acciones-top">
+      <a href="publicar-alojamiento.html" class="btn-reserve">
+        <i class="bi bi-plus-circle"></i> Publicar nueva propiedad
+      </a>
+    </div>
+
     <section class="lista-propiedades" id="listaPropiedadesAnfitrion">
-      <!-- Carga inicial hardcodeada de ejemplo, en una versión real esto se carga con JS -->
-      <article class="propiedad-card shadow-sm">
+
+      <article class="propiedad-card">
         <div class="propiedad-foto">
-            <img src="assets/img/img-cordoba.jpg" alt="Casa en las montañas">
+          <img src="assets/img/img-cordoba.jpg" alt="Casa en las montañas">
         </div>
         <div class="propiedad-info">
-          <h2>Casa en las montañas</h2>
-          <span class="badge estado publicada">Publicada</span>
+          <div class="propiedad-header">
+            <h2>Casa en las montañas</h2>
+            <span class="badge-estado confirmado">Publicada</span>
+          </div>
+          <p class="propiedad-meta"><i class="bi bi-geo-alt"></i> Córdoba Capital &nbsp;·&nbsp; <i class="bi bi-currency-dollar"></i> $45.000 / noche &nbsp;·&nbsp; <i class="bi bi-people"></i> Hasta 4 huéspedes</p>
           <div class="acciones-propiedad">
-              <a href="#editar-1" class="btn-editar"><i class="bi bi-pencil-square"></i> Editar</a>
-              <button type="button" class="btn-retirar"><i class="bi bi-x-circle"></i> Retirar</button>
+            <a href="publicar-alojamiento.html" class="btn-editar"><i class="bi bi-pencil-square"></i> Editar</a>
+            <button type="button" class="btn-retirar"><i class="bi bi-x-circle"></i> Retirar</button>
           </div>
         </div>
       </article>
 
-      <article class="propiedad-card shadow-sm">
+      <article class="propiedad-card">
         <div class="propiedad-foto">
-            <img src="assets/img/img-villacp.webp" alt="Cabaña con pileta">
+          <img src="assets/img/cabañaconpileta.jpg" alt="Cabaña con pileta">
         </div>
         <div class="propiedad-info">
-          <h2>Cabaña con pileta</h2>
-          <span class="badge estado retirada">Retirada</span>
+          <div class="propiedad-header">
+            <h2>Cabaña con pileta</h2>
+            <span class="badge-estado cancelado">Retirada</span>
+          </div>
+          <p class="propiedad-meta"><i class="bi bi-geo-alt"></i> Villa Carlos Paz &nbsp;·&nbsp; <i class="bi bi-currency-dollar"></i> $70.000 / noche &nbsp;·&nbsp; <i class="bi bi-people"></i> Hasta 6 huéspedes</p>
           <div class="acciones-propiedad">
-              <a href="#editar-2" class="btn-editar"><i class="bi bi-pencil-square"></i> Editar</a>
-              <button type="button" class="btn-retirar"><i class="bi bi-arrow-counterclockwise"></i> Reactivar</button>
+            <a href="publicar-alojamiento.html" class="btn-editar"><i class="bi bi-pencil-square"></i> Editar</a>
+            <button type="button" class="btn-retirar"><i class="bi bi-arrow-counterclockwise"></i> Reactivar</button>
           </div>
         </div>
       </article>
+
     </section>
   </main>
 
@@ -55,9 +68,6 @@
   <script src="assets/js/sesion.js"></script>
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
-  <script>
-    // Proteger ruta
-    requerirSesion("anfitrion");
-  </script>
+  <script src="assets/js/mis-propiedades.js"></script>
 </body>
 </html>

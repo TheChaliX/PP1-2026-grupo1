@@ -18,6 +18,7 @@
     </header>
 
     <form id="formPublicar" class="form-publicar" novalidate>
+
       <div class="campo-grupo">
         <label for="nombre"><i class="bi bi-tag"></i> Nombre del alojamiento</label>
         <div class="input-icono-wrapper">
@@ -48,8 +49,13 @@
           <option value="">Seleccione una opción</option>
           <option value="Cabaña">Cabaña</option>
           <option value="Casa">Casa</option>
+          <option value="Casa quinta">Casa quinta</option>
+          <option value="Chalet">Chalet</option>
           <option value="Departamento">Departamento</option>
+          <option value="Dúplex">Dúplex</option>
           <option value="Hotel">Hotel</option>
+          <option value="Hostel">Hostel</option>
+          <option value="Estancia">Estancia</option>
         </select>
         <span class="campo-error" id="err-tipo"></span>
       </div>
@@ -61,70 +67,80 @@
             <label for="precioNoche">Precio/Noche ($)</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-currency-dollar input-icono"></i>
-              <input type="number" id="precioNoche" name="precioNoche" min="0">
+              <input type="number" id="precioNoche" name="precioNoche" min="0" placeholder="Ej: 45000">
             </div>
             <span class="campo-error" id="err-precio"></span>
           </div>
-
           <div class="campo-grupo">
             <label for="huespedes">Huéspedes</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-people-fill input-icono"></i>
-              <input type="number" id="huespedes" name="huespedes" min="1">
+              <input type="number" id="huespedes" name="huespedes" min="1" placeholder="Ej: 4">
             </div>
             <span class="campo-error" id="err-huespedes"></span>
           </div>
-
           <div class="campo-grupo">
             <label for="habitaciones">Habitaciones</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-door-open-fill input-icono"></i>
-              <input type="number" id="habitaciones" name="habitaciones" min="1">
+              <input type="number" id="habitaciones" name="habitaciones" min="1" placeholder="Ej: 2">
             </div>
             <span class="campo-error" id="err-habitaciones"></span>
           </div>
-
           <div class="campo-grupo">
             <label for="camas">Camas</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-moon-stars-fill input-icono"></i>
-              <input type="number" id="camas" name="camas" min="1">
+              <input type="number" id="camas" name="camas" min="1" placeholder="Ej: 3">
             </div>
             <span class="campo-error" id="err-camas"></span>
+          </div>
+          <div class="campo-grupo">
+            <label for="banos">Baños</label>
+            <div class="input-icono-wrapper">
+              <i class="bi bi-droplet-fill input-icono"></i>
+              <input type="number" id="banos" name="banos" min="1" placeholder="Ej: 1">
+            </div>
           </div>
         </div>
       </fieldset>
 
-      <fieldset class="campo-fieldset filtro-servicios">
-        <legend><i class="bi bi-star"></i> Servicios</legend>
-        <div class="servicios-grid">
-          <label class="servicio-check">
-            <input type="checkbox" name="servicios" value="Wi-Fi">
-            <span><i class="bi bi-wifi"></i> Wi-Fi</span>
-          </label>
-          <label class="servicio-check">
-            <input type="checkbox" name="servicios" value="Cocina">
-            <span><i class="bi bi-cup-hot"></i> Cocina</span>
-          </label>
-          <label class="servicio-check">
-            <input type="checkbox" name="servicios" value="Pileta">
-            <span><i class="bi bi-water"></i> Pileta</span>
-          </label>
-          <label class="servicio-check">
-            <input type="checkbox" name="servicios" value="Estacionamiento">
-            <span><i class="bi bi-p-circle"></i> Estacionamiento</span>
-          </label>
+      <fieldset class="campo-fieldset">
+        <legend><i class="bi bi-star"></i> Servicios y comodidades</legend>
+        <div class="servicios-grid servicios-grid-grande">
+
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Wi-Fi"> <span><i class="bi bi-wifi"></i> Wi-Fi</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Cocina"> <span><i class="bi bi-cup-hot"></i> Cocina</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Pileta"> <span><i class="bi bi-water"></i> Pileta</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Estacionamiento"> <span><i class="bi bi-p-circle"></i> Cochera</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Desayuno"> <span><i class="bi bi-cup-hot-fill"></i> Desayuno</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Parrilla"> <span><i class="bi bi-fire"></i> Parrilla / Quincho</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Aire acondicionado"> <span><i class="bi bi-snow2"></i> Aire acondicionado</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Calefacción"> <span><i class="bi bi-thermometer-sun"></i> Calefacción</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="TV"> <span><i class="bi bi-tv"></i> Smart TV</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Vista panorámica"> <span><i class="bi bi-binoculars"></i> Vista panorámica</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Lavandería"> <span><i class="bi bi-bag-heart"></i> Lavandería</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Jacuzzi"> <span><i class="bi bi-droplet-half"></i> Jacuzzi / Bañera</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Mascotas permitidas"> <span><i class="bi bi-github"></i> Mascotas permitidas</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Apto para niños"> <span><i class="bi bi-emoji-smile"></i> Apto para niños</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Seguridad 24h"> <span><i class="bi bi-shield-check"></i> Seguridad 24h</span></label>
+          <label class="servicio-check"><input type="checkbox" name="servicios" value="Gym"> <span><i class="bi bi-bicycle"></i> Gimnasio</span></label>
+
         </div>
       </fieldset>
 
       <div class="campo-grupo">
         <label for="fotos"><i class="bi bi-camera"></i> Cargar imágenes</label>
-        <input type="file" id="fotos" name="fotos" accept="image/*">
+        <input type="file" id="fotos" name="fotos" accept="image/*" multiple>
+        <small style="color:var(--gris-texto); font-size:0.78rem; margin-top:4px; display:block;">Podés subir varias fotos a la vez. Recomendado: al menos 3.</small>
       </div>
 
-      <div class="botones-publicar mt-3">
-        <button type="submit" class="btn-reserve"><i class="bi bi-cloud-arrow-up"></i> Publicar alojamiento</button>
+      <div style="margin-top: 24px;">
+        <button type="submit" class="btn-reserve" style="width: 100%; font-size: 1.05rem; padding: 14px;">
+          <i class="bi bi-cloud-arrow-up"></i> Publicar alojamiento
+        </button>
       </div>
+
     </form>
   </main>
 
@@ -134,8 +150,6 @@
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/publicar-alojamiento.js"></script>
-  <script>
-    requerirSesion("anfitrion");
-  </script>
+  <script>requerirSesion("anfitrion");</script>
 </body>
 </html>
