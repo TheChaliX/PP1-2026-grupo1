@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class HospedajeRepository {
@@ -16,6 +17,8 @@ public class HospedajeRepository {
             new Hospedaje(3L, "Casa de Montaña", "Casa con vista a las sierras y chimenea", "Córdoba", 38000.0, 6)
     ));
 
+    private final AtomicLong secuencia = new AtomicLong(3);
+
     public List<Hospedaje> findAll() {
         return hospedajes;
     }
@@ -24,5 +27,11 @@ public class HospedajeRepository {
         return hospedajes.stream()
                 .filter(h -> h.getId().equals(id))
                 .findFirst();
+    }
+
+    public Hospedaje save(Hospedaje hospedaje) {
+        hospedaje.setId(secuencia.incrementAndGet());
+        hospedajes.add(hospedaje);
+        return hospedaje;
     }
 }

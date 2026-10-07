@@ -23,4 +23,8 @@ public class HospedajeService {
     public Optional<Hospedaje> buscarPorId(Long id) {
         return repository.findById(id);
     }
+
+    public Hospedaje crear(Hospedaje hospedaje) {
+        return repository.save(hospedaje);
+    }
 }
