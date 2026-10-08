@@ -12,6 +12,9 @@ const elRating         = document.querySelector("#ratingAlojamiento");
 const elListaServicios = document.querySelector("#listaServicios");
 const formReserva      = document.querySelector("#formReserva");
 
+//acceso a la api
+const API_URL = "http://localhost:8080/api/hospedajes";
+
 const iconosServicios = {
   "Wi-Fi":              "bi-wifi",
   "Cocina":             "bi-cup-hot",
@@ -50,16 +53,32 @@ function crearListaServicios(servicios) {
 
 async function cargarDetalle() {
   if (elNombre) elNombre.textContent = "Cargando...";
-  try {
-    const respuesta = await fetch("data/catalogo.json");
-    if (!respuesta.ok) throw new Error("Error de red");
-    const datosJson = await respuesta.json();
-    const encontrado = datosJson.find((item) => String(item.id) === String(idAlojamiento));
+  try{
+  if (!idAlojamiento) {
+  if (elNombre) elNombre.textContent = "Alojamiento no encontrado.";
+  return;
+}
 
-    if (!encontrado) {
-      if (elNombre) elNombre.textContent = "Alojamiento no encontrado.";
-      return;
-    }
+const respuesta = await fetch(`${API_URL}/${idAlojamiento}`);
+if (respuesta.status === 404) {
+  if (elNombre) elNombre.textContent = "Alojamiento no encontrado.";
+  return;
+}
+if (!respuesta.ok) throw new Error("Error de red");
+const item = await respuesta.json();
+
+const encontrado = {
+  id:           item.id,
+  nombre:       item.nombre,
+  descripcion:  item.descripcion,
+  ubicacion:    item.ciudad,
+  precioNoche:  item.precioPorNoche,
+  capacidad:    item.capacidad,
+  imagen:       item.imagen || null,
+  imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
+  calificacion: item.calificacion || null,
+  servicios:    item.servicios || []
+};
 
     if (elNombre)      elNombre.textContent = encontrado.titulo || encontrado.nombre;
     if (elDescripcion) elDescripcion.textContent = encontrado.descripcion || "";

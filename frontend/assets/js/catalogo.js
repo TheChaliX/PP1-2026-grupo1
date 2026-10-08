@@ -6,6 +6,9 @@ const inputTarifaMin     = document.querySelector("#tarifa-minima");
 const inputTarifaMax     = document.querySelector("#tarifa-maxima");
 const mensajeFiltros     = document.querySelector("#mensaje-filtros");
 
+//acceso a la API
+const API_URL = "http://localhost:8080/api/hospedajes";
+
 let alojamientos = [];
 
 const iconosServicios = {
@@ -126,18 +129,18 @@ async function cargarCatalogo() {
   contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-info py-4"><i class="bi bi-arrow-repeat spin"></i> Cargando alojamientos...</p>`;
 
   try {
-    const respuesta = await fetch("data/catalogo.json");
+    const respuesta = await fetch(API_URL);
     if (!respuesta.ok) throw new Error("Error al cargar catálogo");
-    const datosJson = await respuesta.json();
+    const datosApi = await respuesta.json();
 
-    alojamientos = datosJson.map((item) => ({
+    alojamientos = datosApi.map((item) => ({
       id:           item.id,
-      nombre:       item.titulo || item.nombre,
-      ubicacion:    item.ubicacion,
-      precioNoche:  item.precioNoche,
-     imagen: item.imagen,
-imagenes: item.imagenes || [item.imagen],
-calificacion: item.calificacion || null,
+      nombre:       item.nombre,
+      ubicacion:    item.ciudad,
+      precioNoche:  item.precioPorNoche,
+      imagen:       item.imagen || null,
+      imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
+      calificacion: item.calificacion || null,
       resenas:      item.resenas || 0,
       servicios:    item.servicios || [],
       destacado:    item.destacado || null
@@ -147,7 +150,7 @@ calificacion: item.calificacion || null,
   } catch (error) {
     console.error("Error al obtener catálogo:", error);
     contenedorCatalogo.innerHTML = "";
-    mostrarMensajeFiltros("Ocurrió un error al cargar el catálogo.", "error");
+    mostrarMensajeFiltros("No se pudo conectar con el servidor. Verificá que el backend esté corriendo.", "error");
   }
 }
 
