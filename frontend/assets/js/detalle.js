@@ -74,6 +74,7 @@ const encontrado = {
   ubicacion:    item.ciudad,
   precioNoche:  item.precioPorNoche,
   capacidad:    item.capacidad,
+  anfitrion:    item.anfitrion,
   imagen:       item.imagen || null,
   imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
   calificacion: item.calificacion || null,
