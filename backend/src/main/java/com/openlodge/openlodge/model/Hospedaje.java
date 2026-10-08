@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +28,12 @@ public class Hospedaje {
 
     @Min(value = 1, message = "La capacidad mínima es 1")
     private int capacidad;
+
+    private String imagen;
+    private List<String> imagenes;
+    private List<String> servicios;
+    private Double calificacion;
+    private Integer resenas;
+    private String destacado;
+    private String anfitrion;
 }
