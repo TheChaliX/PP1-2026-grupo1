@@ -4,10 +4,12 @@ import com.openlodge.openlodge.model.Ciudad;
 import com.openlodge.openlodge.model.Pais;
 import com.openlodge.openlodge.model.Servicio;
 import com.openlodge.openlodge.model.TipoHospedaje;
+import com.openlodge.openlodge.model.TipoUsuario;
 import com.openlodge.openlodge.repository.CiudadRepository;
 import com.openlodge.openlodge.repository.PaisRepository;
 import com.openlodge.openlodge.repository.ServicioRepository;
 import com.openlodge.openlodge.repository.TipoHospedajeRepository;
+import com.openlodge.openlodge.repository.TipoUsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,15 +22,18 @@ public class DatosIniciales implements CommandLineRunner {
     private final CiudadRepository ciudadRepository;
     private final TipoHospedajeRepository tipoHospedajeRepository;
     private final ServicioRepository servicioRepository;
+    private final TipoUsuarioRepository tipoUsuarioRepository;
 
     public DatosIniciales(PaisRepository paisRepository,
                           CiudadRepository ciudadRepository,
                           TipoHospedajeRepository tipoHospedajeRepository,
-                          ServicioRepository servicioRepository) {
+                          ServicioRepository servicioRepository,
+                          TipoUsuarioRepository tipoUsuarioRepository) {
         this.paisRepository = paisRepository;
         this.ciudadRepository = ciudadRepository;
         this.tipoHospedajeRepository = tipoHospedajeRepository;
         this.servicioRepository = servicioRepository;
+        this.tipoUsuarioRepository = tipoUsuarioRepository;
     }
 
     @Override
@@ -54,6 +59,12 @@ public class DatosIniciales implements CommandLineRunner {
                             "Wi-Fi", "Cocina", "Pileta", "Estacionamiento", "Desayuno",
                             "Parrilla", "Vista panorámica", "Aire acondicionado", "TV").stream()
                     .map(nombre -> new Servicio(null, nombre))
+                    .toList());
+        }
+
+        if (tipoUsuarioRepository.count() == 0) {
+            tipoUsuarioRepository.saveAll(List.of("huesped", "anfitrion", "administrador").stream()
+                    .map(nombre -> new TipoUsuario(null, nombre))
                     .toList());
         }
     }
