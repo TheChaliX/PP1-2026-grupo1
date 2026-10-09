@@ -1,39 +1,92 @@
 package com.openlodge.openlodge.model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderColumn;
+import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Entity
+@Table(name = "hospedaje")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Hospedaje {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
+    @Column(nullable = false, length = 150)
     private String nombre;
 
+    @Column(length = 2000)
     private String descripcion;
 
-    @NotBlank(message = "La ciudad es obligatoria")
-    private String ciudad;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal precioPorNoche;
 
-    @Positive(message = "El precio por noche debe ser mayor a 0")
-    private double precioPorNoche;
-
-    @Min(value = 1, message = "La capacidad mínima es 1")
+    @Column(nullable = false)
     private int capacidad;
 
+    // Foto de portada
+    @Column(length = 500)
     private String imagen;
-    private List<String> imagenes;
-    private List<String> servicios;
+
+    // Galería completa (tabla aparte: hospedaje_imagen)
+    @ElementCollection
+    @CollectionTable(name = "hospedaje_imagen", joinColumns = @JoinColumn(name = "id_hospedaje"))
+    @OrderColumn(name = "orden")
+    @Column(name = "url", length = 500)
+    private List<String> imagenes = new ArrayList<>();
+
+    // Opcionales
     private Double calificacion;
     private Integer resenas;
+
+    @Column(length = 20)
     private String destacado;
-    private String anfitrion;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @UpdateTimestamp
+    private LocalDateTime fechaModificacion;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_ciudad", nullable = false)
+    private Ciudad ciudad;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_tipo_hospedaje", nullable = false)
+    private TipoHospedaje tipoHospedaje;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_anfitrion", nullable = false)
+    private Usuario anfitrion;
+
+    @ManyToMany
+    @JoinTable(name = "servicio_hospedaje",
+            joinColumns = @JoinColumn(name = "id_hospedaje"),
+            inverseJoinColumns = @JoinColumn(name = "id_servicio"))
+    private List<Servicio> servicios = new ArrayList<>();
 }

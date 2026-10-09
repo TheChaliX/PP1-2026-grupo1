@@ -1,5 +1,6 @@
 package com.openlodge.openlodge.config;
 
+import org.springframework.core.annotation.Order;
 import com.openlodge.openlodge.model.Ciudad;
 import com.openlodge.openlodge.model.Pais;
 import com.openlodge.openlodge.model.Servicio;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Order(1)
 @Component
 public class DatosIniciales implements CommandLineRunner {
 
