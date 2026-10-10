@@ -1,6 +1,5 @@
 package com.openlodge.openlodge.repository;
 
-import com.openlodge.openlodge.model.Pais;
 import com.openlodge.openlodge.model.Servicio;
 import org.springframework.data.jpa.repository.JpaRepository;
 
