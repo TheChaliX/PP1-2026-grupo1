@@ -20,13 +20,22 @@
 
     <form id="registerForm" novalidate>
 
-      <div class="campo-grupo">
-        <label for="fullName"><i class="bi bi-person"></i> Nombre completo</label>
+            <div class="campo-grupo">
+        <label for="nombre"><i class="bi bi-person"></i> Nombre</label>
         <div class="input-icono-wrapper">
           <i class="bi bi-person-fill input-icono"></i>
-          <input type="text" id="fullName" name="fullName" placeholder="Como en tu documento" autocomplete="name">
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name">
         </div>
         <span class="campo-error" id="err-nombre"></span>
+      </div>
+
+      <div class="campo-grupo">
+        <label for="apellido"><i class="bi bi-person"></i> Apellido</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-person-fill input-icono"></i>
+          <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name">
+        </div>
+        <span class="campo-error" id="err-apellido"></span>
       </div>
 
       <div class="campo-grupo">
