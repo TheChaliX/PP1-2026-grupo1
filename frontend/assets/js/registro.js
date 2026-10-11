@@ -49,8 +49,8 @@ if (registerForm) {
     const email           = inputEmail.value.trim();
     const password        = inputPassword.value;
     const confirmPassword = inputConfirmPassword.value;
-    const rolElegido      = registerForm.querySelector('input[name="rol"]:checked');
-    const rol             = rolElegido ? rolElegido.value : "huesped";
+       // Toda cuenta nueva arranca como huésped; después se puede cambiar de modo desde la barra
+    const rol             = "huesped";
 
     let hayError = false;
 
@@ -111,9 +111,12 @@ if (registerForm) {
         throw new Error("Respuesta inesperada del servidor: " + respuesta.status);
       }
 
+            const usuario = await respuesta.json();
+      iniciarSesion(usuario);
+
       cuentaCreada = true;
-      mostrarModal("¡Cuenta creada exitosamente! Redirigiendo al login...", "exito");
-      setTimeout(() => { window.location.href = "login.html"; }, 1400);
+      mostrarModal("¡Cuenta creada exitosamente! Bienvenido/a a AlojAR.", "exito");
+      setTimeout(() => { window.location.href = "catalogo.html"; }, 1400);
     } catch (error) {
       console.error("Error al registrar:", error);
       mostrarModal("No se pudo crear la cuenta. Verificá que el servidor esté en funcionamiento e intentá de nuevo.", "error");
