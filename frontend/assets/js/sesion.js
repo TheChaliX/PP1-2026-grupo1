@@ -57,3 +57,38 @@ function requerirSesion(rolRequerido) {
 
   return usuario;
 }
+
+// ── Cambio de modo (huésped <-> anfitrión) ────────────────────────────────────
+
+async function cambiarModo() {
+  const usuario = obtenerUsuarioActivo();
+
+  if (!usuario || !usuario.id) {
+    mostrarModal("Volvé a iniciar sesión para cambiar de modo.", "error");
+    return;
+  }
+
+  const nuevoRol = usuario.rol === "anfitrion" ? "huesped" : "anfitrion";
+
+  try {
+    const respuesta = await fetch(`http://localhost:8080/api/usuarios/${usuario.id}/cambiar-modo`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rol: nuevoRol })
+    });
+
+    if (!respuesta.ok) {
+      throw new Error("Respuesta inesperada del servidor: " + respuesta.status);
+    }
+
+    const actualizado = await respuesta.json();
+    iniciarSesion(actualizado);
+
+    window.location.href = actualizado.rol === "anfitrion"
+      ? "mis-propiedades.html"
+      : "catalogo.html";
+  } catch (error) {
+    console.error("Error al cambiar de modo:", error);
+    mostrarModal("No se pudo cambiar de modo. Verificá que el servidor esté en funcionamiento e intentá de nuevo.", "error");
+  }
+}

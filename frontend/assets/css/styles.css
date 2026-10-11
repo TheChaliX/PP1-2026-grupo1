@@ -3269,3 +3269,23 @@ footer {
 .servicios-grid-grande .servicio-check span {
   font-size: 0.9rem;
 }
+
+.btn-cambiar-modo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--turquesa-oscuro);
+  border: 1px solid var(--turquesa);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cambiar-modo:hover {
+  background: var(--turquesa);
+  color: #fff;
+}
