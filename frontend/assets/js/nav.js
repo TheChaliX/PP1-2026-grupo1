@@ -42,11 +42,17 @@
   const etiquetaRol = usuario.rol === "anfitrion"
     ? `<span class="nav-badge-rol anfitrion"><i class="bi bi-house-fill"></i> Anfitrión</span>`
     : `<span class="nav-badge-rol huesped"><i class="bi bi-person-fill"></i> Huésped</span>`;
+      const textoCambioModo = usuario.rol === "anfitrion"
+    ? "Modo huésped"
+    : "Modo anfitrión";
 
-  navContainer.innerHTML = `
+    navContainer.innerHTML = `
     <nav class="navbar">
       ${linksRol}
       ${etiquetaRol}
+      <button class="btn-cambiar-modo" onclick="cambiarModo()">
+        <i class="bi bi-arrow-left-right"></i> ${textoCambioModo}
+      </button>
       <button class="btn-cerrar-sesion" onclick="cerrarSesion()">
         <i class="bi bi-box-arrow-right"></i> Salir
       </button>
