@@ -24,12 +24,13 @@ function mostrarModal(mensaje, tipo = "error") {
       <div class="modal-icono">
         <i class="bi ${esError ? "bi-exclamation-circle-fill" : "bi-check-circle-fill"}"></i>
       </div>
-      <p class="modal-mensaje">${mensaje}</p>
+      <p class="modal-mensaje"></p>
       <button class="modal-cerrar" aria-label="Cerrar">Aceptar</button>
     </div>
   `;
 
   document.body.appendChild(overlay);
+    overlay.querySelector(".modal-mensaje").textContent = mensaje;
 
   // Forzar reflow para que la animación se dispare
   requestAnimationFrame(() => overlay.classList.add("modal-visible"));
