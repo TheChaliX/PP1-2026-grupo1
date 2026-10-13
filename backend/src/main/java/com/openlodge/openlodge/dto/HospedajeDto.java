@@ -14,13 +14,17 @@ public record HospedajeDto(
         String tipo,
         BigDecimal precioPorNoche,
         int capacidad,
+        Integer habitaciones,
+        Integer camas,
+        Integer banos,
         String imagen,
         List<String> imagenes,
         List<String> servicios,
         Double calificacion,
         Integer resenas,
         String destacado,
-        String anfitrion
+        String anfitrion,
+        Long anfitrionId
 ) {
     public static HospedajeDto desde(Hospedaje h) {
         return new HospedajeDto(
@@ -31,13 +35,17 @@ public record HospedajeDto(
                 h.getTipoHospedaje().getNombre(),
                 h.getPrecioPorNoche(),
                 h.getCapacidad(),
+                h.getHabitaciones(),
+                h.getCamas(),
+                h.getBanos(),
                 h.getImagen(),
                 List.copyOf(h.getImagenes()),
                 h.getServicios().stream().map(Servicio::getNombre).toList(),
                 h.getCalificacion(),
                 h.getResenas(),
                 h.getDestacado(),
-                h.getAnfitrion().getNombre() + " " + h.getAnfitrion().getApellido()
+                h.getAnfitrion().getNombre() + " " + h.getAnfitrion().getApellido(),
+                h.getAnfitrion().getId()
         );
     }
 }

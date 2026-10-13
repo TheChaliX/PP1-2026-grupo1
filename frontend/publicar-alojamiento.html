@@ -34,11 +34,12 @@
         <span class="campo-error" id="err-descripcion"></span>
       </div>
 
-      <div class="campo-grupo">
-        <label for="ubicacion"><i class="bi bi-geo-alt"></i> Ubicación</label>
+            <div class="campo-grupo">
+        <label for="ubicacion"><i class="bi bi-geo-alt"></i> Ciudad</label>
         <div class="input-icono-wrapper">
           <i class="bi bi-geo-alt-fill input-icono"></i>
-          <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Villa Carlos Paz, Córdoba">
+          <input type="text" id="ubicacion" name="ubicacion" list="listaCiudades" placeholder="Ej: Villa Carlos Paz" autocomplete="off">
+          <datalist id="listaCiudades"></datalist>
         </div>
         <span class="campo-error" id="err-ubicacion"></span>
       </div>
@@ -80,7 +81,7 @@
             <span class="campo-error" id="err-huespedes"></span>
           </div>
           <div class="campo-grupo">
-            <label for="habitaciones">Habitaciones</label>
+           <label for="habitaciones">Habitaciones (opcional)</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-door-open-fill input-icono"></i>
               <input type="number" id="habitaciones" name="habitaciones" min="1" placeholder="Ej: 2">
@@ -88,7 +89,7 @@
             <span class="campo-error" id="err-habitaciones"></span>
           </div>
           <div class="campo-grupo">
-            <label for="camas">Camas</label>
+            <label for="camas">Camas (opcional)</label>
             <div class="input-icono-wrapper">
               <i class="bi bi-moon-stars-fill input-icono"></i>
               <input type="number" id="camas" name="camas" min="1" placeholder="Ej: 3">
@@ -96,8 +97,9 @@
             <span class="campo-error" id="err-camas"></span>
           </div>
           <div class="campo-grupo">
-            <label for="banos">Baños</label>
+           <label for="banos">Baños (opcional)</label>
             <div class="input-icono-wrapper">
+             <span class="campo-error" id="err-banos"></span>
               <i class="bi bi-droplet-fill input-icono"></i>
               <input type="number" id="banos" name="banos" min="1" placeholder="Ej: 1">
             </div>
@@ -129,10 +131,11 @@
         </div>
       </fieldset>
 
-      <div class="campo-grupo">
-        <label for="fotos"><i class="bi bi-camera"></i> Cargar imágenes</label>
-        <input type="file" id="fotos" name="fotos" accept="image/*" multiple>
-        <small style="color:var(--gris-texto); font-size:0.78rem; margin-top:4px; display:block;">Podés subir varias fotos a la vez. Recomendado: al menos 3.</small>
+            <div class="campo-grupo">
+        <label for="fotos"><i class="bi bi-camera"></i> Fotos (opcional)</label>
+        <textarea id="fotos" name="fotos" rows="4" placeholder="Pegá una dirección de imagen por línea. Ej: https://sitio.com/foto1.jpg"></textarea>
+        <small style="color:var(--gris-texto); font-size:0.78rem; margin-top:4px; display:block;">La primera será la portada. Recomendado: al menos 3.</small>
+        <span class="campo-error" id="err-fotos"></span>
       </div>
 
       <div style="margin-top: 24px;">
