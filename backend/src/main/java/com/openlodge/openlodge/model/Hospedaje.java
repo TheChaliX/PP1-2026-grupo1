@@ -61,6 +61,9 @@ public class Hospedaje {
     // Opcionales
     private Double calificacion;
     private Integer resenas;
+    private Integer habitaciones;
+    private Integer camas;
+    private Integer banos;
 
     @Column(length = 20)
     private String destacado;

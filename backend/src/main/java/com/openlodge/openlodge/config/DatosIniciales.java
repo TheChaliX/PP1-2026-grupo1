@@ -1,6 +1,5 @@
 package com.openlodge.openlodge.config;
 
-import org.springframework.core.annotation.Order;
 import com.openlodge.openlodge.model.Ciudad;
 import com.openlodge.openlodge.model.Pais;
 import com.openlodge.openlodge.model.Servicio;
@@ -12,13 +11,28 @@ import com.openlodge.openlodge.repository.ServicioRepository;
 import com.openlodge.openlodge.repository.TipoHospedajeRepository;
 import com.openlodge.openlodge.repository.TipoUsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Order(1)
 @Component
+@Order(1)
 public class DatosIniciales implements CommandLineRunner {
+
+    private static final List<String> TIPOS_HOSPEDAJE = List.of(
+            "Casa", "Cabaña", "Departamento", "Chalet",
+            "Casa quinta", "Dúplex", "Hotel", "Hostel", "Estancia");
+
+    private static final List<String> SERVICIOS = List.of(
+            "Wi-Fi", "Cocina", "Pileta", "Estacionamiento", "Desayuno",
+            "Parrilla", "Vista panorámica", "Aire acondicionado", "TV",
+            "Calefacción", "Lavandería", "Jacuzzi", "Mascotas permitidas",
+            "Apto para niños", "Seguridad 24h", "Gym");
+
+    private static final List<String> TIPOS_USUARIO = List.of("huesped", "anfitrion", "administrador");
 
     private final PaisRepository paisRepository;
     private final CiudadRepository ciudadRepository;
@@ -50,24 +64,26 @@ public class DatosIniciales implements CommandLineRunner {
                     .toList());
         }
 
-        if (tipoHospedajeRepository.count() == 0) {
-            tipoHospedajeRepository.saveAll(List.of("Casa", "Cabaña", "Departamento", "Chalet").stream()
-                    .map(nombre -> new TipoHospedaje(null, nombre))
-                    .toList());
-        }
+        // Se agregan solo los que todavía no existen
+        Set<String> tiposExistentes = tipoHospedajeRepository.findAll().stream()
+                .map(TipoHospedaje::getNombre)
+                .collect(Collectors.toSet());
+        TIPOS_HOSPEDAJE.stream()
+                .filter(nombre -> !tiposExistentes.contains(nombre))
+                .forEach(nombre -> tipoHospedajeRepository.save(new TipoHospedaje(null, nombre)));
 
-        if (servicioRepository.count() == 0) {
-            servicioRepository.saveAll(List.of(
-                            "Wi-Fi", "Cocina", "Pileta", "Estacionamiento", "Desayuno",
-                            "Parrilla", "Vista panorámica", "Aire acondicionado", "TV").stream()
-                    .map(nombre -> new Servicio(null, nombre))
-                    .toList());
-        }
+        Set<String> serviciosExistentes = servicioRepository.findAll().stream()
+                .map(Servicio::getNombre)
+                .collect(Collectors.toSet());
+        SERVICIOS.stream()
+                .filter(nombre -> !serviciosExistentes.contains(nombre))
+                .forEach(nombre -> servicioRepository.save(new Servicio(null, nombre)));
 
-        if (tipoUsuarioRepository.count() == 0) {
-            tipoUsuarioRepository.saveAll(List.of("huesped", "anfitrion", "administrador").stream()
-                    .map(nombre -> new TipoUsuario(null, nombre))
-                    .toList());
-        }
+        Set<String> tiposUsuarioExistentes = tipoUsuarioRepository.findAll().stream()
+                .map(TipoUsuario::getNombre)
+                .collect(Collectors.toSet());
+        TIPOS_USUARIO.stream()
+                .filter(nombre -> !tiposUsuarioExistentes.contains(nombre))
+                .forEach(nombre -> tipoUsuarioRepository.save(new TipoUsuario(null, nombre)));
     }
 }
