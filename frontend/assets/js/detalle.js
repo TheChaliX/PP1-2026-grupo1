@@ -28,7 +28,14 @@ const iconosServicios = {
   "Parrilla":           "bi-fire",
   "Vista panorámica":   "bi-binoculars",
   "Aire acondicionado": "bi-snow2",
-  "TV":                 "bi-tv"
+  "TV":                 "bi-tv",
+  "Calefacción":         "bi-thermometer-sun",
+  "Lavandería":          "bi-bag-heart",
+  "Jacuzzi":             "bi-droplet-half",
+  "Mascotas permitidas": "bi-heart",
+  "Apto para niños":     "bi-emoji-smile",
+  "Seguridad 24h":       "bi-shield-check",
+  "Gym":                 "bi-bicycle"
 };
 
 const usuario = obtenerUsuarioActivo();
