@@ -51,10 +51,10 @@
     --blanco: #FFFFFF;
 
     /* ---- CORAL / MANDARINA: botones de conversión (.btn-reserve) ---- */
-    --coral: #FF6A4D;
-    --coral-oscuro: #E24E30;
-    --coral-claro: #FF8B6E;
-    --coral-suave: #FFE6DD;
+    --coral: #2F6FED;
+    --coral-oscuro:#1F4FBF;
+    --coral-claro: #6B9BFF;
+    --coral-suave: #E3ECFF;
 
     /* ---- AMARILLO SOL: destacados, badges, estrellas de calificación ---- */
     --amarillo-sol: #FFB627;
@@ -87,8 +87,8 @@
     --sombra-suave: 0 4px 16px rgba(22, 50, 74, 0.06);
     --sombra-media: 0 14px 32px rgba(22, 50, 74, 0.10);
     --sombra-fuerte: 0 30px 70px rgba(22, 50, 74, 0.16);
-    --sombra-coral: 0 14px 28px rgba(255, 106, 77, 0.34);
-    --sombra-turquesa: 0 14px 30px rgba(14, 168, 160, 0.22);
+    --sombra-coral: 0 14px 28px rgba(47, 111, 237, 0.34);
+    --sombra-turquesa: 0 14px 30px rgba(1, 2, 2, 0.22);
 
     /* radios orgánicos y transición */
     --radio-pequeno: 12px;
@@ -1071,10 +1071,15 @@ body.catalogo header {
    12. PANTALLA DETALLE
    ========================================= */
 .detalle-alojamiento {
-    width: min(calc(100% - 32px), 1100px);
-    max-width: 1100px;
-    margin: 28px auto 60px;
-    padding: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 24px 40px 60px;
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .detalle-alojamiento h1 {
@@ -1103,6 +1108,7 @@ body.catalogo header {
     overflow: hidden;
     border-radius: 26px;
     box-shadow: var(--sombra-media);
+    height: clamp(360px, 40vw, 600px);
 }
 
 .galeria img {
@@ -2192,6 +2198,9 @@ footer {
     .perfil-main {
         width: calc(100% - 20px);
     }
+    .detalle-alojamiento {
+    padding: 16px 12px 40px;
+}
 
     .catalogo-main {
         margin-top: 20px;
@@ -2421,8 +2430,8 @@ footer {
   margin-left: 10px;
 }
 .nav-badge-rol.anfitrion {
-  background: var(--amarillo-sol-suave);
-  color: var(--amarillo-sol-oscuro);
+  background: var(--coral-suave);
+  color: var(--coral-oscuro);
 }
 .nav-badge-rol.huesped {
   background: var(--turquesa-suave);
@@ -3274,11 +3283,14 @@ footer {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 6px 14px;
   background: transparent;
   color: var(--turquesa-oscuro);
   border: 1px solid var(--turquesa);
   border-radius: 999px;
-  padding: 6px 14px;
+  box-shadow: none;
   font: inherit;
   font-size: 0.85rem;
   font-weight: 600;
@@ -3288,4 +3300,61 @@ footer {
 .btn-cambiar-modo:hover {
   background: var(--turquesa);
   color: #fff;
+  transform: none;
+  box-shadow: none;
+  filter: none;
 }
+
+#formFiltros button[type="reset"] {
+  margin-top: 0;
+  background: none;
+  box-shadow: none;
+}
+
+#formFiltros button[type="reset"]:hover {
+  transform: none;
+  box-shadow: none;
+}
+/* =========================================
+   ANCHO UNIFICADO DE TODAS LAS PANTALLAS
+   ========================================= */
+:root {
+  --ancho-pagina: 100%;     /* para poner un tope: 1400px */
+  --margen-pagina: 40px;    /* espacio a los costados */
+}
+
+.catalogo-main,
+.detalle-alojamiento,
+.reservas-main,
+.propiedades-main,
+.contenedor-calendario,
+.reservas-recibidas-main,
+.publicar-main,
+.perfil-main {
+  width: 100%;
+  max-width: var(--ancho-pagina);
+  margin: 24px auto 60px;
+  padding-left: var(--margen-pagina);
+  padding-right: var(--margen-pagina);
+}
+
+/* Sin el panel blanco que hereda de la regla genérica main {} */
+.catalogo-main,
+.detalle-alojamiento,
+.reservas-main,
+.propiedades-main,
+.contenedor-calendario,
+.reservas-recibidas-main,
+.perfil-main {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  :root { --margen-pagina: 12px; }
+}
+
