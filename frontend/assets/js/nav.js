@@ -23,7 +23,6 @@
     <a href="mis-propiedades.html"><i class="bi bi-house-door"></i> Mis propiedades</a>
     <a href="publicar-alojamiento.html"><i class="bi bi-plus-circle"></i> Publicar</a>
     <a href="reservas-recibidas.html"><i class="bi bi-inbox"></i> Reservas recibidas</a>
-    <a href="calendario.html"><i class="bi bi-calendar3"></i> Calendario</a>
     <a href="perfil.html"><i class="bi bi-person-circle"></i> Mi perfil</a>
   `;
 

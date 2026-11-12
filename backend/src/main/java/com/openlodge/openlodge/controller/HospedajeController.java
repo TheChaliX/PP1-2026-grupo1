@@ -31,6 +31,11 @@ public class HospedajeController {
         return service.listar();
     }
 
+    @GetMapping("/anfitrion/{anfitrionId}")
+    public List<HospedajeDto> listarPorAnfitrion(@PathVariable Long anfitrionId) {
+        return service.listarPorAnfitrion(anfitrionId);
+    }
+
     @GetMapping("/{id}")
     public HospedajeDto obtener(@PathVariable Long id) {
         return service.buscarPorId(id)

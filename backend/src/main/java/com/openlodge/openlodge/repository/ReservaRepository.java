@@ -14,6 +14,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     // Historial del huésped (CU009)
     List<Reserva> findByUsuarioIdOrderByFechaCheckInDesc(Long usuarioId);
 
+    // Reservas recibidas por un anfitrión (M5): las de todos sus alojamientos
+    List<Reserva> findByHospedajeAnfitrionIdOrderByFechaCheckInDesc(Long anfitrionId);
+
     // Reservas de un alojamiento, por estado
     List<Reserva> findByHospedajeIdAndEstadoOrderByFechaCheckInAsc(Long hospedajeId, EstadoReserva estado);
 

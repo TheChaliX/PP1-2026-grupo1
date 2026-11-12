@@ -1,6 +1,6 @@
 ﻿// reservas.js — PP1 2026 Grupo 1
 
-const API_RESERVAS_URL = "http://localhost:8080/api/reservas";
+const API_RESERVAS_URL = `${API_BASE}/reservas`;
 
 const contenedorReservas = document.querySelector("#contenedor-reservas");
 const tabs = document.querySelectorAll(".tabs a");
