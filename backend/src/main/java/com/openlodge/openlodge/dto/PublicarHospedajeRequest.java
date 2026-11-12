@@ -54,7 +54,8 @@ public record PublicarHospedajeRequest(
         List<String> servicios,
 
         List<@Size(max = 500, message = "Una de las direcciones de foto es demasiado larga")
-        @Pattern(regexp = "^https?://[^\\s\"'<>]+$",
+        // links o fotos de assets/img
+        @Pattern(regexp = "^(https?://|assets/img/)[^\\s\"'<>]+$",
                 message = "Cada foto debe ser una dirección válida que empiece con http:// o https://") String> imagenes
 ) {
 }

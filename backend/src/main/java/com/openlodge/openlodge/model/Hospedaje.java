@@ -51,7 +51,7 @@ public class Hospedaje {
     @Column(length = 500)
     private String imagen;
 
-    // Galería completa (tabla aparte: hospedaje_imagen)
+    // galeria de fotos
     @ElementCollection
     @CollectionTable(name = "hospedaje_imagen", joinColumns = @JoinColumn(name = "id_hospedaje"))
     @OrderColumn(name = "orden")
@@ -67,6 +67,10 @@ public class Hospedaje {
 
     @Column(length = 20)
     private String destacado;
+
+    // false si el anfitrion lo pauso
+    @Column(nullable = false)
+    private boolean activo = true;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

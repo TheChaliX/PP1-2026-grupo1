@@ -1,44 +1,9 @@
-/* =========================================================
-   SISTEMA DE RESERVAS DE ALOJAMIENTOS — HOJA DE ESTILOS
-   Rediseño visual "Vacacional" inspirado en Airbnb — Grupo 1 — PP1 2026
+/* ===== SISTEMA DE RESERVAS DE ALOJAMIENTOS - HOJA DE ESTILOS ===== */
 
-   Paleta: Blanco Arena · Coral Mandarina · Amarillo Sol · Turquesa
-   Aguamarina · Azul Profundo. Minimalismo, bordes orgánicos, sombras
-   suaves y protagonismo absoluto de la fotografía.
-
-   Índice:
-   0.  Tipografía
-   1.  Variables generales (paleta, sombras, radios)
-   2.  Base / reset
-   3.  Header genérico
-   4.  Navbar
-   5.  Tarjeta principal (main) y formularios genéricos
-   6.  Botones genéricos + .btn-reserve
-   7.  Pantalla Inicio
-   8.  Pantalla Catálogo (tarjetas de alojamiento estilo Airbnb)
-   9.  Sistema de calificación (estrellas)
-   10. Widgets de servicios (iconos)
-   11. Badges flotantes
-   12. Pantalla Detalle
-   13. Pantalla Mis reservas
-   14. Pantalla Publicar alojamiento
-   15. Pantalla Mis propiedades
-   16. Pantalla Calendario
-   17. Pantalla Reservas recibidas
-   18. Pantalla Registro
-   19. Pantalla Mi perfil
-   20. Footer y mensajes de estado
-   21. Responsive
-   ========================================================= */
-
-/* =========================================
-   0. TIPOGRAFÍA
-   ========================================= */
+/* ===== TIPOGRAFÍA ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
-/* =========================================
-   1. VARIABLES GENERALES DEL PROYECTO
-   ========================================= */
+/* ===== VARIABLES GENERALES DEL PROYECTO ===== */
 :root {
     /* tipografías */
     --font-titulos: 'Poppins', 'Segoe UI', sans-serif;
@@ -50,29 +15,29 @@
     --arena-fuerte: #F3E9D6;
     --blanco: #FFFFFF;
 
-    /* ---- CORAL / MANDARINA: botones de conversión (.btn-reserve) ---- */
+    /* coral: botones principales */
     --coral: #2F6FED;
     --coral-oscuro:#1F4FBF;
     --coral-claro: #6B9BFF;
     --coral-suave: #E3ECFF;
 
-    /* ---- AMARILLO SOL: destacados, badges, estrellas de calificación ---- */
+    /* amarillo: destacados y estrellas */
     --amarillo-sol: #FFB627;
     --amarillo-sol-oscuro: #E2960A;
     --amarillo-sol-suave: #FFF2D6;
 
-    /* ---- TURQUESA AGUAMARINA: títulos, nav superior, enlaces ---- */
+    /* turquesa: titulos y links */
     --turquesa: #0EA8A0;
     --turquesa-oscuro: #0B837C;
     --turquesa-claro: #6FE3D9;
     --turquesa-suave: #E1F9F5;
 
-    /* ---- AZUL PROFUNDO: texto general, íconos estructurales ---- */
+    /* azul: texto */
     --azul-profundo: #16324A;
     --azul-medio: #24455F;
     --azul-suave: #4E6C82;
 
-    /* neutros cálidos (sobre base arena, nunca negro puro) */
+    /* neutros */
     --gris-texto: #5C6B75;
     --gris-borde: #EBE1CD;
     --gris-suave: #F4EEE1;
@@ -83,7 +48,7 @@
     --rojo: #E24E3E;
     --rojo-suave: #FDECE9;
 
-    /* sombras — suaves, paralelas, casi imperceptibles */
+    /* sombras */
     --sombra-suave: 0 4px 16px rgba(22, 50, 74, 0.06);
     --sombra-media: 0 14px 32px rgba(22, 50, 74, 0.10);
     --sombra-fuerte: 0 30px 70px rgba(22, 50, 74, 0.16);
@@ -97,9 +62,7 @@
     --transicion: all 0.25s cubic-bezier(.4, 0, .2, 1);
 }
 
-/* =========================================
-   2. BASE / RESET
-   ========================================= */
+/* ===== BASE / RESET ===== */
 * {
     box-sizing: border-box;
 }
@@ -122,9 +85,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Portada y pantallas de autenticación: un hero suave en tonos
-   turquesa + coral sobre el fondo arena, para dar bienvenida sin
-   perder la calidez general del sitio. */
+/* fondo de las pantallas de login/registro */
 body.inicio,
 body.login,
 body.registro {
@@ -177,9 +138,7 @@ select {
     border-radius: 10px;
 }
 
-/* =========================================
-   3. HEADER GENÉRICO
-   ========================================= */
+/* ===== HEADER GENÉRICO ===== */
 header {
     text-align: center;
     margin-bottom: 26px;
@@ -199,12 +158,8 @@ header p {
     font-size: 0.98rem;
 }
 
-/* =========================================
-   4. NAVBAR
-   ========================================= */
-/* Barra flotante tipo "pill" en Blanco Arena con acento turquesa en el
-   enlace activo/hover — la navegación superior usa Azul Turquesa como
-   pide la paleta. */
+/* ===== NAVBAR ===== */
+/* barra de navegacion */
 .navbar {
     display: flex;
     align-items: center;
@@ -251,9 +206,7 @@ header p {
     transform: translateY(0);
 }
 
-/* =========================================
-   5. TARJETA PRINCIPAL (main genérico) Y FORMULARIOS
-   ========================================= */
+/* ===== TARJETA PRINCIPAL (main genérico) Y FORMULARIOS ===== */
 main {
     width: min(100% - 32px, 520px);
     padding: 38px;
@@ -337,12 +290,8 @@ form > a:hover {
     color: var(--turquesa);
 }
 
-/* =========================================
-   6. BOTONES GENÉRICOS + .btn-reserve
-   ========================================= */
-/* Todos los botones de conversión del sitio (confirmar reserva, buscar,
-   publicar, crear cuenta) usan el mismo lenguaje visual coral/mandarina
-   vibrante que pide la paleta como color de acción principal. */
+/* ===== BOTONES GENÉRICOS + .btn-reserve ===== */
+/* botones principales */
 button {
     margin-top: 10px;
     padding: 12px 20px;
@@ -369,10 +318,7 @@ button:active {
     transform: translateY(0) scale(0.99);
 }
 
-/* Clase explícita para usar en cualquier botón/enlace de reserva —
-   nace viva: transición fluida de color, leve escala en hover y
-   esquinas totalmente redondeadas al estilo apps premium.
-   Uso: <button class="btn-reserve">Reservar ahora</button> */
+/* boton de reserva */
 .btn-reserve {
     display: inline-flex;
     align-items: center;
@@ -414,8 +360,7 @@ button:active {
     outline-offset: 2px;
 }
 
-/* Variante secundaria / fantasma, para acciones no primarias junto al
-   botón de reserva (ej. "Cancelar", "Ver más"). */
+/* boton secundario */
 .btn-secundario {
     display: inline-flex;
     align-items: center;
@@ -441,9 +386,7 @@ button:active {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   7. PANTALLA INICIO
-   ========================================= */
+/* ===== PANTALLA INICIO ===== */
 body.inicio {
     display: flex;
     flex-direction: column;
@@ -529,8 +472,7 @@ body.inicio main > p {
     box-shadow: var(--sombra-turquesa);
 }
 
-/* primer acceso destacado como acción principal — coral, el color de
-   conversión, para invitar al primer clic */
+/* boton destacado del inicio */
 .inicio-links a:first-child {
     grid-column: span 3;
     color: var(--blanco);
@@ -543,9 +485,7 @@ body.inicio main > p {
     background: linear-gradient(135deg, var(--coral-claro), var(--coral));
 }
 
-/* =========================================
-   8. PANTALLA CATÁLOGO — TARJETAS ESTILO AIRBNB
-   ========================================= */
+/* ===== PANTALLA CATÁLOGO - TARJETAS ESTILO AIRBNB ===== */
 body.catalogo {
     display: block;
     min-height: 100vh;
@@ -588,7 +528,7 @@ body.catalogo header {
     font-weight: 700;
 }
 
-/* --- Barra de filtros: compacta, tipo "buscador" de plataforma real --- */
+/* filtros */
 #formFiltros {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -695,8 +635,7 @@ body.catalogo header {
     margin: 0 !important;
 }
 
-/* Tarjeta estilo Airbnb: foto protagonista, bordes orgánicos amplios,
-   sombra sutil y elevación fluida en hover. */
+/* tarjetas del catalogo */
 #contenedor-catalogo .card {
     position: relative;
     width: 100%;
@@ -718,10 +657,7 @@ body.catalogo header {
     box-shadow: var(--sombra-fuerte) !important;
 }
 
-/* Contenedor de la foto — recorta y prepara el terreno para el zoom
-   suave y para alojar badges flotantes absolutos (ver sección 11).
-   La imagen que genera catalogo.js vive DENTRO de este wrapper (no es
-   hijo directo de .card), por eso el selector es descendiente. */
+/* foto de la tarjeta */
 #contenedor-catalogo .card-img-wrapper {
     position: relative;
     overflow: hidden;
@@ -742,8 +678,7 @@ body.catalogo header {
     transform: scale(1.06);
 }
 
-/* Cuando un alojamiento no tiene foto cargada, catalogo.js pone este
-   placeholder en vez de un <img> roto. */
+/* cuando no hay foto */
 #contenedor-catalogo .card-img-placeholder {
     display: flex;
     align-items: center;
@@ -784,8 +719,7 @@ body.catalogo header {
     color: var(--azul-profundo);
 }
 
-/* precio destacado en coral — es lo que el ojo debe encontrar primero
-   después de la foto */
+/* precio */
 #contenedor-catalogo .card-text:last-of-type {
     margin-top: 2px !important;
     color: var(--coral-oscuro);
@@ -793,9 +727,7 @@ body.catalogo header {
     font-size: 0.95rem;
 }
 
-/* El botón "Ver detalle" que genera catalogo.js (btn btn-dark) se
-   convierte automáticamente en un .btn-reserve compacto, sin tocar
-   el JS. */
+/* boton ver detalle del catalogo */
 #contenedor-catalogo .btn {
     display: inline-flex;
     align-items: center;
@@ -849,7 +781,7 @@ body.catalogo header {
     background: var(--rojo-suave);
 }
 
-/* clases de Bootstrap usadas por catalogo.js para los mensajes de estado */
+/* mensajes de estado */
 #contenedor-catalogo p.text-info,
 #contenedor-catalogo p.text-muted,
 #contenedor-catalogo p.text-danger {
@@ -861,22 +793,8 @@ body.catalogo header {
     font-weight: 600;
 }
 
-/* =========================================
-   9. SISTEMA DE CALIFICACIÓN (ESTRELLAS)
-   ========================================= */
-/* Componente listo para usar en cualquier tarjeta o página de detalle.
-   Estrellas en Amarillo Sol, alineadas con el puntaje numérico y la
-   cantidad de reseñas.
-
-   Uso sugerido dentro de una .card-body o de la sección .descripcion:
-   <div class="rating">
-     <span class="rating-estrellas" style="--puntaje: 4.5;"
-           aria-label="4.5 de 5 estrellas"></span>
-     <span class="rating-valor">4.5</span>
-     <span class="rating-reviews">(128 reseñas)</span>
-   </div>
-   La variable CSS --puntaje (0 a 5) rellena las estrellas de forma
-   proporcional, sin depender de imágenes ni de una librería de iconos. */
+/* ===== SISTEMA DE CALIFICACIÓN (ESTRELLAS) ===== */
+/* estrellas */
 .rating {
     display: flex;
     align-items: center;
@@ -920,25 +838,13 @@ body.catalogo header {
     font-size: 0.8rem;
 }
 
-/* Variante compacta para usar dentro de la tarjeta del catálogo, justo
-   debajo del título del alojamiento. */
+/* estrellas dentro de la tarjeta */
 #contenedor-catalogo .rating {
     margin: 1px 0 3px;
 }
 
-/* =========================================
-   10. WIDGETS DE SERVICIOS (WI-FI, PILETA, A/C, ETC.)
-   ========================================= */
-/* Lista horizontal de servicios con fondos redondeados tenues, pensada
-   para íconos de Bootstrap Icons (<i class="bi bi-wifi">) o Font
-   Awesome. Funciona igual de bien solo con texto si todavía no se
-   agregó la librería de íconos.
-
-   Uso sugerido:
-   <ul class="servicios-lista">
-     <li><i class="bi bi-wifi"></i> Wi-Fi</li>
-     <li><i class="bi bi-p-circle"></i> Estacionamiento</li>
-   </ul> */
+/* ===== WIDGETS DE SERVICIOS (WI-FI, PILETA, A/C, ETC.) ===== */
+/* lista de servicios */
 .servicios-lista {
     display: flex;
     flex-wrap: wrap;
@@ -968,10 +874,7 @@ body.catalogo header {
     font-size: 0.95rem;
 }
 
-/* La lista <ul id="listaServicios"> de detalle.html es completada
-   dinámicamente por detalle.js con un <i class="bi ..."> por servicio
-   (ver assets/js/detalle.js). Se ve como una fila de "chips" con el
-   ícono en Turquesa dentro de un círculo tenue en Amarillo Sol. */
+/* servicios en el detalle */
 #listaServicios {
     display: flex;
     flex-wrap: wrap;
@@ -1012,17 +915,8 @@ body.catalogo header {
     font-size: 0.8rem;
 }
 
-/* =========================================
-   11. BADGES FLOTANTES ABSOLUTOS
-   ========================================= */
-/* Etiquetas posicionadas sobre la esquina superior de una foto. Deben
-   colocarse dentro de un contenedor con position: relative (la .card
-   del catálogo y .propiedad-foto ya lo tienen preparado).
-
-   Uso sugerido dentro de la tarjeta, justo antes o después de la
-   imagen:
-   <span class="badge-flotante badge-oferta">Oferta especial</span>
-   <span class="badge-flotante badge-top">¡Mejor puntuado!</span> */
+/* ===== BADGES FLOTANTES ABSOLUTOS ===== */
+/* badges sobre las fotos */
 .badge-flotante {
     position: absolute;
     top: 14px;
@@ -1042,7 +936,7 @@ body.catalogo header {
     white-space: nowrap;
 }
 
-/* si hay dos badges en la misma foto, el segundo se acomoda debajo */
+/* si hay dos badges */
 .badge-flotante + .badge-flotante {
     top: 48px;
 }
@@ -1067,9 +961,7 @@ body.catalogo header {
     background: linear-gradient(135deg, var(--turquesa), var(--turquesa-oscuro));
 }
 
-/* =========================================
-   12. PANTALLA DETALLE
-   ========================================= */
+/* ===== PANTALLA DETALLE ===== */
 .detalle-alojamiento {
     width: 100%;
     max-width: none;
@@ -1089,15 +981,8 @@ body.catalogo header {
     letter-spacing: -0.5px;
 }
 
-/* Galería preparada para más de una foto: con una sola imagen ocupa
-   todo el bloque; en cuanto el HTML/JS agregue más <img> dentro de
-   esta misma sección (hasta 5 funciona perfecto) se arma solo el
-   clásico layout "1 foto grande + 4 chicas" de Airbnb. */
-/* La cantidad de fotos varía por alojamiento (algunos todavía tienen
-   una sola imagen, otros ya tienen la galería completa). detalle.js
-   le agrega a .galeria la clase "cant-N" según cuántas fotos haya, y
-   acá se arma el layout correcto para cada caso — de 1 a 5 fotos —
-   en vez de dejar casilleros vacíos o fotos recortadas. */
+/* galeria */
+/* la galeria cambia segun cuantas fotos hay (cant-N) */
 .galeria {
     position: relative;
     display: grid;
@@ -1122,9 +1007,7 @@ body.catalogo header {
     transition: transform 0.3s ease;
 }
 
-/* 5 fotos (o más — las que sobran se resumen en el badge "+N" that
-   detalle.js agrega sobre la última miniatura): el clásico layout de
-   Airbnb, 1 foto grande a la izquierda y 4 chicas en grilla 2x2. */
+/* 5 fotos o mas */
 .galeria img:first-child {
     grid-column: 1;
     grid-row: 1 / 3;
@@ -1150,7 +1033,7 @@ body.catalogo header {
     grid-row: 2;
 }
 
-/* 1 sola foto: ocupa todo el bloque, sin columnas vacías al costado. */
+/* 1 foto */
 .galeria.cant-1 img:first-child {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
@@ -1173,7 +1056,7 @@ body.catalogo header {
     grid-column: 2;
 }
 
-/* 3 fotos: 1 grande a la izquierda + 2 apiladas a la derecha. */
+/* 3 fotos */
 .galeria.cant-3 {
     grid-template-columns: 2fr 1fr;
 }
@@ -1193,7 +1076,7 @@ body.catalogo header {
     grid-row: 2;
 }
 
-/* 4 fotos: 1 grande a la izquierda + 3 apiladas a la derecha. */
+/* 4 fotos */
 .galeria.cant-4 {
     grid-template-columns: 2fr 1fr;
     grid-template-rows: repeat(3, 1fr);
@@ -1219,8 +1102,7 @@ body.catalogo header {
     grid-row: 3;
 }
 
-/* Badge "+N fotos" sobre la última miniatura, cuando hay más de 5
-   fotos cargadas (lo agrega detalle.js con .galeria-mas-fotos). */
+/* cartel +N fotos */
 .galeria-mas-fotos {
     display: flex;
     align-items: center;
@@ -1274,9 +1156,7 @@ body.catalogo header {
     color: var(--azul-profundo);
 }
 
-/* Bloque de reserva: se distingue con un halo cálido en amarillo sol
-   muy suave, para que el ojo lo identifique como la acción principal
-   de la página. */
+/* bloque de reserva */
 .disponibilidad {
     background: linear-gradient(150deg, var(--blanco) 0%, var(--amarillo-sol-suave) 130%);
     border-color: var(--amarillo-sol-suave);
@@ -1304,9 +1184,7 @@ body.catalogo header {
     padding: 0;
 }
 
-/* =========================================
-   13. PANTALLA MIS RESERVAS
-   ========================================= */
+/* ===== PANTALLA MIS RESERVAS ===== */
 body.reservas {
     display: block;
     min-height: 100vh;
@@ -1440,9 +1318,7 @@ article a:hover,
     font-weight: 700;
 }
 
-/* =========================================
-   14. PANTALLA PUBLICAR ALOJAMIENTO
-   ========================================= */
+/* ===== PANTALLA PUBLICAR ALOJAMIENTO ===== */
 body.publicar {
     display: block;
     min-height: 100vh;
@@ -1515,9 +1391,7 @@ fieldset label {
     flex: 1;
 }
 
-/* =========================================
-   15. PANTALLA MIS PROPIEDADES
-   ========================================= */
+/* ===== PANTALLA MIS PROPIEDADES ===== */
 body.mis-propiedades {
     display: block;
     min-height: 100vh;
@@ -1666,9 +1540,7 @@ height: 100%;
     text-align: center;
 }
 
-/* =========================================
-   16. PANTALLA CALENDARIO DE DISPONIBILIDAD
-   ========================================= */
+/* ===== PANTALLA CALENDARIO DE DISPONIBILIDAD ===== */
 .contenedor-calendario {
     width: min(calc(100% - 32px), 1000px);
     max-width: 1000px;
@@ -1801,9 +1673,7 @@ height: 100%;
     flex: 1;
 }
 
-/* =========================================
-   17. PANTALLA RESERVAS RECIBIDAS
-   ========================================= */
+/* ===== PANTALLA RESERVAS RECIBIDAS ===== */
 body.reservas-recibidas {
     display: block;
     min-height: 100vh;
@@ -1872,9 +1742,7 @@ body.reservas-recibidas {
     color: var(--gris-texto);
 }
 
-/* =========================================
-   18. PANTALLA REGISTRO
-   ========================================= */
+/* ===== PANTALLA REGISTRO ===== */
 body.registro {
     min-height: 100vh;
 }
@@ -1991,9 +1859,7 @@ body.registro {
     font-weight: 700;
 }
 
-/* =========================================
-   19. MI PERFIL
-   ========================================= */
+/* ===== MI PERFIL ===== */
 .perfil {
     min-height: 100vh;
 }
@@ -2056,9 +1922,7 @@ body.registro {
     margin-top: 10px;
 }
 
-/* =========================================
-   20. MENSAJES GENERALES Y FOOTER
-   ========================================= */
+/* ===== MENSAJES GENERALES Y FOOTER ===== */
 #mensajeError,
 #mensajeEstado,
 #mensajeFormulario,
@@ -2077,9 +1941,7 @@ footer {
     text-align: center;
 }
 
-/* =========================================
-   21. RESPONSIVE
-   ========================================= */
+/* ===== RESPONSIVE ===== */
 
 /* TABLET */
 @media (max-width: 900px) {
@@ -2329,9 +2191,7 @@ footer {
     }
 }
 
-/* =========================================
-   XX. MODAL EMERGENTE
-   ========================================= */
+/* ===== MODAL EMERGENTE ===== */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -2399,9 +2259,7 @@ footer {
   background: var(--azul-medio);
 }
 
-/* =========================================
-   XX. ESTILOS DE ERROR POR CAMPO
-   ========================================= */
+/* ===== ESTILOS DE ERROR POR CAMPO ===== */
 .campo-error {
   display: block;
   color: var(--rojo);
@@ -2419,9 +2277,7 @@ footer {
   margin-bottom: 5px;
 }
 
-/* =========================================
-   XX. NAVBAR BADGES & AUTH LAYOUT
-   ========================================= */
+/* ===== NAVBAR BADGES & AUTH LAYOUT ===== */
 .nav-badge-rol {
   padding: 4px 10px;
   border-radius: 12px;
@@ -2566,9 +2422,7 @@ footer {
 .spin { display: inline-block; animation: spin 1s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* =========================================
-   XX. FIXES VISUALES INPUTS E ICONOS
-   ========================================= */
+/* ===== FIXES VISUALES INPUTS E ICONOS ===== */
 .input-icono-wrapper {
   position: relative;
   display: flex;
@@ -2633,9 +2487,7 @@ footer {
   gap: 15px;
 }
 
-/* =========================================
-   XX. FIX NAVBAR WRAP
-   ========================================= */
+/* ===== FIX NAVBAR WRAP ===== */
 .navbar {
   flex-wrap: nowrap !important;
   overflow-x: auto;
@@ -2680,9 +2532,7 @@ footer {
     font-size: 20px;
     cursor: pointer;
 }
-/* =========================================
-   XX. MIS RESERVAS — layout cards
-   ========================================= */
+/* ===== MIS RESERVAS - layout cards ===== */
 .reserva {
   display: grid;
   grid-template-columns: 130px 1fr auto;
@@ -2776,9 +2626,7 @@ footer {
 .badge-estado.pendiente  { background: #fef3c7; color: #92400e; }
 .badge-estado.cancelado  { background: #fee2e2; color: #991b1b; }
 
-/* =========================================
-   XX. MIS PROPIEDADES — layout cards
-   ========================================= */
+/* ===== MIS PROPIEDADES - layout cards ===== */
 .propiedades-main {
   max-width: 900px;
   margin: 0 auto;
@@ -2887,9 +2735,7 @@ footer {
 
 .btn-retirar:hover { background: var(--rojo-suave); }
 
-/* =========================================
-   XX. CHIPS DE SERVICIOS — sin texto visible fuera del chip
-   ========================================= */
+/* ===== CHIPS DE SERVICIOS - sin texto visible fuera del chip ===== */
 .chips-servicios {
   display: flex;
   flex-wrap: wrap;
@@ -2915,9 +2761,7 @@ footer {
   color: var(--gris-texto);
 }
 
-/* =========================================
-   XX. PERFIL — estilos
-   ========================================= */
+/* ===== PERFIL - estilos ===== */
 .perfil-main {
   max-width: 580px;
   margin: 0 auto;
@@ -2956,9 +2800,7 @@ footer {
   background: var(--gris-borde);
 }
 
-/* =========================================
-   XX. RESERVAS RECIBIDAS — estilos
-   ========================================= */
+/* ===== RESERVAS RECIBIDAS - estilos ===== */
 .reservas-recibidas-main {
   max-width: 860px;
   margin: 0 auto;
@@ -3048,9 +2890,7 @@ footer {
 
 .btn-rechazar:hover { background: #fecaca; }
 
-/* =========================================
-   XX. CALENDARIO — estilos
-   ========================================= */
+/* ===== CALENDARIO - estilos ===== */
 .contenedor-calendario {
   max-width: 760px;
   margin: 0 auto;
@@ -3160,9 +3000,7 @@ footer {
   margin: 0;
 }
 
-/* =========================================
-   XX. RECUPERAR CONTRASEÑA
-   ========================================= */
+/* ===== RECUPERAR CONTRASEÑA ===== */
 .recuperar-exito {
   text-align: center;
   padding: 10px 0;
@@ -3218,9 +3056,7 @@ footer {
   transform: none;
 }
 
-/* =========================================
-   XX. FILTROS RESERVAS RECIBIDAS
-   ========================================= */
+/* ===== FILTROS RESERVAS RECIBIDAS ===== */
 .filtros-recibidas {
   display: flex;
   gap: 16px;
@@ -3267,9 +3103,7 @@ footer {
   box-shadow: 0 0 0 3px rgba(14,168,160,0.12);
 }
 
-/* =========================================
-   XX. SERVICIOS GRID GRANDE (publicar)
-   ========================================= */
+/* ===== SERVICIOS GRID GRANDE (publicar) ===== */
 .servicios-grid-grande {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 10px !important;
@@ -3315,9 +3149,7 @@ footer {
   transform: none;
   box-shadow: none;
 }
-/* =========================================
-   ANCHO UNIFICADO DE TODAS LAS PANTALLAS
-   ========================================= */
+/* ===== ANCHO UNIFICADO DE TODAS LAS PANTALLAS ===== */
 :root {
   --ancho-pagina: 100%;     /* para poner un tope: 1400px */
   --margen-pagina: 40px;    /* espacio a los costados */
@@ -3338,7 +3170,7 @@ footer {
   padding-right: var(--margen-pagina);
 }
 
-/* Sin el panel blanco que hereda de la regla genérica main {} */
+/* sin el fondo blanco del main */
 .catalogo-main,
 .detalle-alojamiento,
 .reservas-main,
@@ -3358,3 +3190,481 @@ footer {
   :root { --margen-pagina: 12px; }
 }
 
+
+/* ===== AGREGADOS ENTREGA 4 ===== */
+
+/* estrellas debajo del nombre, más grandes */
+.detalle-alojamiento #ratingAlojamiento {
+  margin: 4px 0 16px;
+}
+
+.detalle-alojamiento #ratingAlojamiento .rating {
+  gap: 10px;
+}
+
+.detalle-alojamiento #ratingAlojamiento .rating-estrellas {
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+.detalle-alojamiento #ratingAlojamiento .rating-valor {
+  font-size: 1.15rem;
+}
+
+/* visor de fotos */
+.visor-imagen {
+  gap: 16px;
+}
+
+.visor-contenido {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(100% - 140px);
+}
+
+.visor-imagen .visor-foto {
+  max-width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* cruz arriba a la derecha de la foto */
+.visor-imagen .cerrar-visor {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: none;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.visor-imagen .cerrar-visor:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.visor-flecha {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--blanco);
+  font-size: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.visor-flecha:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.visor-contador {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .visor-imagen { padding: 12px; gap: 6px; }
+  .visor-contenido { max-width: calc(100% - 90px); }
+  .visor-flecha { width: 40px; height: 40px; font-size: 18px; }
+}
+
+/* propiedad pausada */
+.propiedad-pausada .propiedad-foto img {
+  filter: grayscale(0.7);
+  opacity: 0.75;
+}
+
+.propiedad-aviso {
+  font-size: 0.85rem;
+  color: var(--gris-texto);
+  margin: 4px 0 8px;
+}
+
+.acciones-propiedad {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* que los botones queden igual que los links */
+.acciones-propiedad > a,
+.acciones-propiedad > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  margin: 0;
+  box-shadow: none;
+  font-family: inherit;
+}
+
+/* agregar servicio nuevo */
+.nuevo-servicio {
+  margin-top: 18px;
+}
+
+.nuevo-servicio label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--azul-profundo);
+  margin-bottom: 6px;
+}
+
+.nuevo-servicio-fila {
+  display: flex;
+  gap: 10px;
+}
+
+.nuevo-servicio-fila button {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.nuevo-servicio-fila input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--arena-fuerte);
+  border-radius: var(--radio-pequeno);
+  font-family: inherit;
+}
+
+/* subir fotos */
+.subir-fotos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 22px;
+  margin: 6px 0 8px;
+  border: 2px dashed var(--coral-claro);
+  border-radius: var(--radio-medio);
+  background: var(--coral-suave);
+  color: var(--azul-profundo);
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.subir-fotos:hover {
+  background: #d4e1ff;
+}
+
+.subir-fotos i {
+  font-size: 1.8rem;
+  color: var(--coral);
+}
+
+.subir-fotos span {
+  font-weight: 700;
+}
+
+.subir-fotos small {
+  color: var(--gris-texto);
+}
+
+.estado-subida {
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  color: var(--azul-profundo);
+  margin: 0 0 8px;
+}
+
+.preview-fotos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.preview-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radio-pequeno);
+  overflow: hidden;
+  background: var(--arena-fuerte);
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-portada {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--azul-profundo);
+  color: var(--blanco);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.preview-quitar {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--blanco);
+  font-size: 0.75rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.label-secundario {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gris-texto);
+  margin-bottom: 4px;
+}
+
+/* calendario de reserva, dias ocupados en rojo */
+.flatpickr-day.dia-ocupado,
+.flatpickr-day.dia-ocupado.flatpickr-disabled,
+.flatpickr-day.dia-ocupado.flatpickr-disabled:hover {
+  background: #fee2e2;
+  border-color: #fee2e2;
+  color: #b91c1c;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.leyenda-ocupado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -4px 0 14px;
+  font-size: 0.85rem;
+  color: var(--gris-texto);
+}
+
+.punto-ocupado {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+}
+
+/* calendario del anfitrion */
+.flatpickr-day.dia-reservado,
+.flatpickr-day.dia-reservado.flatpickr-disabled,
+.flatpickr-day.dia-reservado.flatpickr-disabled:hover {
+  background: #fee2e2;
+  border-color: #fee2e2;
+  color: #b91c1c;
+  cursor: not-allowed;
+}
+
+.flatpickr-day.dia-bloqueado,
+.flatpickr-day.dia-bloqueado.flatpickr-disabled,
+.flatpickr-day.dia-bloqueado.flatpickr-disabled:hover {
+  background: #e0e7ff;
+  border-color: #e0e7ff;
+  color: #3730a3;
+  cursor: not-allowed;
+}
+
+.flatpickr-day.inRange,
+.flatpickr-day.inRange:hover {
+  background: var(--amarillo-sol-suave);
+  border-color: var(--amarillo-sol-suave);
+  box-shadow: -5px 0 0 var(--amarillo-sol-suave), 5px 0 0 var(--amarillo-sol-suave);
+}
+
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: var(--amarillo-sol);
+  border-color: var(--amarillo-sol);
+  color: var(--azul-profundo);
+}
+
+#calendarioBloqueo + .flatpickr-calendar.inline {
+  margin: 0 auto 20px;
+  box-shadow: none;
+  border: 1px solid var(--arena-fuerte);
+}
+
+.texto-ayuda {
+  font-size: 0.88rem;
+  color: var(--gris-texto);
+  margin-bottom: 14px;
+}
+
+.seleccion-bloqueo {
+  font-weight: 600;
+  color: var(--azul-profundo);
+  margin-bottom: 10px;
+}
+
+.lista-bloqueos {
+  margin-top: 20px;
+}
+
+.item-bloqueo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--arena-fuerte);
+}
+
+.item-bloqueo:last-child {
+  border-bottom: none;
+}
+
+.item-bloqueo strong {
+  color: var(--azul-profundo);
+}
+
+.item-bloqueo p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--gris-texto);
+}
+
+/* recuperar contraseña */
+.recuperar-codigo {
+  text-align: center;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: var(--radio-medio);
+  background: var(--amarillo-sol-suave);
+  color: var(--azul-profundo);
+  font-size: 0.9rem;
+}
+
+.recuperar-codigo-valor {
+  margin: 8px 0 4px;
+  font-family: var(--font-titulos);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+
+/* cancelar reserva (anfitrion) */
+.form-cancelacion {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* para que funcione hidden */
+.form-cancelacion[hidden],
+.btn-abrir-cancelacion[hidden] {
+  display: none;
+}
+
+.form-cancelacion label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul-profundo);
+}
+
+.form-cancelacion textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--arena-fuerte);
+  border-radius: var(--radio-pequeno);
+  font-family: inherit;
+  resize: vertical;
+}
+
+/* paneles de mis reservas */
+.reserva .panel-reserva {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--arena-fuerte);
+}
+
+.reserva .panel-reserva[hidden] {
+  display: none;
+}
+
+.panel-reserva h4 {
+  font-size: 0.95rem;
+  color: var(--azul-profundo);
+  margin: 0;
+}
+
+.panel-reserva label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul-profundo);
+}
+
+.panel-fechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.panel-fechas label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.panel-reserva input,
+.panel-reserva textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--arena-fuerte);
+  border-radius: var(--radio-pequeno);
+  font-family: inherit;
+}
+
+.acciones-panel {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.acciones-panel .btn-accion {
+  margin: 0;
+}
+
+.motivo-cancelacion {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #991b1b;
+}

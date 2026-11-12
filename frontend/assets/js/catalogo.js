@@ -1,27 +1,17 @@
-﻿// catalogo.js — Frontend Mockup PP1 2026
+﻿// catalogo.js
 const contenedorCatalogo = document.querySelector("#contenedor-catalogo");
 const formFiltros        = document.querySelector("#formFiltros");
 const inputUbicacion     = document.querySelector("#ubicacion");
 const inputTarifaMin     = document.querySelector("#tarifa-minima");
 const inputTarifaMax     = document.querySelector("#tarifa-maxima");
 const mensajeFiltros     = document.querySelector("#mensaje-filtros");
+const inputLlegada       = document.querySelector("#fecha-entrada");
+const inputSalida        = document.querySelector("#fecha-salida");
 
 //acceso a la API
 const API_URL = `${API_BASE}/hospedajes`;
 
 let alojamientos = [];
-
-const iconosServicios = {
-  "Wi-Fi":               "bi-wifi",
-  "Cocina":              "bi-cup-hot",
-  "Pileta":              "bi-water",
-  "Estacionamiento":     "bi-p-circle",
-  "Desayuno":            "bi-cup-hot-fill",
-  "Parrilla":            "bi-fire",
-  "Vista panorámica":    "bi-binoculars",
-  "Aire acondicionado":  "bi-snow2",
-  "TV":                  "bi-tv"
-};
 
 function crearBadge(alojamiento) {
   if (alojamiento.destacado === "oferta") return `<span class="badge-flotante badge-oferta">Oferta especial</span>`;
@@ -101,9 +91,62 @@ function renderizarCatalogo(lista) {
   contenedorCatalogo.innerHTML = lista.map(crearTarjeta).join("");
 }
 
+function adaptarHospedaje(item) {
+  return {
+    id:           item.id,
+    nombre:       item.nombre,
+    ubicacion:    item.ciudad,
+    precioNoche:  item.precioPorNoche,
+    imagen:       item.imagen || null,
+    imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
+    calificacion: item.calificacion || null,
+    resenas:      item.resenas || 0,
+    servicios:    item.servicios || [],
+    destacado:    item.destacado || null
+  };
+}
+
+function hoyISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+// no deja elegir fechas pasadas ni una salida antes de la llegada
+if (inputLlegada && inputSalida) {
+  inputLlegada.min = hoyISO();
+  inputSalida.min  = hoyISO();
+  inputLlegada.addEventListener("change", () => {
+    if (inputLlegada.value) inputSalida.min = inputLlegada.value;
+  });
+}
+
+// con fechas le pedimos al back solo los libres, sin fechas usamos la lista que ya tenemos
+async function buscarPorFechas(llegada, salida) {
+  if (!llegada && !salida) return alojamientos;
+  if (!llegada || !salida) throw new Error("Elegí la fecha de llegada y la de salida.");
+  if (llegada < hoyISO()) throw new Error("La llegada no puede ser antes de hoy.");
+  if (salida <= llegada) throw new Error("La salida tiene que ser después de la llegada.");
+
+  const respuesta = await fetch(`${API_URL}?entrada=${llegada}&salida=${salida}`);
+  if (!respuesta.ok) {
+    const datos = await respuesta.json().catch(() => ({}));
+    throw new Error(datos.mensaje || "No se pudo buscar por fechas.");
+  }
+  return (await respuesta.json()).map(adaptarHospedaje);
+}
+
 if (formFiltros) {
-  formFiltros.addEventListener("submit", function (e) {
+  formFiltros.addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    let base;
+    try {
+      base = await buscarPorFechas(inputLlegada?.value, inputSalida?.value);
+    } catch (error) {
+      contenedorCatalogo.innerHTML = "";
+      mostrarMensajeFiltros(error.message, "error");
+      return;
+    }
 
     const ubicacionTexto = inputUbicacion.value.toLowerCase().trim();
     const min = Number(inputTarifaMin.value) || 0;
@@ -112,7 +155,7 @@ if (formFiltros) {
     const serviciosMarcados = [...document.querySelectorAll('.servicio-check input[type="checkbox"]:checked')]
       .map((cb) => cb.value);
 
-    const filtrados = alojamientos.filter((a) => {
+    const filtrados = base.filter((a) => {
       const coincideUbicacion  = !ubicacionTexto || a.ubicacion.toLowerCase().includes(ubicacionTexto);
       const coincidePrecio     = a.precioNoche >= min && a.precioNoche <= max;
       const coincideServicios  = serviciosMarcados.length === 0 ||
@@ -124,6 +167,27 @@ if (formFiltros) {
   });
 }
 
+// carga los servicios para el filtro
+async function cargarFiltroServicios() {
+  const contenedor = document.querySelector("#filtroServicios");
+  if (!contenedor) return;
+  try {
+    const respuesta = await fetch(`${API_BASE}/servicios`);
+    if (!respuesta.ok) throw new Error("Error de red: " + respuesta.status);
+    const servicios = await respuesta.json();
+    contenedor.replaceChildren(...servicios.map((nombre) => {
+      const label = document.createElement("label");
+      label.className = "servicio-check m-0";
+      label.innerHTML = `<input type="checkbox"> <span><i class="bi ${iconoServicio(nombre)}"></i> </span>`;
+      label.querySelector("input").value = nombre;
+      label.querySelector("span").append(nombre);
+      return label;
+    }));
+  } catch (error) {
+    console.error("No se pudieron cargar los servicios:", error);
+  }
+}
+
 async function cargarCatalogo() {
   if (!contenedorCatalogo) return;
   contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-info py-4"><i class="bi bi-arrow-repeat spin"></i> Cargando alojamientos...</p>`;
@@ -133,18 +197,7 @@ async function cargarCatalogo() {
     if (!respuesta.ok) throw new Error("Error al cargar catálogo");
     const datosApi = await respuesta.json();
 
-    alojamientos = datosApi.map((item) => ({
-      id:           item.id,
-      nombre:       item.nombre,
-      ubicacion:    item.ciudad,
-      precioNoche:  item.precioPorNoche,
-      imagen:       item.imagen || null,
-      imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
-      calificacion: item.calificacion || null,
-      resenas:      item.resenas || 0,
-      servicios:    item.servicios || [],
-      destacado:    item.destacado || null
-    }));
+    alojamientos = datosApi.map(adaptarHospedaje);
 
     renderizarCatalogo(alojamientos);
   } catch (error) {
@@ -154,4 +207,5 @@ async function cargarCatalogo() {
   }
 }
 
+cargarFiltroServicios();
 cargarCatalogo();

@@ -8,4 +8,7 @@ import java.util.List;
 public interface HospedajeRepository extends JpaRepository<Hospedaje, Long> {
 
     List<Hospedaje> findByAnfitrionIdOrderByNombreAsc(Long anfitrionId);
+
+    // para el catalogo
+    List<Hospedaje> findByActivoTrue();
 }

@@ -7,6 +7,7 @@ import com.openlodge.openlodge.model.Hospedaje;
 import com.openlodge.openlodge.model.Reserva;
 import com.openlodge.openlodge.model.TipoUsuario;
 import com.openlodge.openlodge.model.Usuario;
+import com.openlodge.openlodge.repository.BloqueoRepository;
 import com.openlodge.openlodge.repository.HospedajeRepository;
 import com.openlodge.openlodge.repository.ReservaRepository;
 import com.openlodge.openlodge.repository.UsuarioRepository;
@@ -28,15 +29,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Regla de negocio: un alojamiento no se puede reservar en fechas que se pisan
- * con otra reserva activa. Se prueba el servicio solo, sin base de datos
- * (los repositorios son simulados con Mockito).
+ * Prueba la regla de que no se puede reservar en fechas ocupadas.
+ * Los repositorios estan simulados con Mockito, no usa la base.
  */
 class ReservaServiceTest {
 
     private ReservaRepository reservaRepository;
     private HospedajeRepository hospedajeRepository;
     private UsuarioRepository usuarioRepository;
+    private BloqueoRepository bloqueoRepository;
     private ReservaService service;
 
     private final LocalDate entrada = LocalDate.now().plusDays(10);
@@ -47,7 +48,9 @@ class ReservaServiceTest {
         reservaRepository   = mock(ReservaRepository.class);
         hospedajeRepository = mock(HospedajeRepository.class);
         usuarioRepository   = mock(UsuarioRepository.class);
-        service = new ReservaService(reservaRepository, hospedajeRepository, usuarioRepository);
+        bloqueoRepository   = mock(BloqueoRepository.class);
+        service = new ReservaService(reservaRepository, hospedajeRepository, usuarioRepository,
+                bloqueoRepository);
 
         Usuario huesped = new Usuario();
         huesped.setId(1L);
@@ -70,6 +73,18 @@ class ReservaServiceTest {
     @Test
     void rechazaReservaSiLasFechasSePisanConOtraActiva() {
         when(reservaRepository.hayReservaSuperpuesta(5L, entrada, salida)).thenReturn(true);
+
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> service.crear(new CrearReservaRequest(5L, 1L, entrada, salida, 2)));
+
+        assertEquals(HttpStatus.CONFLICT, error.getStatusCode());
+        verify(reservaRepository, never()).save(any());
+    }
+
+    @Test
+    void rechazaReservaSiElAnfitrionBloqueoEsasFechas() {
+        when(reservaRepository.hayReservaSuperpuesta(5L, entrada, salida)).thenReturn(false);
+        when(bloqueoRepository.hayBloqueoSuperpuesto(5L, entrada, salida)).thenReturn(true);
 
         ResponseStatusException error = assertThrows(ResponseStatusException.class,
                 () -> service.crear(new CrearReservaRequest(5L, 1L, entrada, salida, 2)));

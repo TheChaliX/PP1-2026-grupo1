@@ -1,6 +1,6 @@
 ﻿/**
- * modal.js — Modal emergente reutilizable
- * PP1 2026 — Grupo 1
+ * modal.js - modal reutilizable
+ * PP1 2026 - Grupo 1
  *
  * Uso:
  *   mostrarModal("Mensaje de error", "error")
@@ -8,7 +8,7 @@
  */
 
 function mostrarModal(mensaje, tipo = "error") {
-  // Eliminar modal anterior si existe
+  // borra el modal anterior si hay uno
   const anterior = document.querySelector(".modal-overlay");
   if (anterior) anterior.remove();
 
@@ -32,7 +32,7 @@ function mostrarModal(mensaje, tipo = "error") {
   document.body.appendChild(overlay);
     overlay.querySelector(".modal-mensaje").textContent = mensaje;
 
-  // Forzar reflow para que la animación se dispare
+  // para que arranque la animacion
   requestAnimationFrame(() => overlay.classList.add("modal-visible"));
 
   const cerrar = () => {

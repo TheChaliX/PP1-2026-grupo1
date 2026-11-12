@@ -9,4 +9,8 @@ import java.util.List;
 public interface ServicioRepository extends JpaRepository<Servicio, Long> {
 
     List<Servicio> findByNombreIn(Collection<String> nombres);
+
+    List<Servicio> findAllByOrderByNombreAsc();
+
+    boolean existsByNombreIgnoreCase(String nombre);
 }

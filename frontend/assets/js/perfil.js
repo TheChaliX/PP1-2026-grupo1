@@ -1,6 +1,6 @@
-﻿// perfil.js — PP1 2026 Grupo 1
+﻿// perfil.js
 
-// Proteger ruta y cargar datos del usuario activo
+// carga los datos del usuario
 const usuario = requerirSesion();
 if (usuario) {
   const inputNombre = document.getElementById("nombre");
@@ -9,7 +9,7 @@ if (usuario) {
   if (inputNombre) inputNombre.value = usuario.nombre || "";
 }
 
-// ── Validación del formulario ──────────────────────────────────────────────
+// validación del formulario
 const formPerfil  = document.getElementById("formPerfil");
 const inputNombre = document.getElementById("nombre");
 const inputPass   = document.getElementById("password");
@@ -46,7 +46,7 @@ if (formPerfil) {
       hayError = true;
     }
 
-    // Validar contraseña solo si el usuario escribió algo
+    // la contraseña solo se valida si escribio algo
     if (pass || passC) {
       if (pass.length < 8) {
         marcarError(inputPass, errPass, "La nueva contraseña debe tener al menos 8 caracteres.");

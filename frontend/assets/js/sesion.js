@@ -1,20 +1,41 @@
 ﻿/**
- * sesion.js — Gestión de Sesión (Front-end)
- * PP1 2026 — Grupo 1
+ * sesion.js - manejo de la sesion
+ * PP1 2026 - Grupo 1
  *
- * La validación del usuario la hace el backend (POST /api/auth/login).
- * Acá solo se guardan los datos del usuario que devolvió el servidor en
- * sessionStorage, para poder navegar entre pantallas según el rol.
+ * El login lo valida el backend, aca solo guardamos el usuario
+ * en sessionStorage para saber el rol.
  */
 
-// Dirección del backend: se cambia solo acá (sesion.js se carga en todas las páginas)
+// url del backend
 const API_BASE = "http://localhost:8080/api";
 
-// ── Sesión activa ─────────────────────────────────────────────────────────────
+// iconos de los servicios
+const iconosServicios = {
+  "Wi-Fi":               "bi-wifi",
+  "Cocina":              "bi-cup-hot",
+  "Pileta":              "bi-water",
+  "Estacionamiento":     "bi-p-circle",
+  "Desayuno":            "bi-cup-hot-fill",
+  "Parrilla":            "bi-fire",
+  "Vista panorámica":    "bi-binoculars",
+  "Aire acondicionado":  "bi-snow2",
+  "TV":                  "bi-tv",
+  "Calefacción":         "bi-thermometer-sun",
+  "Lavandería":          "bi-bag-heart",
+  "Jacuzzi":             "bi-droplet-half",
+  "Mascotas permitidas": "bi-heart",
+  "Apto para niños":     "bi-emoji-smile",
+  "Seguridad 24h":       "bi-shield-check",
+  "Gym":                 "bi-bicycle"
+};
 
+function iconoServicio(nombre) {
+  return iconosServicios[nombre] || "bi-check-circle";
+}
+
+// sesión activa
 function iniciarSesion(datos, email) {
-  // Uso nuevo: iniciarSesion(usuarioDeLaApi)
-  // Uso viejo (por compatibilidad): iniciarSesion(rol, email)
+  // se puede llamar con el usuario de la api o con (rol, email)
   const usuario = (typeof datos === "object" && datos !== null)
     ? {
         id:       datos.id,
@@ -26,7 +47,7 @@ function iniciarSesion(datos, email) {
       }
     : { nombre: "Usuario", email: email, rol: datos };
 
-  // Se guarda solo mientras la pestaña esté abierta
+  // dura mientras la pestaña este abierta
   sessionStorage.setItem("usuarioActivo", JSON.stringify(usuario));
 }
 
@@ -39,8 +60,7 @@ function cerrarSesion() {
   window.location.href = "login.html";
 }
 
-// ── Protección de rutas ───────────────────────────────────────────────────────
-
+// protección de rutas
 function requerirSesion(rolRequerido) {
   const usuario = obtenerUsuarioActivo();
 
@@ -61,8 +81,7 @@ function requerirSesion(rolRequerido) {
   return usuario;
 }
 
-// ── Cambio de modo (huésped <-> anfitrión) ────────────────────────────────────
-
+// cambio de modo
 async function cambiarModo() {
   const usuario = obtenerUsuarioActivo();
 

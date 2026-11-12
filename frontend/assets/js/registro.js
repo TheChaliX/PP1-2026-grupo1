@@ -1,4 +1,4 @@
-﻿// registro.js — PP1 2026 Grupo 1
+﻿// registro.js
 
 const API_AUTH_URL = `${API_BASE}/auth`;
 
@@ -49,7 +49,7 @@ if (registerForm) {
     const email           = inputEmail.value.trim();
     const password        = inputPassword.value;
     const confirmPassword = inputConfirmPassword.value;
-       // Toda cuenta nueva arranca como huésped; después se puede cambiar de modo desde la barra
+       // todos arrancan como huesped, despues pueden cambiar de modo
     const rol             = "huesped";
 
     let hayError = false;

@@ -21,7 +21,9 @@ public record ReservaDto(
         BigDecimal importeTotal,
         String estado,
         LocalDateTime fechaCreacion,
-        String huesped
+        String huesped,
+        String motivoCancelacion,
+        String canceladaPor
 ) {
     public static ReservaDto desde(Reserva r) {
         Hospedaje h = r.getHospedaje();
@@ -38,7 +40,9 @@ public record ReservaDto(
                 r.getImporteTotal(),
                 r.getEstado().name(),
                 r.getFechaCreacion(),
-                r.getUsuario().getNombre() + " " + r.getUsuario().getApellido()
+                r.getUsuario().getNombre() + " " + r.getUsuario().getApellido(),
+                r.getMotivoCancelacion(),
+                r.getCanceladaPor()
         );
     }
 }

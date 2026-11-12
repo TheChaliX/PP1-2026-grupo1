@@ -1,7 +1,9 @@
 package com.openlodge.openlodge.controller;
 
 import com.openlodge.openlodge.dto.LoginRequest;
+import com.openlodge.openlodge.dto.RecuperarRequest;
 import com.openlodge.openlodge.dto.RegistroRequest;
+import com.openlodge.openlodge.dto.RestablecerRequest;
 import com.openlodge.openlodge.dto.UsuarioDto;
 import com.openlodge.openlodge.service.AutenticacionService;
 import jakarta.validation.Valid;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -31,5 +35,17 @@ public class AutenticacionController {
     @PostMapping("/login")
     public UsuarioDto login(@Valid @RequestBody LoginRequest request) {
         return service.login(request);
+    }
+
+    // recuperar contraseña: devuelve el codigo porque no mandamos mails
+    @PostMapping("/recuperar")
+    public Map<String, String> recuperar(@Valid @RequestBody RecuperarRequest request) {
+        return Map.of("codigo", service.generarCodigoRecuperacion(request));
+    }
+
+    @PostMapping("/restablecer")
+    public Map<String, String> restablecer(@Valid @RequestBody RestablecerRequest request) {
+        service.restablecerPassword(request);
+        return Map.of("mensaje", "Contraseña actualizada");
     }
 }

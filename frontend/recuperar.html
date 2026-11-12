@@ -15,10 +15,10 @@
     <div class="auth-header">
       <div class="auth-logo"><i class="bi bi-envelope-open-heart-fill"></i></div>
       <h1>Recuperar contraseña</h1>
-      <p>Ingresá tu email y te enviaremos las instrucciones</p>
+      <p id="textoPaso">Ingresá el email de tu cuenta para recibir un código</p>
     </div>
 
-    <!-- Paso 1: ingresar email -->
+    <!-- paso 1 -->
     <form id="formRecuperar" novalidate>
       <div class="campo-grupo">
         <label for="email"><i class="bi bi-envelope"></i> Email de tu cuenta</label>
@@ -30,20 +30,49 @@
       </div>
 
       <button type="submit" class="btn-auth">
-        <i class="bi bi-send-fill"></i> Enviar instrucciones
+        <i class="bi bi-send-fill"></i> Pedir código
       </button>
     </form>
 
-    <!-- Paso 2: mensaje de éxito (oculto hasta enviar) -->
-    <div id="mensajeEnviado" class="recuperar-exito" style="display: none;">
-      <div class="recuperar-exito-icono"><i class="bi bi-check-circle-fill"></i></div>
-      <h2>¡Correo enviado!</h2>
-      <p>Si existe una cuenta con ese email, recibirás un correo con el enlace para restablecer tu contraseña en los próximos minutos.</p>
-      <p style="font-size: 0.85rem; color: var(--gris-texto);">Revisá también tu carpeta de spam.</p>
-      <a href="login.html" class="btn-reserve" style="margin-top: 20px; display: inline-flex;">
-        <i class="bi bi-arrow-left"></i> Volver al inicio de sesión
-      </a>
-    </div>
+    <!-- paso 2 -->
+    <form id="formRestablecer" novalidate style="display: none;">
+      <div class="recuperar-codigo">
+        <p><i class="bi bi-info-circle-fill"></i> El envío de correos todavía no está activo, así que te mostramos el código acá:</p>
+        <p class="recuperar-codigo-valor" id="codigoGenerado"></p>
+        <small>Vence en 10 minutos.</small>
+      </div>
+
+      <div class="campo-grupo">
+        <label for="codigo"><i class="bi bi-key"></i> Código</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-123 input-icono"></i>
+          <input type="text" id="codigo" name="codigo" inputmode="numeric" maxlength="6" placeholder="6 dígitos" autocomplete="one-time-code">
+        </div>
+        <span class="campo-error" id="err-codigo"></span>
+      </div>
+
+      <div class="campo-grupo">
+        <label for="password"><i class="bi bi-lock"></i> Nueva contraseña</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-lock-fill input-icono"></i>
+          <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+        </div>
+        <span class="campo-error" id="err-password"></span>
+      </div>
+
+      <div class="campo-grupo">
+        <label for="confirmPassword"><i class="bi bi-lock"></i> Repetir contraseña</label>
+        <div class="input-icono-wrapper">
+          <i class="bi bi-lock-fill input-icono"></i>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repetí la nueva contraseña" autocomplete="new-password">
+        </div>
+        <span class="campo-error" id="err-confirmPassword"></span>
+      </div>
+
+      <button type="submit" class="btn-auth">
+        <i class="bi bi-check2-circle"></i> Cambiar contraseña
+      </button>
+    </form>
 
     <p class="auth-separador"><a href="login.html"><i class="bi bi-arrow-left"></i> Volver al login</a></p>
   </main>

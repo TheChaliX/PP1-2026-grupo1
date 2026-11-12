@@ -24,7 +24,8 @@ public record HospedajeDto(
         Integer resenas,
         String destacado,
         String anfitrion,
-        Long anfitrionId
+        Long anfitrionId,
+        boolean activo
 ) {
     public static HospedajeDto desde(Hospedaje h) {
         return new HospedajeDto(
@@ -45,7 +46,8 @@ public record HospedajeDto(
                 h.getResenas(),
                 h.getDestacado(),
                 h.getAnfitrion().getNombre() + " " + h.getAnfitrion().getApellido(),
-                h.getAnfitrion().getId()
+                h.getAnfitrion().getId(),
+                h.isActivo()
         );
     }
 }

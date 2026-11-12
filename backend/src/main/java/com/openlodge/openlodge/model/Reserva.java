@@ -64,6 +64,13 @@ public class Reserva {
     @Column(nullable = false, length = 20)
     private EstadoReserva estado = EstadoReserva.ACTIVA;
 
+    // se completan al cancelar
+    @Column(length = 500)
+    private String motivoCancelacion;
+
+    @Column(length = 20)
+    private String canceladaPor;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;

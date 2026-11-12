@@ -1,4 +1,4 @@
-﻿// detalle.js — PP1 2026 Grupo 1
+﻿// detalle.js
 const parametrosURL  = new URLSearchParams(window.location.search);
 const idAlojamiento  = parametrosURL.get("id");
 
@@ -19,25 +19,6 @@ const API_RESERVAS_URL = `${API_BASE}/reservas`;
 const MAX_NOCHES = 30;
 let capacidadAlojamiento = null;
 
-const iconosServicios = {
-  "Wi-Fi":              "bi-wifi",
-  "Cocina":             "bi-cup-hot",
-  "Pileta":             "bi-water",
-  "Estacionamiento":    "bi-p-circle",
-  "Desayuno":           "bi-cup-hot-fill",
-  "Parrilla":           "bi-fire",
-  "Vista panorámica":   "bi-binoculars",
-  "Aire acondicionado": "bi-snow2",
-  "TV":                 "bi-tv",
-  "Calefacción":         "bi-thermometer-sun",
-  "Lavandería":          "bi-bag-heart",
-  "Jacuzzi":             "bi-droplet-half",
-  "Mascotas permitidas": "bi-heart",
-  "Apto para niños":     "bi-emoji-smile",
-  "Seguridad 24h":       "bi-shield-check",
-  "Gym":                 "bi-bicycle"
-};
-
 const usuario = obtenerUsuarioActivo();
 const seccionReserva = document.querySelector(".disponibilidad");
 if (seccionReserva) {
@@ -48,17 +29,12 @@ if (seccionReserva) {
   }
 }
 
-// ── Utilidades ─────────────────────────────────────────────────────────────
+// utilidades
 function hoyISO() {
   const d = new Date();
   const mes = String(d.getMonth() + 1).padStart(2, "0");
   const dia = String(d.getDate()).padStart(2, "0");
   return `${d.getFullYear()}-${mes}-${dia}`;
-}
-
-function formatearFecha(iso) {
-  const [anio, mes, dia] = iso.split("-");
-  return `${dia}/${mes}/${anio}`;
 }
 
 function crearRating(alojamiento) {
@@ -75,26 +51,90 @@ function crearListaServicios(servicios) {
   elListaServicios.innerHTML = servicios.map((s) => `<li><i class="bi ${iconosServicios[s] || "bi-check-circle"}"></i> ${s}</li>`).join("");
 }
 
-// ── Fechas ocupadas (reservas activas del alojamiento) ─────────────────────
-async function cargarOcupacion() {
-  const elLista = document.querySelector("#listaReservas");
-  if (!elLista) return;
+// fechas ocupadas
+// guardamos las noches ocupadas (el dia de salida queda libre)
+let nochesOcupadas = new Set();
 
+function fechaISO(d) {
+  const mes = String(d.getMonth() + 1).padStart(2, "0");
+  const dia = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${mes}-${dia}`;
+}
+
+function sumarDias(iso, dias) {
+  const [anio, mes, dia] = iso.split("-").map(Number);
+  return fechaISO(new Date(anio, mes - 1, dia + dias));
+}
+
+async function cargarOcupacion() {
   try {
     const respuesta = await fetch(`${API_RESERVAS_URL}/hospedaje/${idAlojamiento}/ocupacion`);
     if (!respuesta.ok) throw new Error("Error de red: " + respuesta.status);
     const ocupadas = await respuesta.json();
 
-    elLista.innerHTML = ocupadas.length === 0
-      ? "<p class='text-muted'>Sin reservas por ahora: todas las fechas están disponibles.</p>"
-      : ocupadas.map((o) => `<div class="reserva-previa"><span><i class="bi bi-calendar-event"></i> ${formatearFecha(o.fechaCheckIn)} → ${formatearFecha(o.fechaCheckOut)}</span></div>`).join("");
+    nochesOcupadas = new Set();
+    ocupadas.forEach((o) => {
+      for (let noche = o.fechaCheckIn; noche < o.fechaCheckOut; noche = sumarDias(noche, 1)) {
+        nochesOcupadas.add(noche);
+      }
+    });
+    actualizarCalendarios();
   } catch (error) {
     console.error("Error al cargar las fechas ocupadas:", error);
-    elLista.innerHTML = "<p class='text-muted'>No se pudieron cargar las fechas ocupadas.</p>";
   }
 }
 
-// ── Detalle del alojamiento ────────────────────────────────────────────────
+// visor de fotos
+function abrirVisor(imagenes, indiceInicial, nombre) {
+  let indice = indiceInicial;
+  const variasFotos = imagenes.length > 1;
+
+  const visor = document.createElement("div");
+  visor.className = "visor-imagen";
+  visor.innerHTML = `
+    ${variasFotos ? `<button class="visor-flecha visor-anterior" aria-label="Foto anterior"><i class="bi bi-chevron-left"></i></button>` : ""}
+    <div class="visor-contenido">
+      <img class="visor-foto" alt="">
+      <button class="cerrar-visor" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+      ${variasFotos ? `<span class="visor-contador"></span>` : ""}
+    </div>
+    ${variasFotos ? `<button class="visor-flecha visor-siguiente" aria-label="Foto siguiente"><i class="bi bi-chevron-right"></i></button>` : ""}
+  `;
+
+  const foto     = visor.querySelector(".visor-foto");
+  const contador = visor.querySelector(".visor-contador");
+
+  function mostrar(nuevoIndice) {
+    // si llega al final vuelve a la primera
+    indice = (nuevoIndice + imagenes.length) % imagenes.length;
+    foto.src = imagenes[indice];
+    foto.alt = `${nombre || "Alojamiento"} - foto ${indice + 1}`;
+    if (contador) contador.textContent = `${indice + 1} / ${imagenes.length}`;
+  }
+
+  function cerrar() {
+    visor.remove();
+    document.removeEventListener("keydown", teclas);
+  }
+
+  function teclas(e) {
+    if (e.key === "Escape") cerrar();
+    if (variasFotos && e.key === "ArrowLeft")  mostrar(indice - 1);
+    if (variasFotos && e.key === "ArrowRight") mostrar(indice + 1);
+  }
+
+  visor.addEventListener("click", (e) => {
+    if (e.target.closest(".visor-anterior"))  return mostrar(indice - 1);
+    if (e.target.closest(".visor-siguiente")) return mostrar(indice + 1);
+    if (e.target === visor || e.target.closest(".cerrar-visor")) cerrar();
+  });
+  document.addEventListener("keydown", teclas);
+
+  mostrar(indice);
+  document.body.appendChild(visor);
+}
+
+// detalle del alojamiento
 async function cargarDetalle() {
   if (elNombre) elNombre.textContent = "Cargando...";
   try {
@@ -127,6 +167,11 @@ async function cargarDetalle() {
 
     capacidadAlojamiento = encontrado.capacidad;
 
+    // si esta pausado no se puede reservar
+    if (item.activo === false && seccionReserva) {
+      seccionReserva.innerHTML = `<div class="aviso-sesion aviso-info"><p><i class="bi bi-pause-circle-fill"></i> Este alojamiento está pausado por el anfitrión y no recibe reservas por el momento.</p></div>`;
+    }
+
     if (elNombre)      elNombre.textContent = encontrado.nombre;
     if (elDescripcion) elDescripcion.textContent = encontrado.descripcion || "";
     if (elUbicacion)   elUbicacion.textContent = encontrado.ubicacion || "";
@@ -137,9 +182,7 @@ async function cargarDetalle() {
     const galeria = document.querySelector(".galeria");
 
     if (galeria) {
-      // Si el alojamiento todavía no tiene cargado el array "imagenes"
-      // (galería completa), usamos su foto de portada ("imagen") como
-      // única foto en vez de dejar la galería vacía.
+      // si no tiene galeria usamos la portada
       const todasLasImagenes = (encontrado.imagenes && encontrado.imagenes.length)
         ? encontrado.imagenes
         : (encontrado.imagen ? [encontrado.imagen] : []);
@@ -163,31 +206,12 @@ async function cargarDetalle() {
           img.style.display = "none";
         });
 
-        img.addEventListener("click", () => {
-          const visor = document.createElement("div");
-          visor.className = "visor-imagen";
-          visor.innerHTML = `
-            <button class="cerrar-visor">
-              <i class="bi bi-x-lg"></i>
-            </button>
-            <img src="${imagen}" alt="${img.alt}">
-          `;
-
-          document.body.appendChild(visor);
-
-          visor.addEventListener("click", (e) => {
-            if (e.target === visor || e.target.closest(".cerrar-visor")) {
-              visor.remove();
-            }
-          });
-        });
+        img.addEventListener("click", () => abrirVisor(todasLasImagenes, index, encontrado.nombre));
 
         galeria.appendChild(img);
       });
 
-      // Si hay más de 5 fotos, mostramos un "+N" sobre la última
-      // miniatura (en la misma celda de la grilla) en vez de agregar
-      // más casilleros.
+      // si hay mas de 5 fotos mostramos "+N" en la ultima
       if (fotosRestantes > 0) {
         const ultimaImagen = galeria.lastElementChild;
         const contadorExtra = document.createElement("div");
@@ -211,7 +235,7 @@ async function cargarDetalle() {
   }
 }
 
-// ── Formulario de reserva ──────────────────────────────────────────────────
+// formulario de reserva
 const inputEntrada = document.querySelector("#entrada");
 const inputSalida = document.querySelector("#salida");
 const inputHuespedes = document.querySelector("#huespedes");
@@ -220,22 +244,80 @@ const errorEntrada = document.querySelector("#err-entrada");
 const errorSalida = document.querySelector("#err-salida");
 const errorHuespedes = document.querySelector("#err-huespedes");
 
-// No se puede entrar antes de hoy
-if (inputEntrada) inputEntrada.min = hoyISO();
-if (inputSalida) inputSalida.min = hoyISO();
+// calendarios con flatpickr, los dias ocupados no se pueden elegir
+let calendarioEntrada = null;
+let calendarioSalida  = null;
 
-// La fecha de salida no puede ser anterior ni igual a la entrada
-if (inputEntrada && inputSalida) {
-  inputEntrada.addEventListener("change", function () {
-    if (inputEntrada.value) {
-      inputSalida.min = inputEntrada.value;
+function marcarDiaOcupado(_fechas, _texto, _instancia, diaElem) {
+  if (nochesOcupadas.has(fechaISO(diaElem.dateObj))) {
+    diaElem.classList.add("dia-ocupado");
+    diaElem.title = "Ocupado";
+  }
+}
 
-      // Si la salida ya elegida es inválida, la limpiamos
-      if (inputSalida.value && inputSalida.value <= inputEntrada.value) {
-        inputSalida.value = "";
-      }
-    }
+// la salida no puede pasar la proxima fecha ocupada
+function limiteSalida(entradaISO) {
+  let limite = sumarDias(entradaISO, MAX_NOCHES);
+  nochesOcupadas.forEach((noche) => {
+    if (noche > entradaISO && noche < limite) limite = noche;
   });
+  return limite;
+}
+
+function ajustarSalida() {
+  if (!calendarioSalida) return;
+  const entrada = inputEntrada.value;
+  if (!entrada) {
+    calendarioSalida.set("minDate", sumarDias(hoyISO(), 1));
+    calendarioSalida.set("maxDate", null);
+    return;
+  }
+  calendarioSalida.set("minDate", sumarDias(entrada, 1));
+  calendarioSalida.set("maxDate", limiteSalida(entrada));
+
+  // si la salida ya no sirve la borramos
+  const salida = inputSalida.value;
+  if (salida && (salida <= entrada || salida > limiteSalida(entrada))) {
+    calendarioSalida.clear();
+  }
+}
+
+function actualizarCalendarios() {
+  if (calendarioEntrada) {
+    calendarioEntrada.set("disable", [(fecha) => nochesOcupadas.has(fechaISO(fecha))]);
+    calendarioEntrada.redraw();
+  }
+  if (calendarioSalida) {
+    ajustarSalida();
+    calendarioSalida.redraw();
+  }
+}
+
+if (inputEntrada && inputSalida && typeof flatpickr === "function") {
+  const opcionesComunes = {
+    locale:     "es",
+    dateFormat: "Y-m-d",
+    altInput:   true,
+    altFormat:  "d/m/Y",   // formato que se ve
+    disableMobile: true,
+    onDayCreate: marcarDiaOcupado
+  };
+
+  calendarioEntrada = flatpickr(inputEntrada, {
+    ...opcionesComunes,
+    minDate: "today",
+    disable: [(fecha) => nochesOcupadas.has(fechaISO(fecha))],
+    onChange: ajustarSalida
+  });
+
+  calendarioSalida = flatpickr(inputSalida, {
+    ...opcionesComunes,
+    minDate: sumarDias(hoyISO(), 1)
+  });
+} else if (inputEntrada && inputSalida) {
+  // por si no carga flatpickr
+  inputEntrada.min = hoyISO();
+  inputSalida.min  = hoyISO();
 }
 
 if (formReserva && usuario && usuario.rol === "huesped") {

@@ -6,6 +6,7 @@
   <title>Detalle del alojamiento — AlojAR</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
 </head>
 <body class="detalle">
 
@@ -44,11 +45,6 @@
             <li>Cargando servicios...</li>
           </ul>
         </section>
-
-        <section class="reservas-realizadas">
-          <h2><i class="bi bi-calendar-check"></i> Reservas sobre este alojamiento</h2>
-          <div id="listaReservas"></div>
-        </section>
       </div>
 
       <div class="columna-der">
@@ -58,15 +54,17 @@
 
             <div class="campo-grupo">
               <label for="entrada"><i class="bi bi-calendar-event"></i> Fecha de entrada</label>
-              <input type="date" id="entrada" name="entrada" required>
+              <input type="text" id="entrada" name="entrada" placeholder="Elegí la fecha" required>
               <span class="campo-error" id="err-entrada"></span>
             </div>
 
             <div class="campo-grupo">
               <label for="salida"><i class="bi bi-calendar-check"></i> Fecha de salida</label>
-              <input type="date" id="salida" name="salida" required>
+              <input type="text" id="salida" name="salida" placeholder="Elegí la fecha" required>
               <span class="campo-error" id="err-salida"></span>
             </div>
+
+            <p class="leyenda-ocupado"><span class="punto-ocupado"></span> En rojo: fechas ocupadas</p>
 
             <div class="campo-grupo">
               <label for="huespedes"><i class="bi bi-people"></i> Huéspedes</label>
@@ -93,6 +91,8 @@
   <script src="assets/js/sesion.js"></script>
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/es.min.js"></script>
   <script src="assets/js/detalle.js"></script>
 </body>
 </html>

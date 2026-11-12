@@ -13,8 +13,8 @@
 
   <main class="publicar-main">
     <header class="page-header">
-      <h1><i class="bi bi-plus-circle-fill"></i> Publicar alojamiento</h1>
-      <p>Completá los datos para que los huéspedes puedan encontrarte</p>
+      <h1 id="tituloPagina"><i class="bi bi-plus-circle-fill"></i> Publicar alojamiento</h1>
+      <p id="subtituloPagina">Completá los datos para que los huéspedes puedan encontrarte</p>
     </header>
 
     <form id="formPublicar" class="form-publicar" novalidate>
@@ -109,31 +109,34 @@
 
       <fieldset class="campo-fieldset">
         <legend><i class="bi bi-star"></i> Servicios y comodidades</legend>
-        <div class="servicios-grid servicios-grid-grande">
+        <div class="servicios-grid servicios-grid-grande" id="listaServiciosPublicar">
+        </div>
 
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Wi-Fi"> <span><i class="bi bi-wifi"></i> Wi-Fi</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Cocina"> <span><i class="bi bi-cup-hot"></i> Cocina</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Pileta"> <span><i class="bi bi-water"></i> Pileta</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Estacionamiento"> <span><i class="bi bi-p-circle"></i> Cochera</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Desayuno"> <span><i class="bi bi-cup-hot-fill"></i> Desayuno</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Parrilla"> <span><i class="bi bi-fire"></i> Parrilla / Quincho</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Aire acondicionado"> <span><i class="bi bi-snow2"></i> Aire acondicionado</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Calefacción"> <span><i class="bi bi-thermometer-sun"></i> Calefacción</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="TV"> <span><i class="bi bi-tv"></i> Smart TV</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Vista panorámica"> <span><i class="bi bi-binoculars"></i> Vista panorámica</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Lavandería"> <span><i class="bi bi-bag-heart"></i> Lavandería</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Jacuzzi"> <span><i class="bi bi-droplet-half"></i> Jacuzzi / Bañera</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Mascotas permitidas"> <span><i class="bi bi-github"></i> Mascotas permitidas</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Apto para niños"> <span><i class="bi bi-emoji-smile"></i> Apto para niños</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Seguridad 24h"> <span><i class="bi bi-shield-check"></i> Seguridad 24h</span></label>
-          <label class="servicio-check"><input type="checkbox" name="servicios" value="Gym"> <span><i class="bi bi-bicycle"></i> Gimnasio</span></label>
-
+        <div class="nuevo-servicio">
+          <label for="nuevoServicio">¿No está el que buscás? Agregalo:</label>
+          <div class="nuevo-servicio-fila">
+            <input type="text" id="nuevoServicio" maxlength="100" placeholder="Ej: Hogar a leña">
+            <button type="button" class="btn-secundario" id="btnAgregarServicio"><i class="bi bi-plus-circle"></i> Agregar</button>
+          </div>
+          <span class="campo-error" id="err-nuevoServicio"></span>
         </div>
       </fieldset>
 
             <div class="campo-grupo">
-        <label for="fotos"><i class="bi bi-camera"></i> Fotos (opcional)</label>
-        <textarea id="fotos" name="fotos" rows="4" placeholder="Pegá una dirección de imagen por línea. Ej: https://sitio.com/foto1.jpg"></textarea>
+        <label><i class="bi bi-camera"></i> Fotos (opcional)</label>
+
+        <label for="archivosFotos" class="subir-fotos">
+          <i class="bi bi-cloud-arrow-up"></i>
+          <span>Elegí fotos de tu computadora</span>
+          <small>JPG, PNG o WEBP · podés elegir varias a la vez</small>
+        </label>
+        <input type="file" id="archivosFotos" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <p class="estado-subida" id="estadoSubida"></p>
+
+        <div class="preview-fotos" id="previewFotos"></div>
+
+        <label for="fotos" class="label-secundario">O pegá direcciones de imágenes (una por línea)</label>
+        <textarea id="fotos" name="fotos" rows="3" placeholder="Ej: https://sitio.com/foto1.jpg"></textarea>
         <small style="color:var(--gris-texto); font-size:0.78rem; margin-top:4px; display:block;">La primera será la portada. Recomendado: al menos 3.</small>
         <span class="campo-error" id="err-fotos"></span>
       </div>

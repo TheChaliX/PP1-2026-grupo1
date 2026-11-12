@@ -38,7 +38,7 @@
     </header>
 
     <section class="filtros-section mb-5">
-      <!-- Agregado display: block !important para anular flexbox conflictivo del viejo styles.css -->
+      <!-- display block para que no lo rompa el css viejo -->
       <form id="formFiltros" class="bg-white p-4 rounded-4 shadow-sm border" style="display: block !important; background: rgba(255,255,255,0.95);">
         
         <!-- Fila 1: Destino y Fechas -->
@@ -85,11 +85,7 @@
         <!-- Fila 3: Servicios Extras -->
         <div class="pt-3 border-top d-flex flex-wrap align-items-center gap-3">
           <span class="fw-bold" style="color: var(--azul-profundo); font-size: 0.95rem;"><i class="bi bi-star"></i> Extras:</span>
-          <label class="servicio-check m-0"><input type="checkbox" name="wifi" value="Wi-Fi"> <span>Wi-Fi</span></label>
-          <label class="servicio-check m-0"><input type="checkbox" name="cocina" value="Cocina"> <span>Cocina</span></label>
-          <label class="servicio-check m-0"><input type="checkbox" name="pileta" value="Pileta"> <span>Pileta</span></label>
-          <label class="servicio-check m-0"><input type="checkbox" name="estacionamiento" value="Estacionamiento"> <span>Cochera</span></label>
-          <label class="servicio-check m-0"><input type="checkbox" name="desayuno" value="Desayuno"> <span>Desayuno</span></label>
+          <div id="filtroServicios" style="display: contents;"></div>
           
           <button type="reset" class="btn btn-link text-decoration-none text-muted p-0 ms-auto" style="font-size: 0.85rem;">
             <i class="bi bi-eraser"></i> Limpiar filtros

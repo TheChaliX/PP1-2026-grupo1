@@ -1,5 +1,7 @@
 package com.openlodge.openlodge.controller;
 
+import com.openlodge.openlodge.dto.CambiarFechasRequest;
+import com.openlodge.openlodge.dto.CancelarPorAnfitrionRequest;
 import com.openlodge.openlodge.dto.CancelarReservaRequest;
 import com.openlodge.openlodge.dto.CrearReservaRequest;
 import com.openlodge.openlodge.dto.OcupacionDto;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -50,6 +53,17 @@ public class ReservaController {
 
     @PostMapping("/{id}/cancelar")
     public ReservaDto cancelar(@PathVariable Long id, @Valid @RequestBody CancelarReservaRequest request) {
-        return service.cancelar(id, request.usuarioId());
+        return service.cancelar(id, request.usuarioId(), request.motivo());
+    }
+
+    @PutMapping("/{id}/fechas")
+    public ReservaDto cambiarFechas(@PathVariable Long id, @Valid @RequestBody CambiarFechasRequest request) {
+        return service.cambiarFechas(id, request);
+    }
+
+    @PostMapping("/{id}/cancelar-anfitrion")
+    public ReservaDto cancelarComoAnfitrion(@PathVariable Long id,
+                                            @Valid @RequestBody CancelarPorAnfitrionRequest request) {
+        return service.cancelarComoAnfitrion(id, request.anfitrionId(), request.motivo());
     }
 }

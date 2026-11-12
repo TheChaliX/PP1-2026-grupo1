@@ -1,12 +1,11 @@
 ﻿/**
- * nav.js — Navbar dinámica por rol
+ * nav.js - navbar segun el rol
  */
 
 (function () {
-  // Limpiamos la basura vieja del localStorage por si quedó algo de versiones anteriores
+  // limpiamos lo que haya quedado de versiones viejas
   localStorage.removeItem("usuarioActivo");
 
-  // Leemos del sessionStorage correcto a través de la función global
   const usuario = typeof obtenerUsuarioActivo === "function" ? obtenerUsuarioActivo() : null;
 
   const navContainer = document.getElementById("navbar-dinamica");

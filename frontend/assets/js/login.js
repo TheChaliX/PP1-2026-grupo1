@@ -1,4 +1,4 @@
-﻿// login.js — PP1 2026 Grupo 1
+﻿// login.js
 
 const API_AUTH_URL = `${API_BASE}/auth`;
 
