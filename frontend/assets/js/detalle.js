@@ -13,8 +13,8 @@ const elListaServicios = document.querySelector("#listaServicios");
 const formReserva      = document.querySelector("#formReserva");
 
 // Acceso a la API
-const API_URL          = "http://localhost:8080/api/hospedajes";
-const API_RESERVAS_URL = "http://localhost:8080/api/reservas";
+const API_URL          = `${API_BASE}/hospedajes`;
+const API_RESERVAS_URL = `${API_BASE}/reservas`;
 
 const MAX_NOCHES = 30;
 let capacidadAlojamiento = null;

@@ -1,7 +1,7 @@
 ﻿// publicar-alojamiento.js — PP1 2026 Grupo 1
 
-const API_HOSPEDAJES_URL = "http://localhost:8080/api/hospedajes";
-const API_CIUDADES_URL   = "http://localhost:8080/api/ciudades";
+const API_HOSPEDAJES_URL = `${API_BASE}/hospedajes`;
+const API_CIUDADES_URL   = `${API_BASE}/ciudades`;
 
 const formPublicar       = document.querySelector("#formPublicar");
 

@@ -53,6 +53,13 @@ public class HospedajeService {
     }
 
     @Transactional(readOnly = true)
+    public List<HospedajeDto> listarPorAnfitrion(Long anfitrionId) {
+        return repository.findByAnfitrionIdOrderByNombreAsc(anfitrionId).stream()
+                .map(HospedajeDto::desde)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public Optional<HospedajeDto> buscarPorId(Long id) {
         return repository.findById(id).map(HospedajeDto::desde);
     }

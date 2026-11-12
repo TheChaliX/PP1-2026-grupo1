@@ -1,6 +1,6 @@
 ﻿// login.js — PP1 2026 Grupo 1
 
-const API_AUTH_URL = "http://localhost:8080/api/auth";
+const API_AUTH_URL = `${API_BASE}/auth`;
 
 const formLogin     = document.querySelector("#formLogin");
 const inputEmail    = document.querySelector("#email");

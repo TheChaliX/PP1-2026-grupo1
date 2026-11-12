@@ -99,6 +99,13 @@ public class ReservaService {
     }
 
     @Transactional(readOnly = true)
+    public List<ReservaDto> listarPorAnfitrion(Long anfitrionId) {
+        return reservaRepository.findByHospedajeAnfitrionIdOrderByFechaCheckInDesc(anfitrionId).stream()
+                .map(ReservaDto::desde)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<OcupacionDto> ocupacion(Long hospedajeId) {
         LocalDate hoy = LocalDate.now(ZONA);
         return reservaRepository

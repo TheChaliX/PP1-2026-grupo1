@@ -7,7 +7,7 @@ const inputTarifaMax     = document.querySelector("#tarifa-maxima");
 const mensajeFiltros     = document.querySelector("#mensaje-filtros");
 
 //acceso a la API
-const API_URL = "http://localhost:8080/api/hospedajes";
+const API_URL = `${API_BASE}/hospedajes`;
 
 let alojamientos = [];
 

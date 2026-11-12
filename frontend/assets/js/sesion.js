@@ -7,6 +7,9 @@
  * sessionStorage, para poder navegar entre pantallas según el rol.
  */
 
+// Dirección del backend: se cambia solo acá (sesion.js se carga en todas las páginas)
+const API_BASE = "http://localhost:8080/api";
+
 // ── Sesión activa ─────────────────────────────────────────────────────────────
 
 function iniciarSesion(datos, email) {
@@ -71,7 +74,7 @@ async function cambiarModo() {
   const nuevoRol = usuario.rol === "anfitrion" ? "huesped" : "anfitrion";
 
   try {
-    const respuesta = await fetch(`http://localhost:8080/api/usuarios/${usuario.id}/cambiar-modo`, {
+    const respuesta = await fetch(`${API_BASE}/usuarios/${usuario.id}/cambiar-modo`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rol: nuevoRol })

@@ -20,7 +20,8 @@ public record ReservaDto(
         int huespedes,
         BigDecimal importeTotal,
         String estado,
-        LocalDateTime fechaCreacion
+        LocalDateTime fechaCreacion,
+        String huesped
 ) {
     public static ReservaDto desde(Reserva r) {
         Hospedaje h = r.getHospedaje();
@@ -36,7 +37,8 @@ public record ReservaDto(
                 r.getCantAdultos() + r.getCantNinos() + r.getCantBebes(),
                 r.getImporteTotal(),
                 r.getEstado().name(),
-                r.getFechaCreacion()
+                r.getFechaCreacion(),
+                r.getUsuario().getNombre() + " " + r.getUsuario().getApellido()
         );
     }
 }

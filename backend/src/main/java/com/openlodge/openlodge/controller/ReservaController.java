@@ -38,6 +38,11 @@ public class ReservaController {
         return service.listarPorUsuario(usuarioId);
     }
 
+    @GetMapping("/anfitrion/{anfitrionId}")
+    public List<ReservaDto> listarPorAnfitrion(@PathVariable Long anfitrionId) {
+        return service.listarPorAnfitrion(anfitrionId);
+    }
+
     @GetMapping("/hospedaje/{hospedajeId}/ocupacion")
     public List<OcupacionDto> ocupacion(@PathVariable Long hospedajeId) {
         return service.ocupacion(hospedajeId);
