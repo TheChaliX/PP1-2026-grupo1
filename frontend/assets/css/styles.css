@@ -2259,6 +2259,60 @@ footer {
   background: var(--azul-medio);
 }
 
+/* modal para confirmar (eliminar, etc.) */
+.modal-aviso .modal-icono i {
+  color: var(--rojo);
+}
+
+.modal-titulo {
+  margin: 12px 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--azul-profundo);
+}
+
+.modal-aviso .modal-mensaje {
+  margin: 8px 0 22px;
+  font-weight: 400;
+  color: var(--gris-texto);
+}
+
+.modal-botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-cancelar,
+.modal-confirmar {
+  min-width: 120px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modal-cancelar {
+  background: transparent;
+  color: var(--azul-profundo);
+  border: 1.5px solid var(--arena-fuerte);
+}
+
+.modal-cancelar:hover {
+  background: var(--arena-fuerte);
+}
+
+.modal-confirmar {
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+}
+
+.modal-confirmar:hover {
+  filter: brightness(0.92);
+}
+
 /* ===== ESTILOS DE ERROR POR CAMPO ===== */
 .campo-error {
   display: block;
@@ -2733,7 +2787,7 @@ footer {
   border: 1.5px solid var(--rojo-suave);
 }
 
-.btn-retirar:hover { background: var(--rojo-suave); }
+.btn-retirar:hover { background: var(--rojo-suave); color: var(--rojo); border-color: var(--rojo-suave); }
 
 /* ===== CHIPS DE SERVICIOS - sin texto visible fuera del chip ===== */
 .chips-servicios {

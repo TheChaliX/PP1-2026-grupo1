@@ -100,9 +100,12 @@ contenedorPropias?.addEventListener("click", (e) => {
   if (botonEliminar) {
     const id = Number(botonEliminar.dataset.id);
     const nombre = misPropiedades.find((h) => h.id === id)?.nombre || "este alojamiento";
-    if (confirm(`¿Seguro que querés eliminar "${nombre}"? No se puede deshacer.`)) {
-      eliminarPropiedad(id);
-    }
+    confirmarModal(`Vas a eliminar "${nombre}". Esto no se puede deshacer.`, {
+      titulo: "¿Eliminar alojamiento?",
+      textoConfirmar: "Eliminar"
+    }).then((confirmado) => {
+      if (confirmado) eliminarPropiedad(id);
+    });
   }
 });
 
