@@ -30,6 +30,7 @@ public class ReservaService {
 
     private static final int MAX_NOCHES = 30;
     private static final ZoneId ZONA = ZoneId.of("America/Argentina/Buenos_Aires");
+    private static final String SERVICIO_MASCOTAS = "Mascotas permitidas";
 
     private final ReservaRepository reservaRepository;
     private final HospedajeRepository hospedajeRepository;
@@ -64,9 +65,14 @@ public class ReservaService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Este alojamiento no está disponible por el momento");
         }
-        if (req.huespedes() > hospedaje.getCapacidad()) {
+        if (req.totalHuespedes() > hospedaje.getCapacidad()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "El alojamiento admite hasta " + hospedaje.getCapacidad() + " huéspedes");
+        }
+        // solo se puede ir con mascotas si el anfitrion marco el servicio "Mascotas permitidas"
+        if (req.mascotas() > 0 && !admiteMascotas(hospedaje)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Este alojamiento no admite mascotas");
         }
 
         if (reservaRepository.hayReservaSuperpuesta(hospedaje.getId(), entrada, salida)
@@ -80,14 +86,19 @@ public class ReservaService {
         reserva.setUsuario(usuario);
         reserva.setFechaCheckIn(entrada);
         reserva.setFechaCheckOut(salida);
-        reserva.setCantAdultos(req.huespedes());
-        reserva.setCantNinos(0);
-        reserva.setCantBebes(0);
-        reserva.setCantMascotas(0);
+        reserva.setCantAdultos(req.adultos());
+        reserva.setCantNinos(req.ninos());
+        reserva.setCantBebes(req.bebes());
+        reserva.setCantMascotas(req.mascotas());
         reserva.setImporteTotal(hospedaje.getPrecioPorNoche().multiply(BigDecimal.valueOf(noches)));
         reserva.setEstado(EstadoReserva.ACTIVA);
 
         return ReservaDto.desde(reservaRepository.save(reserva));
+    }
+
+    private boolean admiteMascotas(Hospedaje hospedaje) {
+        return hospedaje.getServicios().stream()
+                .anyMatch(s -> SERVICIO_MASCOTAS.equals(s.getNombre()));
     }
 
     // valida las fechas y devuelve las noches

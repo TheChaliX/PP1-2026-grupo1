@@ -67,10 +67,20 @@
             <p class="leyenda-ocupado"><span class="punto-ocupado"></span> En rojo: fechas ocupadas</p>
 
             <div class="campo-grupo">
-              <label for="huespedes"><i class="bi bi-people"></i> Huéspedes</label>
-              <div class="input-icono-wrapper">
-                <i class="bi bi-people-fill input-icono"></i>
-                <input type="number" id="huespedes" name="huespedes" min="1" max="20" required>
+              <label><i class="bi bi-people"></i> Huéspedes</label>
+              <div class="grid-huespedes">
+                <label class="contador-huesped">Adultos <small>13 años o más</small>
+                  <input type="number" id="adultos" min="1" max="20" value="1" required>
+                </label>
+                <label class="contador-huesped">Niños <small>2 a 12 años</small>
+                  <input type="number" id="ninos" min="0" max="20" value="0">
+                </label>
+                <label class="contador-huesped">Bebés <small>menos de 2 años</small>
+                  <input type="number" id="bebes" min="0" max="20" value="0">
+                </label>
+                <label class="contador-huesped">Mascotas <small>no cuentan en la capacidad</small>
+                  <input type="number" id="mascotas" min="0" max="5" value="0">
+                </label>
               </div>
               <span class="campo-error" id="err-huespedes"></span>
             </div>

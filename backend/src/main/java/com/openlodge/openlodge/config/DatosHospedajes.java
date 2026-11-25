@@ -80,7 +80,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 anfitrion("anfitrion1", "Martín y Sofía", "Gómez"),
                 fotos("img-cordoba.jpg", "cordoba-cocina.jpg", "cordoba-comedor.jpg",
                         "cordoba-habitacion.jpg", "cordoba-living.jpg"),
-                List.of("Wi-Fi", "Estacionamiento", "Parrilla", "Vista panorámica"),
+                List.of("Wi-Fi", "Estacionamiento", "Parrilla", "Vista panorámica", "Mascotas permitidas"),
                 4.8, 132, "top");
 
         guardar("Cabaña con pileta",
@@ -100,7 +100,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("img-santafe.jpg", "santafe-baño.jpg", "santafe-cocina.jpg",
                         "santafe-habitacion.jpg", "santafe-living.jpg", "habitacion-pileta.jpg",
                         "living-pileta.jpg", "comedor-pileta.jpg"),
-                List.of("Wi-Fi", "Pileta", "Cocina", "Estacionamiento"),
+                List.of("Wi-Fi", "Pileta", "Cocina", "Estacionamiento", "Mascotas permitidas"),
                 4.3, 54, null);
 
         guardar("Departamento con vista al río",
@@ -117,7 +117,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 "Bariloche", "Cabaña", "85000", 5,
                 anfitrion("anfitrion5", "Familia", "Rossi"),
                 fotos("bariloche.jpg"),
-                List.of("Wi-Fi", "Parrilla", "Vista panorámica", "Cocina"),
+                List.of("Wi-Fi", "Parrilla", "Vista panorámica", "Cocina", "Mascotas permitidas"),
                 4.9, 201, "top");
 
         guardar("Chalet en los viñedos",

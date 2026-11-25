@@ -26,6 +26,19 @@ function escaparHtml(texto) {
   return div.innerHTML;
 }
 
+// "2 adultos, 1 niño · 1 mascota"
+function textoHuespedes(r) {
+  const partes = [];
+  const agregar = (n, uno, varios) => { if (n > 0) partes.push(`${n} ${n === 1 ? uno : varios}`); };
+  agregar(r.adultos, "adulto", "adultos");
+  agregar(r.ninos, "niño", "niños");
+  agregar(r.bebes, "bebé", "bebés");
+  // reservas viejas sin desglose
+  let texto = partes.length ? partes.join(", ") : `${r.huespedes} huésped${r.huespedes !== 1 ? "es" : ""}`;
+  if (r.mascotas > 0) texto += ` · ${r.mascotas} mascota${r.mascotas !== 1 ? "s" : ""}`;
+  return texto;
+}
+
 function formatearFecha(iso) {
   const [anio, mes, dia] = iso.split("-");
   return `${dia}/${mes}/${anio}`;
@@ -52,6 +65,7 @@ function adaptarReserva(r) {
     fechas:      `${formatearFecha(r.fechaCheckIn)} al ${formatearFecha(r.fechaCheckOut)}`,
     noches:      r.noches,
     huespedes:   r.huespedes,
+    textoHuespedes: textoHuespedes(r),
     importe:     r.importeTotal,
     ...estadoSegunFechas(r, cancelada),
     motivo:      r.motivoCancelacion,
@@ -75,7 +89,7 @@ function crearTarjetaRecibida(r) {
         <h3><i class="bi bi-geo-alt-fill"></i> ${r.propiedad}</h3>
         <p><strong><i class="bi bi-person"></i> Huésped:</strong> ${r.huesped}</p>
         <p><strong><i class="bi bi-calendar"></i> Fechas:</strong> ${r.fechas} (${r.noches} noche${r.noches !== 1 ? "s" : ""})</p>
-        <p><strong><i class="bi bi-people"></i> Cantidad:</strong> ${r.huespedes} huésped${r.huespedes !== 1 ? "es" : ""}</p>
+        <p><strong><i class="bi bi-people"></i> Huéspedes:</strong> ${r.textoHuespedes}</p>
         <p><strong><i class="bi bi-cash-coin"></i> Total:</strong> $${Number(r.importe).toLocaleString("es-AR")}</p>
         ${r.motivoCambio && !r.motivo ? `<p class="reserva-solicitud"><i class="bi bi-calendar-range"></i> <strong>El huésped cambió las fechas:</strong> <em>${escaparHtml(r.motivoCambio)}</em></p>` : ""}
         ${r.motivo ? `<p class="reserva-solicitud"><i class="bi bi-chat-left-text"></i> <strong>${r.canceladaPor === "HUESPED" ? "Canceló el huésped:" : "Motivo de tu cancelación:"}</strong> <em>${escaparHtml(r.motivo)}</em></p>` : ""}

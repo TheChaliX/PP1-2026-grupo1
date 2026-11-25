@@ -27,7 +27,7 @@
 
   if (!usuario) {
     navContainer.innerHTML = `
-      <nav class="navbar">
+      <nav class="navbar navbar-invitado">
         <a href="catalogo.html"><i class="bi bi-search"></i> Catálogo</a>
         <a href="login.html"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a>
         <a href="registro.html"><i class="bi bi-person-plus"></i> Registrarse</a>

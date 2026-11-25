@@ -23,6 +23,19 @@ function escaparHtml(texto) {
   return div.innerHTML;
 }
 
+// "2 adultos, 1 niño · 1 mascota"
+function textoHuespedes(r) {
+  const partes = [];
+  const agregar = (n, uno, varios) => { if (n > 0) partes.push(`${n} ${n === 1 ? uno : varios}`); };
+  agregar(r.adultos, "adulto", "adultos");
+  agregar(r.ninos, "niño", "niños");
+  agregar(r.bebes, "bebé", "bebés");
+  // reservas viejas sin desglose
+  let texto = partes.length ? partes.join(", ") : `${r.huespedes} huésped${r.huespedes !== 1 ? "es" : ""}`;
+  if (r.mascotas > 0) texto += ` · ${r.mascotas} mascota${r.mascotas !== 1 ? "s" : ""}`;
+  return texto;
+}
+
 function formatearFecha(iso) {
   const [anio, mes, dia] = iso.split("-");
   return `${dia}/${mes}/${anio}`;
@@ -43,6 +56,7 @@ function adaptarReserva(r) {
     fechas:        `${formatearFecha(r.fechaCheckIn)} → ${formatearFecha(r.fechaCheckOut)}`,
     noches:        r.noches,
     huespedes:     r.huespedes,
+    textoHuespedes: textoHuespedes(r),
     importe:       r.importeTotal,
     motivo:        r.motivoCancelacion,
     canceladaPor:  r.canceladaPor,
@@ -108,7 +122,7 @@ function crearTarjetaReserva(reserva) {
         <h3>${reserva.titulo}</h3>
         <p><i class="bi bi-geo-alt"></i> ${reserva.ciudad}</p>
         <p><i class="bi bi-calendar-event"></i> ${reserva.fechas} (${reserva.noches} noche${reserva.noches !== 1 ? "s" : ""})</p>
-        <p><i class="bi bi-people"></i> ${reserva.huespedes} huésped${reserva.huespedes !== 1 ? "es" : ""}</p>
+        <p><i class="bi bi-people"></i> ${reserva.textoHuespedes}</p>
         <p><i class="bi bi-cash-coin"></i> Total: $${Number(reserva.importe).toLocaleString("es-AR")}</p>
         <span class="badge-estado ${reserva.badge}">${reserva.estadoTexto}</span>
         ${reserva.motivoCambio && !reserva.motivo ? `<p class="motivo-cancelacion"><i class="bi bi-calendar-range"></i> Tu motivo del cambio de fechas: <em>${escaparHtml(reserva.motivoCambio)}</em></p>` : ""}
