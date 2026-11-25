@@ -78,6 +78,17 @@ function ocultarMensajeFiltros() {
   if (mensajeFiltros) mensajeFiltros.style.display = "none";
 }
 
+// la casita girando mientras se espera al backend
+function mostrarCargando(texto) {
+  if (!contenedorCatalogo) return;
+  ocultarMensajeFiltros();
+  contenedorCatalogo.innerHTML = `
+    <div class="col-12 loader-catalogo">
+      <i class="bi bi-house-door-fill loader-casita"></i>
+      <p>${texto}</p>
+    </div>`;
+}
+
 function renderizarCatalogo(lista) {
   if (!contenedorCatalogo) return;
   ocultarMensajeFiltros();
@@ -136,8 +147,19 @@ async function buscarPorFechas(llegada, salida) {
 }
 
 if (formFiltros) {
+  const botonBuscar = formFiltros.querySelector("button[type='submit']");
+  const textoBoton  = botonBuscar?.innerHTML;
+
   formFiltros.addEventListener("submit", async function (e) {
     e.preventDefault();
+    // si ya esta buscando no hace nada, asi no se manda la misma busqueda varias veces
+    if (botonBuscar?.disabled) return;
+
+    if (botonBuscar) {
+      botonBuscar.disabled = true;
+      botonBuscar.innerHTML = `<i class="bi bi-hourglass-split"></i> Buscando...`;
+    }
+    mostrarCargando("Buscando alojamientos...");
 
     let base;
     try {
@@ -146,6 +168,11 @@ if (formFiltros) {
       contenedorCatalogo.innerHTML = "";
       mostrarMensajeFiltros(error.message, "error");
       return;
+    } finally {
+      if (botonBuscar) {
+        botonBuscar.disabled = false;
+        botonBuscar.innerHTML = textoBoton;
+      }
     }
 
     const ubicacionTexto = inputUbicacion.value.toLowerCase().trim();
@@ -190,7 +217,7 @@ async function cargarFiltroServicios() {
 
 async function cargarCatalogo() {
   if (!contenedorCatalogo) return;
-  contenedorCatalogo.innerHTML = `<p class="col-12 text-center text-info py-4"><i class="bi bi-arrow-repeat spin"></i> Cargando alojamientos...</p>`;
+  mostrarCargando("Cargando alojamientos...");
 
   try {
     const respuesta = await fetch(API_URL);

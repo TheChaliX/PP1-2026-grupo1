@@ -167,6 +167,15 @@ async function cargarDetalle() {
 
     capacidadAlojamiento = encontrado.capacidad;
 
+    // si el anfitrion no permite mascotas, el casillero queda desactivado
+    const inputMascotasDetalle = document.querySelector("#mascotas");
+    if (inputMascotasDetalle && !encontrado.servicios.includes("Mascotas permitidas")) {
+      inputMascotasDetalle.value = 0;
+      inputMascotasDetalle.disabled = true;
+      const aclaracion = inputMascotasDetalle.closest(".contador-huesped")?.querySelector("small");
+      if (aclaracion) aclaracion.textContent = "este alojamiento no admite mascotas";
+    }
+
     // si esta pausado no se puede reservar
     if (item.activo === false && seccionReserva) {
       seccionReserva.innerHTML = `<div class="aviso-sesion aviso-info"><p><i class="bi bi-pause-circle-fill"></i> Este alojamiento está pausado por el anfitrión y no recibe reservas por el momento.</p></div>`;
@@ -238,7 +247,10 @@ async function cargarDetalle() {
 // formulario de reserva
 const inputEntrada = document.querySelector("#entrada");
 const inputSalida = document.querySelector("#salida");
-const inputHuespedes = document.querySelector("#huespedes");
+const inputAdultos  = document.querySelector("#adultos");
+const inputNinos    = document.querySelector("#ninos");
+const inputBebes    = document.querySelector("#bebes");
+const inputMascotas = document.querySelector("#mascotas");
 const mensajeReserva = document.querySelector("#mensajeReserva");
 const errorEntrada = document.querySelector("#err-entrada");
 const errorSalida = document.querySelector("#err-salida");
@@ -334,7 +346,12 @@ if (formReserva && usuario && usuario.rol === "huesped") {
 
     const fechaEntrada = inputEntrada.value;
     const fechaSalida = inputSalida.value;
-    const cantidadHuespedes = Number(inputHuespedes.value);
+    const adultos  = Number(inputAdultos.value);
+    const ninos    = Number(inputNinos.value) || 0;
+    const bebes    = Number(inputBebes.value) || 0;
+    const mascotas = Number(inputMascotas.value) || 0;
+    // adultos, niños y bebés ocupan lugar; las mascotas no
+    const cantidadHuespedes = adultos + ninos + bebes;
 
     let hayError = false;
 
@@ -368,8 +385,12 @@ if (formReserva && usuario && usuario.rol === "huesped") {
     }
 
     // Cantidad de huéspedes
-    if (!cantidadHuespedes || cantidadHuespedes < 1) {
-      if (errorHuespedes) errorHuespedes.textContent = "Ingresá una cantidad válida de huéspedes.";
+    const enteros = [adultos, ninos, bebes, mascotas].every((n) => Number.isInteger(n) && n >= 0);
+    if (!enteros || adultos < 1) {
+      if (errorHuespedes) errorHuespedes.textContent = "Tiene que haber al menos 1 adulto, y las cantidades no pueden ser negativas.";
+      hayError = true;
+    } else if (mascotas > 5) {
+      if (errorHuespedes) errorHuespedes.textContent = "Se pueden llevar hasta 5 mascotas.";
       hayError = true;
     } else if (capacidadAlojamiento && cantidadHuespedes > capacidadAlojamiento) {
       if (errorHuespedes) errorHuespedes.textContent = `Este alojamiento admite hasta ${capacidadAlojamiento} huéspedes.`;
@@ -395,7 +416,10 @@ if (formReserva && usuario && usuario.rol === "huesped") {
           usuarioId:    usuario.id,
           fechaCheckIn:  fechaEntrada,
           fechaCheckOut: fechaSalida,
-          huespedes:    cantidadHuespedes
+          adultos,
+          ninos,
+          bebes,
+          mascotas
         })
       });
 
