@@ -5,6 +5,7 @@ import com.openlodge.openlodge.dto.RecuperarRequest;
 import com.openlodge.openlodge.dto.RegistroRequest;
 import com.openlodge.openlodge.dto.RestablecerRequest;
 import com.openlodge.openlodge.dto.UsuarioDto;
+import com.openlodge.openlodge.dto.VerificarRequest;
 import com.openlodge.openlodge.model.TipoUsuario;
 import com.openlodge.openlodge.model.Usuario;
 import com.openlodge.openlodge.repository.TipoUsuarioRepository;
@@ -17,8 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,16 +37,22 @@ public class AutenticacionService {
     private final Map<String, CodigoRecuperacion> codigos = new ConcurrentHashMap<>();
     private final SecureRandom random = new SecureRandom();
 
+    // el link del correo de confirmacion vence a las 24 hs
+    private static final long HORAS_VALIDEZ_VERIFICACION = 24;
+
     private final UsuarioRepository usuarioRepository;
     private final TipoUsuarioRepository tipoUsuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CorreoService correoService;
 
     public AutenticacionService(UsuarioRepository usuarioRepository,
                        TipoUsuarioRepository tipoUsuarioRepository,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder,
+                       CorreoService correoService) {
         this.usuarioRepository = usuarioRepository;
         this.tipoUsuarioRepository = tipoUsuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.correoService = correoService;
     }
 
     @Transactional
@@ -81,7 +90,13 @@ public class AutenticacionService {
         usuario.setFechaNacimiento(req.fechaNacimiento());
         usuario.setTipoUsuario(tipo);
 
-        return UsuarioDto.desde(usuarioRepository.save(usuario));
+        // la cuenta queda sin confirmar hasta que abra el link del correo
+        usuario.setEmailVerificado(false);
+        asignarTokenVerificacion(usuario);
+
+        Usuario guardado = usuarioRepository.save(usuario);
+        correoService.enviarConfirmacionCuenta(guardado.getEmail(), guardado.getNombre(), guardado.getTokenVerificacion());
+        return UsuarioDto.desde(guardado);
     }
 
     @Transactional(readOnly = true)
@@ -91,20 +106,61 @@ public class AutenticacionService {
                 .filter(u -> passwordEncoder.matches(req.password(), u.getPassword()))
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED, "Correo o contraseña incorrectos"));
+        // se chequea despues de la contraseña para no confirmar a cualquiera que un correo existe
+        if (!usuario.isEmailVerificado()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Tenés que confirmar tu correo antes de ingresar. Revisá tu bandeja de entrada (y el spam)");
+        }
         return UsuarioDto.desde(usuario);
     }
 
-    // genera un codigo de 6 numeros
+    // confirma el correo con el token que llego por mail
+    @Transactional
+    public void verificarEmail(VerificarRequest req) {
+        Usuario usuario = usuarioRepository.findByTokenVerificacion(req.token().trim())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "El link no es válido o ya fue usado"));
+        if (usuario.getTokenVerificacionVence() == null
+                || LocalDateTime.now().isAfter(usuario.getTokenVerificacionVence())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El link venció. Pedí uno nuevo");
+        }
+        usuario.setEmailVerificado(true);
+        usuario.setTokenVerificacion(null);       // se usa una sola vez
+        usuario.setTokenVerificacionVence(null);
+        usuarioRepository.save(usuario);
+    }
+
+    // genera otro token y manda el correo de nuevo. No avisa si el correo no existe o ya estaba confirmado
+    @Transactional
+    public void reenviarConfirmacion(RecuperarRequest req) {
+        usuarioRepository.findByEmail(req.email().trim().toLowerCase())
+                .filter(u -> !u.isEmailVerificado())
+                .ifPresent(u -> {
+                    asignarTokenVerificacion(u);
+                    usuarioRepository.save(u);
+                    correoService.enviarConfirmacionCuenta(u.getEmail(), u.getNombre(), u.getTokenVerificacion());
+                });
+    }
+
+    private void asignarTokenVerificacion(Usuario usuario) {
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        usuario.setTokenVerificacion(Base64.getUrlEncoder().withoutPadding().encodeToString(bytes));
+        usuario.setTokenVerificacionVence(LocalDateTime.now().plusHours(HORAS_VALIDEZ_VERIFICACION));
+    }
+
+    // genera un codigo de 6 numeros y lo manda por mail.
+    // No avisa si el correo no existe, para no dar pistas de quien tiene cuenta
     @Transactional(readOnly = true)
-    public String generarCodigoRecuperacion(RecuperarRequest req) {
+    public void enviarCodigoRecuperacion(RecuperarRequest req) {
         String email = req.email().trim().toLowerCase();
         if (!usuarioRepository.existsByEmail(email)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe una cuenta con ese correo");
+            return;
         }
         String codigo = String.format("%06d", random.nextInt(1_000_000));
         codigos.put(email, new CodigoRecuperacion(codigo,
                 Instant.now().plus(MINUTOS_VALIDEZ_CODIGO, ChronoUnit.MINUTES)));
-        return codigo;
+        correoService.enviarCodigoRecuperacion(email, codigo);
     }
 
     @Transactional

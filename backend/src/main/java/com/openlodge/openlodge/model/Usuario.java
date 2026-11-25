@@ -46,6 +46,15 @@ public class Usuario {
 
     private LocalDate fechaNacimiento;
 
+    // false hasta que la persona confirma el correo con el link que le mandamos
+    @Column(nullable = false)
+    private boolean emailVerificado = true;
+
+    @Column(length = 100)
+    private String tokenVerificacion;
+
+    private LocalDateTime tokenVerificacionVence;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;

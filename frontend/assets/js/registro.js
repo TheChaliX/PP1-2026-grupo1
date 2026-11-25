@@ -111,12 +111,10 @@ if (registerForm) {
         throw new Error("Respuesta inesperada del servidor: " + respuesta.status);
       }
 
-            const usuario = await respuesta.json();
-      iniciarSesion(usuario);
-
+      // todavia no inicia sesion: primero tiene que confirmar el correo
       cuentaCreada = true;
-      mostrarModal("¡Cuenta creada exitosamente! Bienvenido/a a AlojAR.", "exito");
-      setTimeout(() => { window.location.href = "catalogo.html"; }, 1400);
+      mostrarModal(`¡Cuenta creada! Te enviamos un correo a ${email} para confirmarla. Revisá tu bandeja de entrada (y el spam).`, "exito");
+      setTimeout(() => { window.location.href = "login.html"; }, 3500);
     } catch (error) {
       console.error("Error al registrar:", error);
       mostrarModal("No se pudo crear la cuenta. Verificá que el servidor esté en funcionamiento e intentá de nuevo.", "error");

@@ -5,6 +5,7 @@ import com.openlodge.openlodge.dto.RecuperarRequest;
 import com.openlodge.openlodge.dto.RegistroRequest;
 import com.openlodge.openlodge.dto.RestablecerRequest;
 import com.openlodge.openlodge.dto.UsuarioDto;
+import com.openlodge.openlodge.dto.VerificarRequest;
 import com.openlodge.openlodge.service.AutenticacionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,15 +33,29 @@ public class AutenticacionController {
         return service.registrar(request);
     }
 
+    // confirma el correo con el token del link
+    @PostMapping("/verificar")
+    public Map<String, String> verificar(@Valid @RequestBody VerificarRequest request) {
+        service.verificarEmail(request);
+        return Map.of("mensaje", "Correo confirmado");
+    }
+
+    @PostMapping("/reenviar-confirmacion")
+    public Map<String, String> reenviarConfirmacion(@Valid @RequestBody RecuperarRequest request) {
+        service.reenviarConfirmacion(request);
+        return Map.of("mensaje", "Si la cuenta falta confirmar, te enviamos un correo nuevo");
+    }
+
     @PostMapping("/login")
     public UsuarioDto login(@Valid @RequestBody LoginRequest request) {
         return service.login(request);
     }
 
-    // recuperar contraseña: devuelve el codigo porque no mandamos mails
+    // recuperar contraseña: manda el codigo por mail
     @PostMapping("/recuperar")
     public Map<String, String> recuperar(@Valid @RequestBody RecuperarRequest request) {
-        return Map.of("codigo", service.generarCodigoRecuperacion(request));
+        service.enviarCodigoRecuperacion(request);
+        return Map.of("mensaje", "Si la cuenta existe, te enviamos un código por correo");
     }
 
     @PostMapping("/restablecer")

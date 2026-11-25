@@ -8,6 +8,7 @@ const inputPassword = document.querySelector("#password");
 const errEmail      = document.querySelector("#err-email");
 const errPassword   = document.querySelector("#err-password");
 const botonLogin    = formLogin ? formLogin.querySelector(".btn-auth") : null;
+const linkReenviar  = document.querySelector("#reenviarConfirmacion");
 
 function limpiarErrores() {
   [errEmail, errPassword].forEach((el) => { if (el) el.textContent = ""; });
@@ -58,6 +59,13 @@ if (formLogin) {
         marcarError(inputPassword, errPassword, "Correo o contraseña incorrectos.");
         return;
       }
+      if (respuesta.status === 403) {
+        // la contraseña es correcta pero falta confirmar el correo
+        const datos = await respuesta.json().catch(() => ({}));
+        mostrarModal(datos.mensaje || "Tenés que confirmar tu correo antes de ingresar.", "error");
+        if (linkReenviar) linkReenviar.style.display = "block";
+        return;
+      }
       if (respuesta.status === 400) {
         mostrarModal("Revisá los datos ingresados.", "error");
         return;
@@ -84,6 +92,30 @@ if (formLogin) {
       mostrarModal("No se pudo iniciar sesión. Verificá que el servidor esté en funcionamiento e intentá de nuevo.", "error");
     } finally {
       if (!ingreso) setEnviando(false);
+    }
+  });
+}
+
+// reenviar el correo de confirmacion
+if (linkReenviar) {
+  linkReenviar.addEventListener("click", async function (e) {
+    e.preventDefault();
+    const email = inputEmail.value.trim();
+    if (!email) {
+      marcarError(inputEmail, errEmail, "Ingresá tu email para reenviar el correo.");
+      return;
+    }
+    try {
+      const respuesta = await fetch(`${API_AUTH_URL}/reenviar-confirmacion`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      if (!respuesta.ok) throw new Error("Respuesta inesperada del servidor: " + respuesta.status);
+      mostrarModal("Listo, si tu cuenta falta confirmar te mandamos un correo nuevo. Revisá tu bandeja de entrada.", "exito");
+    } catch (error) {
+      console.error("Error al reenviar la confirmación:", error);
+      mostrarModal("No se pudo reenviar el correo. Intentá de nuevo en unos minutos.", "error");
     }
   });
 }

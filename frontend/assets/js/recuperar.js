@@ -1,5 +1,5 @@
 // recuperar.js
-// como no mandamos mails, el codigo se muestra en pantalla
+// el codigo llega por mail
 
 const API_AUTH_URL = `${API_BASE}/auth`;
 const regexEmail   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -7,7 +7,6 @@ const regexEmail   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const formRecuperar   = document.getElementById("formRecuperar");
 const formRestablecer = document.getElementById("formRestablecer");
 const textoPaso       = document.getElementById("textoPaso");
-const codigoGenerado  = document.getElementById("codigoGenerado");
 
 const inputEmail    = document.getElementById("email");
 const inputCodigo   = document.getElementById("codigo");
@@ -60,7 +59,6 @@ if (formRecuperar) {
       }
 
       emailRecuperacion = email;
-      codigoGenerado.textContent = datos.codigo;
       formRecuperar.style.display = "none";
       formRestablecer.style.display = "block";
       if (textoPaso) textoPaso.textContent = `Elegí una contraseña nueva para ${email}`;
