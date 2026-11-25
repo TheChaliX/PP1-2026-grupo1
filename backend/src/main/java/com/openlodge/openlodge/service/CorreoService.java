@@ -53,7 +53,7 @@ public class CorreoService {
 
         try {
             MimeMessage mensaje = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mensaje, "UTF-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
             helper.setFrom(remitente);
             helper.setTo(destino);
             helper.setSubject("Confirmá tu cuenta en AlojAR");
@@ -80,7 +80,7 @@ public class CorreoService {
 
         try {
             MimeMessage mensaje = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mensaje, "UTF-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
             helper.setFrom(remitente);
             helper.setTo(destino);
             helper.setSubject("Tu código para recuperar la contraseña");
