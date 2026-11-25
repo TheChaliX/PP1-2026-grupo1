@@ -32,6 +32,8 @@ function adaptarReserva(r) {
   const cancelada = r.estado === "CANCELADA";
   // si ya paso va al historial
   const pasada = r.fechaCheckOut < hoyISO();
+  // ya entro pero todavia no se fue
+  const enCurso = !pasada && r.fechaCheckIn <= hoyISO();
   return {
     id:            r.id,
     alojamientoId: r.hospedajeId,
@@ -44,10 +46,12 @@ function adaptarReserva(r) {
     importe:       r.importeTotal,
     motivo:        r.motivoCancelacion,
     canceladaPor:  r.canceladaPor,
+    motivoCambio:  r.motivoCambioFechas,
     fechaCheckIn:  r.fechaCheckIn,
     fechaCheckOut: r.fechaCheckOut,
     estado:        cancelada ? "cancelado" : "confirmado",
-    estadoTexto:   cancelada ? "Cancelada" : (pasada ? "Finalizada" : "Confirmada"),
+    estadoTexto:   cancelada ? "Cancelada" : (pasada ? "Finalizada" : (enCurso ? "En curso" : "Confirmada")),
+    badge:         cancelada ? "cancelado" : (pasada ? "finalizado" : (enCurso ? "en-curso" : "confirmado")),
     pasada,
     // se puede cambiar o cancelar hasta el dia antes
     puedeCancelar: !cancelada && r.fechaCheckIn > hoyISO()
@@ -78,6 +82,8 @@ function crearTarjetaReserva(reserva) {
           <label>Salida <input type="text" class="nueva-salida" placeholder="Salida"></label>
         </div>
         <p class="leyenda-ocupado"><span class="punto-ocupado"></span> En rojo: fechas ocupadas</p>
+        <label for="motivo-cambio-${reserva.id}">Contale al anfitrión por qué cambiás las fechas</label>
+        <textarea id="motivo-cambio-${reserva.id}" class="motivo-cambio" rows="3" maxlength="500" placeholder="Ej: se me adelantaron las vacaciones"></textarea>
         <span class="campo-error"></span>
         <div class="acciones-panel">
           <button type="submit" class="btn-reserve btn-accion"><i class="bi bi-check2-circle"></i> Guardar fechas</button>
@@ -104,7 +110,8 @@ function crearTarjetaReserva(reserva) {
         <p><i class="bi bi-calendar-event"></i> ${reserva.fechas} (${reserva.noches} noche${reserva.noches !== 1 ? "s" : ""})</p>
         <p><i class="bi bi-people"></i> ${reserva.huespedes} huésped${reserva.huespedes !== 1 ? "es" : ""}</p>
         <p><i class="bi bi-cash-coin"></i> Total: $${Number(reserva.importe).toLocaleString("es-AR")}</p>
-        <span class="badge-estado ${reserva.estado}">${reserva.estadoTexto}</span>
+        <span class="badge-estado ${reserva.badge}">${reserva.estadoTexto}</span>
+        ${reserva.motivoCambio && !reserva.motivo ? `<p class="motivo-cancelacion"><i class="bi bi-calendar-range"></i> Tu motivo del cambio de fechas: <em>${escaparHtml(reserva.motivoCambio)}</em></p>` : ""}
         ${reserva.motivo ? `<p class="motivo-cancelacion"><i class="bi bi-chat-left-text"></i> ${textoMotivo} <em>${escaparHtml(reserva.motivo)}</em></p>` : ""}
       </div>
       <div class="acciones">
@@ -225,6 +232,7 @@ async function prepararCambioFechas(form, reserva) {
 function cambiarFechas(form) {
   const entrada = form.querySelector(".nueva-entrada").value;
   const salida  = form.querySelector(".nueva-salida").value;
+  const motivo  = form.querySelector(".motivo-cambio").value.trim();
   const errSpan = form.querySelector(".campo-error");
   errSpan.textContent = "";
   if (!entrada || !salida) {
@@ -235,9 +243,13 @@ function cambiarFechas(form) {
     errSpan.textContent = "La salida tiene que ser posterior a la entrada.";
     return;
   }
+  if (!motivo) {
+    errSpan.textContent = "Escribí el motivo del cambio de fechas.";
+    return;
+  }
   enviarAccion(form, `${API_RESERVAS_URL}/${form.dataset.id}/fechas`, "PUT",
-    { usuarioId: usuarioActual.id, fechaCheckIn: entrada, fechaCheckOut: salida },
-    "¡Fechas actualizadas! El importe se recalculó con las nuevas noches.");
+    { usuarioId: usuarioActual.id, fechaCheckIn: entrada, fechaCheckOut: salida, motivo },
+    "¡Fechas actualizadas! El anfitrión va a ver tu motivo.");
 }
 
 // render

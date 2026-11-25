@@ -31,6 +31,16 @@ function formatearFecha(iso) {
   return `${dia}/${mes}/${anio}`;
 }
 
+// el estado que se ve depende de las fechas:
+// antes de la entrada "Confirmada", durante la estadia "En curso", despues "Finalizada"
+function estadoSegunFechas(r, cancelada) {
+  const hoy = hoyISO();
+  if (cancelada)                   return { estado: "cancelado",  estadoTexto: "Cancelada" };
+  if (r.fechaCheckOut < hoy)       return { estado: "finalizado", estadoTexto: "Finalizada" };
+  if (r.fechaCheckIn <= hoy)       return { estado: "en-curso",   estadoTexto: "En curso" };
+  return { estado: "confirmado", estadoTexto: "Confirmada" };
+}
+
 function adaptarReserva(r) {
   const cancelada = r.estado === "CANCELADA";
   return {
@@ -43,10 +53,10 @@ function adaptarReserva(r) {
     noches:      r.noches,
     huespedes:   r.huespedes,
     importe:     r.importeTotal,
-    estado:      cancelada ? "cancelado" : "confirmado",
-    estadoTexto: cancelada ? "Cancelada" : "Confirmada",
+    ...estadoSegunFechas(r, cancelada),
     motivo:      r.motivoCancelacion,
     canceladaPor: r.canceladaPor,
+    motivoCambio: r.motivoCambioFechas,
     // se puede cancelar hasta el dia antes
     puedeCancelar: !cancelada && r.fechaCheckIn > hoyISO()
   };
@@ -67,6 +77,7 @@ function crearTarjetaRecibida(r) {
         <p><strong><i class="bi bi-calendar"></i> Fechas:</strong> ${r.fechas} (${r.noches} noche${r.noches !== 1 ? "s" : ""})</p>
         <p><strong><i class="bi bi-people"></i> Cantidad:</strong> ${r.huespedes} huésped${r.huespedes !== 1 ? "es" : ""}</p>
         <p><strong><i class="bi bi-cash-coin"></i> Total:</strong> $${Number(r.importe).toLocaleString("es-AR")}</p>
+        ${r.motivoCambio && !r.motivo ? `<p class="reserva-solicitud"><i class="bi bi-calendar-range"></i> <strong>El huésped cambió las fechas:</strong> <em>${escaparHtml(r.motivoCambio)}</em></p>` : ""}
         ${r.motivo ? `<p class="reserva-solicitud"><i class="bi bi-chat-left-text"></i> <strong>${r.canceladaPor === "HUESPED" ? "Canceló el huésped:" : "Motivo de tu cancelación:"}</strong> <em>${escaparHtml(r.motivo)}</em></p>` : ""}
         <div class="acciones-recibida">
           <span class="badge-estado ${r.estado}">${r.estadoTexto}</span>
