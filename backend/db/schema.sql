@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS reserva (
   estado             VARCHAR(20)   NOT NULL CHECK (estado IN ('ACTIVA', 'CANCELADA')),
   motivo_cancelacion VARCHAR(500),                    -- motivo al cancelar
   cancelada_por      VARCHAR(20),                     -- HUESPED o ANFITRION
+  motivo_cambio_fechas VARCHAR(500),                  -- motivo del ultimo cambio de fechas
   fecha_creacion     TIMESTAMP(6)  NOT NULL,
   fecha_modificacion TIMESTAMP(6),
   CHECK (fecha_check_out > fecha_check_in)
@@ -126,3 +127,4 @@ CREATE TABLE IF NOT EXISTS reserva (
 ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS motivo_cancelacion VARCHAR(500);
 ALTER TABLE hospedaje ADD COLUMN IF NOT EXISTS activo BOOLEAN NOT NULL DEFAULT TRUE;
 ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS cancelada_por VARCHAR(20);
+ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS motivo_cambio_fechas VARCHAR(500);

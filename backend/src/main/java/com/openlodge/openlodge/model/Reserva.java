@@ -71,6 +71,10 @@ public class Reserva {
     @Column(length = 20)
     private String canceladaPor;
 
+    // se completa cuando el huesped cambia las fechas
+    @Column(length = 500)
+    private String motivoCambioFechas;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;

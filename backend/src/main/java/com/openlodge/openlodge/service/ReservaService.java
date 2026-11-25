@@ -142,6 +142,7 @@ public class ReservaService {
         reserva.setFechaCheckIn(entrada);
         reserva.setFechaCheckOut(salida);
         reserva.setImporteTotal(hospedaje.getPrecioPorNoche().multiply(BigDecimal.valueOf(noches)));
+        reserva.setMotivoCambioFechas(req.motivo().trim());
         return ReservaDto.desde(reservaRepository.save(reserva));
     }
 

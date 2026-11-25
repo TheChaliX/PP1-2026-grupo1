@@ -23,7 +23,8 @@ public record ReservaDto(
         LocalDateTime fechaCreacion,
         String huesped,
         String motivoCancelacion,
-        String canceladaPor
+        String canceladaPor,
+        String motivoCambioFechas
 ) {
     public static ReservaDto desde(Reserva r) {
         Hospedaje h = r.getHospedaje();
@@ -42,7 +43,8 @@ public record ReservaDto(
                 r.getFechaCreacion(),
                 r.getUsuario().getNombre() + " " + r.getUsuario().getApellido(),
                 r.getMotivoCancelacion(),
-                r.getCanceladaPor()
+                r.getCanceladaPor(),
+                r.getMotivoCambioFechas()
         );
     }
 }
