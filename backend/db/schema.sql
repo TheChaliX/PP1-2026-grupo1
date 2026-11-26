@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS hospedaje (
   banos              INTEGER,
   destacado          VARCHAR(20),
   activo             BOOLEAN          NOT NULL DEFAULT TRUE,   -- false si esta pausado
+  eliminado          BOOLEAN          NOT NULL DEFAULT FALSE,  -- true si el anfitrion lo elimino (no se borra)
   fecha_creacion     TIMESTAMP(6)     NOT NULL,
   fecha_modificacion TIMESTAMP(6),
   id_ciudad          BIGINT           NOT NULL REFERENCES ciudad (id),
@@ -78,10 +79,12 @@ CREATE TABLE IF NOT EXISTS hospedaje_imagen (
   PRIMARY KEY (id_hospedaje, orden)
 );
 
--- servicios de cada alojamiento
+-- servicios de cada alojamiento (tabla puente sin atributos propios)
+-- la clave compuesta impide cargar dos veces el mismo servicio en un alojamiento
 CREATE TABLE IF NOT EXISTS servicio_hospedaje (
   id_hospedaje BIGINT NOT NULL REFERENCES hospedaje (id),
-  id_servicio  BIGINT NOT NULL REFERENCES servicio (id)
+  id_servicio  BIGINT NOT NULL REFERENCES servicio (id),
+  CONSTRAINT pk_servicio_hospedaje PRIMARY KEY (id_hospedaje, id_servicio)
 );
 
 -- dias bloqueados por el anfitrion
@@ -113,7 +116,7 @@ CREATE TABLE IF NOT EXISTS reserva (
   cant_bebes         INTEGER       NOT NULL,
   cant_mascotas      INTEGER       NOT NULL,
   importe_total      NUMERIC(12,2) NOT NULL,
-  estado             VARCHAR(20)   NOT NULL CHECK (estado IN ('ACTIVA', 'CANCELADA')),
+  estado             VARCHAR(20)   NOT NULL CHECK (estado IN ('CONFIRMADA', 'CANCELADA')),
   motivo_cancelacion VARCHAR(500),                    -- motivo al cancelar
   cancelada_por      VARCHAR(20),                     -- HUESPED o ANFITRION
   motivo_cambio_fechas VARCHAR(500),                  -- motivo del ultimo cambio de fechas
@@ -128,3 +131,48 @@ ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS motivo_cancelacion VARCHAR(500);
 ALTER TABLE hospedaje ADD COLUMN IF NOT EXISTS activo BOOLEAN NOT NULL DEFAULT TRUE;
 ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS cancelada_por VARCHAR(20);
 ALTER TABLE reserva   ADD COLUMN IF NOT EXISTS motivo_cambio_fechas VARCHAR(500);
+ALTER TABLE hospedaje ADD COLUMN IF NOT EXISTS eliminado BOOLEAN NOT NULL DEFAULT FALSE;
+
+-- clave de servicio_hospedaje para la base que ya existia:
+-- primero borra los servicios repetidos (deja uno) y despues agrega la clave, si no estaba
+DELETE FROM servicio_hospedaje a
+USING servicio_hospedaje b
+WHERE a.ctid > b.ctid
+  AND a.id_hospedaje = b.id_hospedaje
+  AND a.id_servicio  = b.id_servicio;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'pk_servicio_hospedaje') THEN
+    ALTER TABLE servicio_hospedaje
+      ADD CONSTRAINT pk_servicio_hospedaje PRIMARY KEY (id_hospedaje, id_servicio);
+  END IF;
+END $$;
+
+-- estado de la reserva: ACTIVA pasa a llamarse CONFIRMADA (la reserva es inmediata).
+-- Saca la regla vieja de la columna estado, pasa las reservas y pone la regla nueva.
+DO $$
+DECLARE regla RECORD;
+BEGIN
+  FOR regla IN
+    SELECT conname FROM pg_constraint
+    WHERE conrelid = 'reserva'::regclass AND contype = 'c'
+      AND pg_get_constraintdef(oid) ILIKE '%estado%'
+  LOOP
+    EXECUTE format('ALTER TABLE reserva DROP CONSTRAINT %I', regla.conname);
+  END LOOP;
+END $$;
+
+UPDATE reserva SET estado = 'CONFIRMADA' WHERE estado = 'ACTIVA';
+
+ALTER TABLE reserva
+  ADD CONSTRAINT ck_reserva_estado CHECK (estado IN ('CONFIRMADA', 'CANCELADA'));
+
+-- datos que se recortaron en el analisis: reseñas y tipo administrador.
+-- Las columnas calificacion y resenas quedan vacias; el tipo se borra solo si nadie lo usa.
+UPDATE hospedaje SET calificacion = NULL, resenas = NULL
+WHERE calificacion IS NOT NULL OR resenas IS NOT NULL;
+
+DELETE FROM tipo_usuario t
+WHERE t.nombre = 'administrador'
+  AND NOT EXISTS (SELECT 1 FROM usuario u WHERE u.id_tipo_usuario = t.id);

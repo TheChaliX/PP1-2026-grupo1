@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class AutenticacionService {
 
-    // El administrador no se puede elegir al registrarse
+    // Roles que se pueden elegir al registrarse
     private static final List<String> ROLES_PERMITIDOS = List.of("huesped", "anfitrion");
 
     // codigos para recuperar la contraseña, se guardan en memoria y vencen a los 10 min

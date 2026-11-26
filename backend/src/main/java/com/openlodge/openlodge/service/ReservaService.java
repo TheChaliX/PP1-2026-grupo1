@@ -91,7 +91,7 @@ public class ReservaService {
         reserva.setCantBebes(req.bebes());
         reserva.setCantMascotas(req.mascotas());
         reserva.setImporteTotal(hospedaje.getPrecioPorNoche().multiply(BigDecimal.valueOf(noches)));
-        reserva.setEstado(EstadoReserva.ACTIVA);
+        reserva.setEstado(EstadoReserva.CONFIRMADA);
 
         return ReservaDto.desde(reservaRepository.save(reserva));
     }
@@ -176,7 +176,7 @@ public class ReservaService {
     public List<OcupacionDto> ocupacion(Long hospedajeId) {
         LocalDate hoy = LocalDate.now(ZONA);
         Stream<OcupacionDto> reservas = reservaRepository
-                .findByHospedajeIdAndEstadoOrderByFechaCheckInAsc(hospedajeId, EstadoReserva.ACTIVA).stream()
+                .findByHospedajeIdAndEstadoOrderByFechaCheckInAsc(hospedajeId, EstadoReserva.CONFIRMADA).stream()
                 .map(r -> new OcupacionDto(r.getFechaCheckIn(), r.getFechaCheckOut(), "reserva"));
         // +1 porque el bloqueo incluye el dia hasta
         Stream<OcupacionDto> bloqueos = bloqueoRepository

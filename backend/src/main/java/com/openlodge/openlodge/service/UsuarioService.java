@@ -36,7 +36,7 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-        // Solo las cuentas de huésped o anfitrión pueden alternar (el administrador no)
+        // Solo las cuentas de huésped o anfitrión pueden alternar
         if (!MODOS_PERMITIDOS.contains(usuario.getTipoUsuario().getNombre())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Esta cuenta no puede cambiar de modo");
         }

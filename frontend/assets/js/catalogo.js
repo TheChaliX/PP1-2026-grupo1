@@ -15,25 +15,15 @@ let alojamientos = [];
 
 function crearBadge(alojamiento) {
   if (alojamiento.destacado === "oferta") return `<span class="badge-flotante badge-oferta">Oferta especial</span>`;
-  if (alojamiento.destacado === "top")    return `<span class="badge-flotante badge-top">¡Mejor puntuado!</span>`;
+  if (alojamiento.destacado === "top")    return `<span class="badge-flotante badge-top">Destacado</span>`;
   return "";
-}
-
-function crearRating(alojamiento) {
-  if (!alojamiento.calificacion) return "";
-  return `
-    <div class="rating">
-      <span class="rating-estrellas" style="--puntaje: ${alojamiento.calificacion};" aria-label="${alojamiento.calificacion} de 5 estrellas"></span>
-      <span class="rating-valor">${alojamiento.calificacion.toFixed(1)}</span>
-      <span class="rating-reviews">(${alojamiento.resenas || 0} reseñas)</span>
-    </div>
-  `;
 }
 
 function crearChipsServicios(servicios) {
   if (!servicios || servicios.length === 0) return "";
-  const visibles = servicios.slice(0, 3);
-  const extras   = servicios.length > 3 ? `<span class="chip chip-extra">+${servicios.length - 3}</span>` : "";
+  // en una sola linea: dos extras y el resto como "+N", asi todas las tarjetas miden lo mismo
+  const visibles = servicios.slice(0, 2);
+  const extras   = servicios.length > 2 ? `<span class="chip chip-extra">+${servicios.length - 2}</span>` : "";
   return `<div class="chips-servicios">
     ${visibles.map((s) => `<span class="chip"><i class="bi ${iconosServicios[s] || "bi-check-circle"}"></i> ${s}</span>`).join("")}
     ${extras}
@@ -53,8 +43,7 @@ function crearTarjeta(alojamiento) {
           ${imgHtml}
         </div>
         <div class="card-body d-flex flex-column">
-          <h3 class="card-title h5">${alojamiento.nombre}</h3>
-          ${crearRating(alojamiento)}
+          <h3 class="card-title h5" title="${alojamiento.nombre}">${alojamiento.nombre}</h3>
           <p class="card-text mb-1"><i class="bi bi-geo-alt-fill text-danger"></i> ${alojamiento.ubicacion}</p>
           <p class="card-text card-precio"><strong>$${alojamiento.precioNoche.toLocaleString("es-AR")}</strong> <span>/ noche</span></p>
           ${crearChipsServicios(alojamiento.servicios)}
@@ -110,8 +99,6 @@ function adaptarHospedaje(item) {
     precioNoche:  item.precioPorNoche,
     imagen:       item.imagen || null,
     imagenes:     item.imagenes || (item.imagen ? [item.imagen] : []),
-    calificacion: item.calificacion || null,
-    resenas:      item.resenas || 0,
     servicios:    item.servicios || [],
     destacado:    item.destacado || null
   };

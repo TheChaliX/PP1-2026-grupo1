@@ -32,7 +32,7 @@ public class DatosIniciales implements CommandLineRunner {
             "Calefacción", "Lavandería", "Jacuzzi", "Mascotas permitidas",
             "Apto para niños", "Seguridad 24h", "Gym");
 
-    private static final List<String> TIPOS_USUARIO = List.of("huesped", "anfitrion", "administrador");
+    private static final List<String> TIPOS_USUARIO = List.of("huesped", "anfitrion");
 
     private final PaisRepository paisRepository;
     private final CiudadRepository ciudadRepository;

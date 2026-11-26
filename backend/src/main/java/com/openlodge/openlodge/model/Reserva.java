@@ -62,7 +62,7 @@ public class Reserva {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private EstadoReserva estado = EstadoReserva.ACTIVA;
+    private EstadoReserva estado = EstadoReserva.CONFIRMADA;
 
     // se completan al cancelar
     @Column(length = 500)

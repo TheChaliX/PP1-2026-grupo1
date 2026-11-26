@@ -81,7 +81,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("img-cordoba.jpg", "cordoba-cocina.jpg", "cordoba-comedor.jpg",
                         "cordoba-habitacion.jpg", "cordoba-living.jpg"),
                 List.of("Wi-Fi", "Estacionamiento", "Parrilla", "Vista panorámica", "Mascotas permitidas"),
-                4.8, 132, "top");
+                "top");
 
         guardar("Cabaña con pileta",
                 "Exclusiva cabaña a minutos del centro, rodeada de verde. Ideal para relajarse en la pileta privada con vistas al lago San Roque.",
@@ -91,7 +91,7 @@ public class DatosHospedajes implements CommandLineRunner {
                         "cabaña-habitacion.jpg", "cabaña-living.jpg", "cabaña-pileta.jpg",
                         "cabañalago.jpg", "cocina-pileta.jpg"),
                 List.of("Wi-Fi", "Pileta", "Estacionamiento", "Parrilla"),
-                4.6, 98, "oferta");
+                "oferta");
 
         guardar("Casa quinta con pileta",
                 "Amplio parque arbolado, quincho techado y pileta enorme. El lugar definitivo para desconectar el fin de semana en familia.",
@@ -101,7 +101,7 @@ public class DatosHospedajes implements CommandLineRunner {
                         "santafe-habitacion.jpg", "santafe-living.jpg", "habitacion-pileta.jpg",
                         "living-pileta.jpg", "comedor-pileta.jpg"),
                 List.of("Wi-Fi", "Pileta", "Cocina", "Estacionamiento", "Mascotas permitidas"),
-                4.3, 54, null);
+                null);
 
         guardar("Departamento con vista al río",
                 "Moderno loft en pleno centro con balcón aterrazado mirando al río Paraná. Cerca de los mejores bares y restaurantes de la ciudad.",
@@ -110,7 +110,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("departamento.jpg", "departamento-baño.jpg", "departamento-cocina.jpg",
                         "departamento-habitacion.jpg", "departamento-living.jpg"),
                 List.of("Wi-Fi", "Cocina", "Vista panorámica"),
-                4.1, 27, null);
+                null);
 
         guardar("Cabaña frente al lago",
                 "Cálida cabaña patagónica construida en madera y piedra. Bajada directa a la playa del lago Nahuel Huapi y estufa a leña.",
@@ -118,7 +118,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 anfitrion("anfitrion5", "Familia", "Rossi"),
                 fotos("bariloche.jpg"),
                 List.of("Wi-Fi", "Parrilla", "Vista panorámica", "Cocina", "Mascotas permitidas"),
-                4.9, 201, "top");
+                "top");
 
         guardar("Chalet en los viñedos",
                 "Rodeado de cepas de Malbec, este chalet ofrece una experiencia vitivinícola completa. Incluye degustación de bienvenida para los huéspedes.",
@@ -127,7 +127,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("chalet.jpg", "chalet-baño.jpg", "chalet-comedor.jpg",
                         "chalet-habitacion.jpg", "chalet-living.jpg"),
                 List.of("Wi-Fi", "Pileta", "Estacionamiento", "Cocina"),
-                4.5, 76, null);
+                null);
 
         guardar("Cabaña colonial",
                 "Alojamiento con arquitectura tradicional salteña a metros de las principales peñas folclóricas. Sentí el verdadero espíritu del norte.",
@@ -136,7 +136,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("colonial.jpg", "colonial-cocina.jpg", "colonial-habitacion.jpg",
                         "colonial-living.jpg", "colonial-patio.jpg"),
                 List.of("Wi-Fi", "Aire acondicionado", "Cocina"),
-                4.2, 39, "oferta");
+                "oferta");
 
         guardar("Departamento dúplex playa",
                 "Dúplex luminoso y súper moderno a solo dos cuadras del mar. Balcón terraza equipado para disfrutar las noches de verano al aire libre.",
@@ -145,7 +145,7 @@ public class DatosHospedajes implements CommandLineRunner {
                 fotos("duplex.jpg", "duplex-baño.jpg", "duplex-cocina.jpg",
                         "duplex-comedor.jpg", "duplex-habitacion.jpg"),
                 List.of("Wi-Fi", "Estacionamiento", "Cocina", "Vista panorámica"),
-                4.4, 88, null);
+                null);
     }
 
     private Usuario anfitrion(String username, String nombre, String apellido) {
@@ -170,7 +170,7 @@ public class DatosHospedajes implements CommandLineRunner {
     private void guardar(String nombre, String descripcion, String ciudad, String tipo,
                          String precio, int capacidad, Usuario anfitrion,
                          List<String> imagenes, List<String> nombresServicios,
-                         Double calificacion, Integer resenas, String destacado) {
+                         String destacado) {
         Hospedaje h = new Hospedaje();
         h.setNombre(nombre);
         h.setDescripcion(descripcion);
@@ -182,8 +182,6 @@ public class DatosHospedajes implements CommandLineRunner {
         h.setImagen(imagenes.get(0));
         h.setImagenes(new ArrayList<>(imagenes));
         h.setServicios(nombresServicios.stream().map(servicios::get).collect(Collectors.toCollection(ArrayList::new)));
-        h.setCalificacion(calificacion);
-        h.setResenas(resenas);
         h.setDestacado(destacado);
         hospedajeRepository.save(h);
     }

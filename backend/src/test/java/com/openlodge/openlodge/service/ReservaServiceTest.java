@@ -102,7 +102,7 @@ class ReservaServiceTest {
 
         // 3 noches x $10.000
         assertEquals(0, new BigDecimal("30000").compareTo(creada.importeTotal()));
-        assertEquals("ACTIVA", creada.estado());
+        assertEquals("CONFIRMADA", creada.estado());
     }
 
     @Test
