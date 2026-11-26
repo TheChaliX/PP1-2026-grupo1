@@ -20,8 +20,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     // para ver si se puede eliminar el alojamiento
     boolean existsByHospedajeIdAndEstadoAndFechaCheckOutAfter(Long hospedajeId, EstadoReserva estado, LocalDate fecha);
 
-    void deleteByHospedajeId(Long hospedajeId);
-
     // Reservas de un alojamiento, por estado
     List<Reserva> findByHospedajeIdAndEstadoOrderByFechaCheckInAsc(Long hospedajeId, EstadoReserva estado);
 
@@ -29,7 +27,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("""
             select count(r) > 0 from Reserva r
             where r.hospedaje.id = :hospedajeId
-              and r.estado = com.openlodge.openlodge.model.EstadoReserva.ACTIVA
+              and r.estado = com.openlodge.openlodge.model.EstadoReserva.CONFIRMADA
               and r.fechaCheckIn < :checkOut
               and r.fechaCheckOut > :checkIn
             """)
@@ -42,7 +40,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             select count(r) > 0 from Reserva r
             where r.hospedaje.id = :hospedajeId
               and r.id <> :reservaId
-              and r.estado = com.openlodge.openlodge.model.EstadoReserva.ACTIVA
+              and r.estado = com.openlodge.openlodge.model.EstadoReserva.CONFIRMADA
               and r.fechaCheckIn < :checkOut
               and r.fechaCheckOut > :checkIn
             """)

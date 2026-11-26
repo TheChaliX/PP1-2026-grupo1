@@ -12,8 +12,6 @@ public interface BloqueoRepository extends JpaRepository<Bloqueo, Long> {
 
     List<Bloqueo> findByHospedajeIdOrderByFechaDesdeAsc(Long hospedajeId);
 
-    void deleteByHospedajeId(Long hospedajeId);
-
     // true si algun bloqueo se pisa con esas fechas
     @Query("""
             select count(b) > 0 from Bloqueo b

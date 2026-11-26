@@ -701,6 +701,10 @@ body.catalogo header {
 }
 
 #contenedor-catalogo .card-title {
+    /* una sola linea: si el nombre es largo se corta con "..." (el nombre completo queda en el title) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-bottom: 2px;
     color: var(--azul-profundo);
     font-family: var(--font-titulos);
@@ -2862,6 +2866,16 @@ footer {
   flex-wrap: wrap;
   gap: 4px;
   margin: 4px 0 6px;
+}
+/* en el catalogo los extras van en una sola linea */
+#contenedor-catalogo .chips-servicios {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  min-height: 24px;
+}
+#contenedor-catalogo .chip {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .chip {

@@ -83,14 +83,14 @@ public class HospedajeService {
 
     @Transactional(readOnly = true)
     public List<HospedajeDto> listarPorAnfitrion(Long anfitrionId) {
-        return repository.findByAnfitrionIdOrderByNombreAsc(anfitrionId).stream()
+        return repository.findByAnfitrionIdAndEliminadoFalseOrderByNombreAsc(anfitrionId).stream()
                 .map(HospedajeDto::desde)
                 .toList();
     }
 
     @Transactional(readOnly = true)
     public Optional<HospedajeDto> buscarPorId(Long id) {
-        return repository.findById(id).map(HospedajeDto::desde);
+        return repository.findByIdAndEliminadoFalse(id).map(HospedajeDto::desde);
     }
 
     @Transactional
@@ -157,22 +157,24 @@ public class HospedajeService {
         return HospedajeDto.desde(repository.save(h));
     }
 
-    // solo se puede eliminar si no tiene reservas activas
+    // solo se puede eliminar si no tiene reservas confirmadas a futuro.
+    // No se borra de la base: se marca como eliminado y deja de verse,
+    // asi las reservas viejas y canceladas siguen en el historial del huesped y del anfitrion
     @Transactional
     public void eliminar(Long id, Long anfitrionId) {
         Hospedaje h = buscarDelAnfitrion(id, anfitrionId);
         LocalDate hoy = LocalDate.now(ZONA);
-        if (reservaRepository.existsByHospedajeIdAndEstadoAndFechaCheckOutAfter(id, EstadoReserva.ACTIVA, hoy)) {
+        if (reservaRepository.existsByHospedajeIdAndEstadoAndFechaCheckOutAfter(id, EstadoReserva.CONFIRMADA, hoy)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Tiene reservas activas. Cancelalas primero o pausá el alojamiento");
         }
-        bloqueoRepository.deleteByHospedajeId(id);
-        reservaRepository.deleteByHospedajeId(id);
-        repository.delete(h);
+        h.setEliminado(true);
+        h.setActivo(false);
+        repository.save(h);
     }
 
     private Hospedaje buscarDelAnfitrion(Long id, Long anfitrionId) {
-        Hospedaje h = repository.findById(id)
+        Hospedaje h = repository.findByIdAndEliminadoFalse(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Alojamiento no encontrado"));
         if (!h.getAnfitrion().getId().equals(anfitrionId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Este alojamiento no es tuyo");

@@ -72,6 +72,10 @@ public class Hospedaje {
     @Column(nullable = false)
     private boolean activo = true;
 
+    // true si el anfitrion lo elimino: no se borra para no perder el historial de reservas
+    @Column(nullable = false)
+    private boolean eliminado = false;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
