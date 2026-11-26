@@ -1,7 +1,7 @@
 # Entrega final: Exposición
 
 **Materia:** Práctica Profesionalizante I (PP1) — 2026
-**Proyecto:** AlojAR — Sistema de reservas de alojamientos
+**Proyecto:** AlojAR/Openlodge — Sistema de reservas de alojamientos
 **Grupo:** Grupo 1 — Sarco Thiago, Nanzer Benjamin, Chalita Antonio y Hernandes German Mateo
 **Fecha de la mesa:** 01/12/2026 (final del 2do llamado de diciembre)
 
