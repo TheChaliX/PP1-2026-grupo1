@@ -42,12 +42,21 @@
       <form id="formPerfil" novalidate>
 
         <div class="campo-grupo">
-          <label for="nombre">Nombre completo</label>
+          <label for="nombre">Nombre</label>
           <div class="input-icono-wrapper">
             <i class="bi bi-person-fill input-icono"></i>
-            <input type="text" id="nombre" name="nombre" autocomplete="name">
+            <input type="text" id="nombre" name="nombre" autocomplete="given-name">
           </div>
           <span class="campo-error" id="err-nombre"></span>
+        </div>
+
+        <div class="campo-grupo">
+          <label for="apellido">Apellido</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-person-fill input-icono"></i>
+            <input type="text" id="apellido" name="apellido" autocomplete="family-name">
+          </div>
+          <span class="campo-error" id="err-apellido"></span>
         </div>
 
         <div class="campo-grupo">
@@ -62,6 +71,16 @@
         </div>
 
         <div class="perfil-divider"><span><i class="bi bi-shield-lock"></i> Cambiar contraseña</span></div>
+
+                <div class="campo-grupo">
+          <label for="password-actual">Contraseña actual</label>
+          <div class="input-icono-wrapper">
+            <i class="bi bi-key-fill input-icono"></i>
+            <input type="password" id="password-actual" name="password-actual" placeholder="Solo si querés cambiarla" autocomplete="current-password">
+            <button type="button" class="btn-toggle-pass" data-target="password-actual" tabindex="-1"><i class="bi bi-eye"></i></button>
+          </div>
+          <span class="campo-error" id="err-password-actual"></span>
+        </div>
 
         <div class="campo-grupo">
           <label for="password">Nueva contraseña</label>
