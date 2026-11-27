@@ -1926,6 +1926,11 @@ body.registro {
     margin-top: 10px;
 }
 
+/* el ojo de las contraseñas no lleva ese margen: queda centrado en el campo */
+.perfil-card .btn-toggle-pass {
+    margin-top: 0;
+}
+
 /* ===== MENSAJES GENERALES Y FOOTER ===== */
 #mensajeError,
 #mensajeEstado,

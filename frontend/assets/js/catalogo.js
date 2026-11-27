@@ -11,7 +11,6 @@ const inputSalida        = document.querySelector("#fecha-salida");
 //acceso a la API
 const API_URL = `${API_BASE}/hospedajes`;
 
-let alojamientos = [];
 
 function crearBadge(alojamiento) {
   if (alojamiento.destacado === "oferta") return `<span class="badge-flotante badge-oferta">Oferta especial</span>`;
@@ -118,17 +117,42 @@ if (inputLlegada && inputSalida) {
   });
 }
 
-// con fechas le pedimos al back solo los libres, sin fechas usamos la lista que ya tenemos
-async function buscarPorFechas(llegada, salida) {
-  if (!llegada && !salida) return alojamientos;
-  if (!llegada || !salida) throw new Error("Elegí la fecha de llegada y la de salida.");
-  if (llegada < hoyISO()) throw new Error("La llegada no puede ser antes de hoy.");
-  if (salida <= llegada) throw new Error("La salida tiene que ser después de la llegada.");
+// arma la URL con los filtros que se completaron; los vacios no se mandan
+function armarFiltros() {
+  const params  = new URLSearchParams();
+  const destino = inputUbicacion?.value.trim();
+  const llegada = inputLlegada?.value;
+  const salida  = inputSalida?.value;
+  const min     = inputTarifaMin?.value;
+  const max     = inputTarifaMax?.value;
 
-  const respuesta = await fetch(`${API_URL}?entrada=${llegada}&salida=${salida}`);
+  if (llegada || salida) {
+    if (!llegada || !salida) throw new Error("Elegí la fecha de llegada y la de salida.");
+    if (llegada < hoyISO()) throw new Error("La llegada no puede ser antes de hoy.");
+    if (salida <= llegada) throw new Error("La salida tiene que ser después de la llegada.");
+  }
+  if (min && max && Number(min) > Number(max)) {
+    throw new Error("El precio mínimo no puede ser mayor que el máximo.");
+  }
+
+  if (destino) params.append("destino", destino);
+  if (min)     params.append("precioMin", min);
+  if (max)     params.append("precioMax", max);
+  if (llegada) params.append("entrada", llegada);
+  if (salida)  params.append("salida", salida);
+  document.querySelectorAll('.servicio-check input[type="checkbox"]:checked')
+    .forEach((cb) => params.append("servicios", cb.value));
+
+  return params;
+}
+
+// el backend filtra todo en una sola consulta y devuelve solo los que coinciden
+async function buscarAlojamientos(params) {
+  const url = params.toString() ? `${API_URL}?${params}` : API_URL;
+  const respuesta = await fetch(url);
   if (!respuesta.ok) {
     const datos = await respuesta.json().catch(() => ({}));
-    throw new Error(datos.mensaje || "No se pudo buscar por fechas.");
+    throw new Error(datos.mensaje || "No se pudo buscar alojamientos.");
   }
   return (await respuesta.json()).map(adaptarHospedaje);
 }
@@ -142,42 +166,32 @@ if (formFiltros) {
     // si ya esta buscando no hace nada, asi no se manda la misma busqueda varias veces
     if (botonBuscar?.disabled) return;
 
+    let params;
+    try {
+      params = armarFiltros();
+    } catch (error) {
+      contenedorCatalogo.innerHTML = "";
+      mostrarMensajeFiltros(error.message, "error");
+      return;
+    }
+
     if (botonBuscar) {
       botonBuscar.disabled = true;
       botonBuscar.innerHTML = `<i class="bi bi-hourglass-split"></i> Buscando...`;
     }
     mostrarCargando("Buscando alojamientos...");
 
-    let base;
     try {
-      base = await buscarPorFechas(inputLlegada?.value, inputSalida?.value);
+      renderizarCatalogo(await buscarAlojamientos(params));
     } catch (error) {
       contenedorCatalogo.innerHTML = "";
       mostrarMensajeFiltros(error.message, "error");
-      return;
     } finally {
       if (botonBuscar) {
         botonBuscar.disabled = false;
         botonBuscar.innerHTML = textoBoton;
       }
     }
-
-    const ubicacionTexto = inputUbicacion.value.toLowerCase().trim();
-    const min = Number(inputTarifaMin.value) || 0;
-    const max = Number(inputTarifaMax.value) || Infinity;
-
-    const serviciosMarcados = [...document.querySelectorAll('.servicio-check input[type="checkbox"]:checked')]
-      .map((cb) => cb.value);
-
-    const filtrados = base.filter((a) => {
-      const coincideUbicacion  = !ubicacionTexto || a.ubicacion.toLowerCase().includes(ubicacionTexto);
-      const coincidePrecio     = a.precioNoche >= min && a.precioNoche <= max;
-      const coincideServicios  = serviciosMarcados.length === 0 ||
-        serviciosMarcados.every((s) => (a.servicios || []).includes(s));
-      return coincideUbicacion && coincidePrecio && coincideServicios;
-    });
-
-    renderizarCatalogo(filtrados);
   });
 }
 
@@ -207,13 +221,7 @@ async function cargarCatalogo() {
   mostrarCargando("Cargando alojamientos...");
 
   try {
-    const respuesta = await fetch(API_URL);
-    if (!respuesta.ok) throw new Error("Error al cargar catálogo");
-    const datosApi = await respuesta.json();
-
-    alojamientos = datosApi.map(adaptarHospedaje);
-
-    renderizarCatalogo(alojamientos);
+    renderizarCatalogo(await buscarAlojamientos(new URLSearchParams()));
   } catch (error) {
     console.error("Error al obtener catálogo:", error);
     contenedorCatalogo.innerHTML = "";

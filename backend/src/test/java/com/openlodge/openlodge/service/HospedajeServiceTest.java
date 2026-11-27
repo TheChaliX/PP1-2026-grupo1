@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,7 +73,7 @@ class HospedajeServiceTest {
         assertTrue(hospedaje.isEliminado());
         assertFalse(hospedaje.isActivo());
         verify(hospedajeRepository).save(hospedaje);
-        verify(hospedajeRepository, never()).delete(any());
+        verify(hospedajeRepository, never()).delete(any(Hospedaje.class));
     }
 
     @Test
@@ -91,5 +95,38 @@ class HospedajeServiceTest {
 
         assertEquals(HttpStatus.FORBIDDEN, error.getStatusCode());
         assertFalse(hospedaje.isEliminado());
+    }
+
+    // ---- filtros del catalogo: si un filtro esta mal, responde 400 sin ir a la base ----
+
+    @Test
+    void filtroRechazaPrecioMinimoMayorQueElMaximo() {
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> service.listar(null, new BigDecimal("50000"), new BigDecimal("10000"), List.of(), null, null));
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getStatusCode());
+        verifyNoInteractions(hospedajeRepository);
+    }
+
+    @Test
+    void filtroRechazaUnaSolaFecha() {
+        LocalDate llegada = LocalDate.now().plusDays(5);
+
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> service.listar(null, null, null, List.of(), llegada, null));
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getStatusCode());
+        verifyNoInteractions(hospedajeRepository);
+    }
+
+    @Test
+    void filtroRechazaSalidaAntesDeLaLlegada() {
+        LocalDate llegada = LocalDate.now().plusDays(5);
+
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> service.listar(null, null, null, List.of(), llegada, llegada.minusDays(1)));
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getStatusCode());
+        verifyNoInteractions(hospedajeRepository);
     }
 }

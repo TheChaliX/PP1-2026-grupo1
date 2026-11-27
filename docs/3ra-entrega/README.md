@@ -2,7 +2,7 @@
 # Entrega 3: Frontend codificado
 
 **Materia:** Práctica Profesionalizante I (PP1) — 2026  
-**Proyecto:** Sistema de reservas de alojamientos (TP Reservas)  
+**Proyecto:** AlojAR — Sistema de reservas de alojamientos  
 **Grupo:** Grupo 1 — [Sarco Thiago, Nanzer Benjamin, Chalita Antonio y Hernandes German Mateo]  
 **Fecha de entrega:** 24/09/2026
 

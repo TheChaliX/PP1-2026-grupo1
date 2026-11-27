@@ -75,6 +75,9 @@ if (formPerfil && usuario) {
       if (passNueva.length < 8) {
         marcarError(inputPass, errPass, "La nueva contraseña debe tener al menos 8 caracteres.");
         hayError = true;
+      } else if (passNueva === passActual) {
+        marcarError(inputPass, errPass, "La nueva contraseña tiene que ser distinta de la actual.");
+        hayError = true;
       }
       if (passNueva !== passConf) {
         marcarError(inputPassC, errPassC, "Las contraseñas no coinciden.");
@@ -99,6 +102,13 @@ if (formPerfil && usuario) {
 
       if (respuesta.status === 401) {
         marcarError(inputPassActual, errPassActual, "La contraseña actual no es correcta.");
+        return;
+      }
+
+      // 400: el backend rechazo algun dato (por ejemplo, la nueva igual a la actual)
+      if (respuesta.status === 400) {
+        const error = await respuesta.json().catch(() => ({}));
+        mostrarModal(error.mensaje || "Revisá los datos ingresados.", "error");
         return;
       }
 

@@ -1,7 +1,7 @@
 # Entrega 2 — Diseño de Interfaces
 
 * **Grupo:** Grupo N°1
-* **Proyecto:** Sistema de reservas de alojamiento
+* **Proyecto:** AlojAR — Sistema de reservas de alojamiento
 * **Fecha de entrega:** 25/06/2026
 
 ---

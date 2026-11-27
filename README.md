@@ -1,7 +1,7 @@
 # PP1 2026 — Proyecto Integrador
 
 **Grupo**: 1  
-**Proyecto**: Sistema de Alojamiento   
+**Proyecto**: AlojAR — Sistema de reservas de alojamientos  
 **Integrantes**:
 - Antonio Chalita 
 - Mateo Hernandez 
