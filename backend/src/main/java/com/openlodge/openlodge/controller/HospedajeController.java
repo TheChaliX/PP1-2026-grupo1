@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,12 +33,17 @@ public class HospedajeController {
         this.service = service;
     }
 
-    // las fechas son opcionales: si vienen, solo devuelve los libres en esas fechas
+    // catalogo: todos los filtros son opcionales y se resuelven en una sola consulta.
+    // Ej: /api/hospedajes?destino=cordoba&precioMax=50000&servicios=Wi-Fi&servicios=Pileta&entrada=2026-12-10&salida=2026-12-13
     @GetMapping
     public List<HospedajeDto> listar(
+            @RequestParam(required = false) String destino,
+            @RequestParam(required = false) BigDecimal precioMin,
+            @RequestParam(required = false) BigDecimal precioMax,
+            @RequestParam(required = false) List<String> servicios,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate entrada,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate salida) {
-        return service.listar(entrada, salida);
+        return service.listar(destino, precioMin, precioMax, servicios, entrada, salida);
     }
 
     @GetMapping("/anfitrion/{anfitrionId}")

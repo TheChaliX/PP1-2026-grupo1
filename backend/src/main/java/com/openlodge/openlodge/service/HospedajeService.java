@@ -12,16 +12,21 @@ import com.openlodge.openlodge.model.Usuario;
 import com.openlodge.openlodge.repository.BloqueoRepository;
 import com.openlodge.openlodge.repository.CiudadRepository;
 import com.openlodge.openlodge.repository.HospedajeRepository;
+import com.openlodge.openlodge.repository.HospedajeSpecs;
 import com.openlodge.openlodge.repository.PaisRepository;
 import com.openlodge.openlodge.repository.ReservaRepository;
 import com.openlodge.openlodge.repository.ServicioRepository;
 import com.openlodge.openlodge.repository.TipoHospedajeRepository;
 import com.openlodge.openlodge.repository.UsuarioRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -30,6 +35,8 @@ import java.util.Optional;
 
 @Service
 public class HospedajeService {
+
+    private static final Logger log = LoggerFactory.getLogger(HospedajeService.class);
 
     private final HospedajeRepository repository;
     private final UsuarioRepository usuarioRepository;
@@ -61,24 +68,47 @@ public class HospedajeService {
     }
 
     @Transactional(readOnly = true)
-    public List<HospedajeDto> listar(LocalDate entrada, LocalDate salida) {
-        List<Hospedaje> activos = repository.findByActivoTrue();
-        if (entrada == null && salida == null) {
-            return activos.stream().map(HospedajeDto::desde).toList();
-        }
-        if (entrada == null || salida == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Elegí la fecha de llegada y la de salida");
-        }
-        if (!salida.isAfter(entrada)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "La fecha de salida debe ser posterior a la de llegada");
-        }
-        // mismas consultas que se usan al reservar
-        return activos.stream()
-                .filter(h -> !reservaRepository.hayReservaSuperpuesta(h.getId(), entrada, salida)
-                        && !bloqueoRepository.hayBloqueoSuperpuesto(h.getId(), entrada, salida))
+    public List<HospedajeDto> listar(String destino, BigDecimal precioMin, BigDecimal precioMax,
+                                     List<String> servicios, LocalDate entrada, LocalDate salida) {
+        // los textos vacios cuentan como "sin filtro"
+        String texto = (destino == null || destino.isBlank()) ? null : destino.trim();
+        List<String> extras = servicios == null ? List.of()
+                : servicios.stream().filter(s -> s != null && !s.isBlank()).map(String::trim).distinct().toList();
+
+        validarFiltros(precioMin, precioMax, entrada, salida);
+
+        List<HospedajeDto> resultado = repository
+                .findAll(HospedajeSpecs.catalogo(texto, precioMin, precioMax, extras, entrada, salida), Sort.by("id"))
+                .stream()
                 .map(HospedajeDto::desde)
                 .toList();
+
+        // queda en la consola del backend que se busco y cuantos encontro
+        log.info("Catálogo · destino={} · precio={} a {} · extras={} · fechas={} a {} → {} alojamientos",
+                texto, precioMin, precioMax, extras, entrada, salida, resultado.size());
+        return resultado;
+    }
+
+    private void validarFiltros(BigDecimal precioMin, BigDecimal precioMax, LocalDate entrada, LocalDate salida) {
+        if ((precioMin != null && precioMin.signum() < 0) || (precioMax != null && precioMax.signum() < 0)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El precio no puede ser negativo");
+        }
+        if (precioMin != null && precioMax != null && precioMin.compareTo(precioMax) > 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El precio mínimo no puede ser mayor que el máximo");
+        }
+        if ((entrada == null) != (salida == null)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Elegí la fecha de llegada y la de salida");
+        }
+        if (entrada != null) {
+            if (entrada.isBefore(LocalDate.now(ZONA))) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La llegada no puede ser antes de hoy");
+            }
+            if (!salida.isAfter(entrada)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "La fecha de salida debe ser posterior a la de llegada");
+            }
+        }
     }
 
     @Transactional(readOnly = true)

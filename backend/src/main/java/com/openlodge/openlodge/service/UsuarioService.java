@@ -7,7 +7,6 @@ import com.openlodge.openlodge.model.Usuario;
 import com.openlodge.openlodge.repository.TipoUsuarioRepository;
 import com.openlodge.openlodge.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +22,15 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final TipoUsuarioRepository tipoUsuarioRepository;
 
-    // Los hashes de BCrypt llevan adentro su configuración, así que este codificador
-    // puede comparar los que generó el registro. Si el proyecto ya tiene un
-    // @Bean PasswordEncoder, conviene inyectarlo por constructor en vez de crear uno acá.
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    // el mismo codificador que usa el registro (el @Bean de PasswordConfig)
+    private final PasswordEncoder passwordEncoder;
 
     public UsuarioService(UsuarioRepository usuarioRepository,
-                          TipoUsuarioRepository tipoUsuarioRepository) {
+                          TipoUsuarioRepository tipoUsuarioRepository,
+                          PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.tipoUsuarioRepository = tipoUsuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -73,6 +72,10 @@ public class UsuarioService {
             }
             if (!passwordEncoder.matches(passwordActual, usuario.getPassword())) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "La contraseña actual no es correcta");
+            }
+            // la nueva tiene que ser distinta: se compara contra el hash guardado
+            if (passwordEncoder.matches(passwordNueva, usuario.getPassword())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La nueva contraseña tiene que ser distinta de la actual");
             }
             usuario.setPassword(passwordEncoder.encode(passwordNueva));
         }

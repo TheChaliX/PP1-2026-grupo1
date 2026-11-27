@@ -1,7 +1,7 @@
 # Entrega 1 — Análisis del Sistema
 
 **Grupo**: [TBMA]  
-**Proyecto**: [Sistema de Reserva de Alojamiento]  
+**Proyecto**: [AlojAR — Sistema de Reserva de Alojamiento]  
 **Fecha de entrega**: 30/04/2026
 
 ---

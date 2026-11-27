@@ -1,7 +1,7 @@
 # Entrega final: Exposición
 
 **Materia:** Práctica Profesionalizante I (PP1) — 2026
-**Proyecto:** AlojAR/Openlodge — Sistema de reservas de alojamientos
+**Proyecto:** AlojAR — Sistema de reservas de alojamientos
 **Grupo:** Grupo 1 — Sarco Thiago, Nanzer Benjamin, Chalita Antonio y Hernandes German Mateo
 **Fecha de la mesa:** 01/12/2026 (final del 2do llamado de diciembre)
 
@@ -40,7 +40,7 @@ La estructura de la base la define el script; Hibernate corre con `ddl-auto=vali
 | **Mis propiedades** | `mis-propiedades.html` | `mis-propiedades.js` | `GET /api/hospedajes/anfitrion/{id}`, `POST /api/hospedajes/{id}/estado`, `DELETE /api/hospedajes/{id}` | `hospedaje` |
 | **Publicar / editar** | `publicar-alojamiento.html` | `publicar-alojamiento.js` | `POST` y `PUT /api/hospedajes`, `POST /api/imagenes`, `GET /api/ciudades` | `hospedaje`, `hospedaje_imagen`, `imagen`, `servicio_hospedaje` |
 | **Bloquear fechas** | `calendario.html` | `calendario.js` | `/api/hospedajes/{id}/bloqueos`, `DELETE /api/bloqueos/{id}` | `bloqueo` |
-| **Perfil** | `perfil.html` | `perfil.js` | — | — |
+| **Perfil** | `perfil.html` | `perfil.js` | `PUT /api/usuarios/{id}` | `usuario` |
 
 ## Contrato de la API
 
@@ -57,6 +57,7 @@ Base: `http://localhost:8080/api`. Todas las respuestas son JSON. Los errores de
 | POST | `/auth/recuperar` | `{ email }` | `200` `{ mensaje }`. El código de 6 dígitos (vence en 10 minutos) llega por correo, no viaja en la respuesta | — (la misma respuesta aunque el correo no tenga cuenta) |
 | POST | `/auth/restablecer` | `{ email, codigo, password }` | `200` `{ mensaje }` | `400` código incorrecto o vencido |
 | POST | `/usuarios/{id}/cambiar-modo` | `{ rol: "huesped" \| "anfitrion" }` | `200` Usuario | `400`, `404` |
+| PUT | `/usuarios/{id}` | `{ nombre, apellido, passwordActual?, passwordNueva? }` (la contraseña solo si se quiere cambiar) | `200` Usuario | `400` datos inválidos, falta la contraseña actual o la nueva es igual a la actual, `401` contraseña actual incorrecta, `404` |
 
 **Usuario:** `{ id, username, nombre, apellido, email, rol }`
 
@@ -64,7 +65,7 @@ Base: `http://localhost:8080/api`. Todas las respuestas son JSON. Los errores de
 
 | Método | Ruta | Body | Respuesta | Errores |
 |---|---|---|---|---|
-| GET | `/hospedajes` (opcional `?entrada=AAAA-MM-DD&salida=AAAA-MM-DD`) | — | `200` lista de Hospedaje activos; con fechas, solo los libres en esas fechas | `400` falta una fecha o la salida no es posterior |
+| GET | `/hospedajes` con filtros opcionales: `destino`, `precioMin`, `precioMax`, `servicios` (se repite, uno por extra), `entrada` y `salida` (`AAAA-MM-DD`). Ej: `?destino=cordoba&precioMax=50000&servicios=Wi-Fi&servicios=Pileta&entrada=2026-12-10&salida=2026-12-13` | — | `200` lista de Hospedaje activos que cumplen todos los filtros (con fechas, solo los libres) | `400` falta una fecha, la llegada es antes de hoy, la salida no es posterior, precio negativo o mínimo mayor que el máximo |
 | GET | `/hospedajes/{id}` | — | `200` Hospedaje | `404` |
 | GET | `/hospedajes/anfitrion/{anfitrionId}` | — | `200` lista de Hospedaje | — |
 | POST | `/hospedajes` | `{ anfitrionId, nombre, descripcion, ciudad, tipo, precioPorNoche, capacidad, habitaciones?, camas?, banos?, servicios[], imagenes[] }` | `201` Hospedaje | `400`, `403` si no es anfitrión, `404` |
@@ -119,7 +120,7 @@ La materia dio un modelo de referencia para el TP de reservas: el documento *05 
 
 | Modelo de la materia | Nuestra tabla | Entidad Java | Atributos | Relaciones | Endpoint | Pantalla de nuestro frontend |
 |---|---|---|---|---|---|---|
-| `usuario` | `usuario` + `tipo_usuario` | `Usuario`, `TipoUsuario` | `id`, `username`, `password` (hash), `email`, `nombre`, `apellido`, `fechaNacimiento`, `emailVerificado`, `tipoUsuario` | muchos → un `TipoUsuario` | `/api/auth/*`, `/api/usuarios/{id}/cambiar-modo` | Login, Registro, Verificar correo, Recuperar contraseña, barra (cambiar de modo) |
+| `usuario` | `usuario` + `tipo_usuario` | `Usuario`, `TipoUsuario` | `id`, `username`, `password` (hash), `email`, `nombre`, `apellido`, `fechaNacimiento`, `emailVerificado`, `tipoUsuario` | muchos → un `TipoUsuario` | `/api/auth/*`, `/api/usuarios/{id}/cambiar-modo`, `/api/usuarios/{id}` | Login, Registro, Verificar correo, Recuperar contraseña, Perfil, barra (cambiar de modo) |
 | `ciudad` | `ciudad` + `pais` | `Ciudad`, `Pais` | `id`, `nombre`, `pais` | muchas → un `Pais` | `/api/ciudades` | Publicar alojamiento (lista de ciudades) |
 | `alojamiento` | `hospedaje` + `tipo_hospedaje` + `hospedaje_imagen` | `Hospedaje`, `TipoHospedaje` | `id`, `nombre`, `descripcion`, `precioPorNoche`, `capacidad`, `imagen`, `imagenes`, `habitaciones`, `camas`, `banos`, `activo`, `eliminado`, `ciudad`, `tipoHospedaje`, `anfitrion` | muchos → una `Ciudad`, → un `TipoHospedaje`, → un `Usuario` (anfitrión); muchos ↔ muchos `Servicio` | `/api/hospedajes` | Catálogo, Detalle, Mis propiedades, Publicar/editar |
 | `servicio` | `servicio` | `Servicio` | `id`, `nombre` | — | `/api/servicios` | Catálogo (extras), Publicar/editar, Detalle (íconos) |
@@ -137,7 +138,7 @@ Igual que en el modelo, las noches no se guardan: se calculan en `ReservaDto` co
 Los cuatro cruces del modelo de la materia y dónde están en nuestro código:
 
 1. **El catálogo publicado, con su ciudad.** ¿Qué alojamientos puede ver un huésped y dónde quedan?
-   `HospedajeRepository.findByActivoTrue()` trae los alojamientos activos, y la ciudad viene por la relación `@ManyToOne`. Endpoint `GET /api/hospedajes`, pantalla **Catálogo** (`catalogo.js`). El filtro por fechas ya lo hace el backend; ciudad, precio y extras todavía se filtran en el navegador.
+   `HospedajeRepository.findAll(HospedajeSpecs.catalogo(...))` arma **una sola consulta** con los filtros que llegan: solo activos, destino (en la ciudad, que viene por el `JOIN` con `ciudad`, o en el nombre, sin importar tildes), precio mínimo y máximo, un `EXISTS` por cada extra marcado y, si hay fechas, `NOT EXISTS` de reservas confirmadas y bloqueos que se pisen (la misma regla del cruce 3). Endpoint `GET /api/hospedajes`, pantalla **Catálogo** (`catalogo.js`). Cada búsqueda deja una línea en la consola del backend con los filtros y la cantidad de resultados.
 2. **Reservas recibidas por un anfitrión.** ¿Quién reservó en mis propiedades?
    `ReservaRepository.findByHospedajeAnfitrionIdOrderByFechaCheckInDesc`: Spring arma el `JOIN` reserva → hospedaje → anfitrión a partir del nombre del método. Endpoint `GET /api/reservas/anfitrion/{id}`, pantalla **Reservas recibidas** (`reservas-recibidas.js`).
 3. **¿Está libre?** ¿Se puede reservar entre estas fechas?
@@ -202,6 +203,9 @@ El modelo de la materia dice que en la exposición tenemos que poder responder e
 | Estado `CONFIRMADA` | El estado `ACTIVA` de la reserva pasó a llamarse `CONFIRMADA`, como en el modelo de la materia: la reserva es inmediata y nace confirmada. Se cambió el enum `EstadoReserva`, las consultas y el `CHECK` de la columna. Para la base que ya existía, `schema.sql` pasa las reservas `ACTIVA` a `CONFIRMADA` y cambia la regla. |
 | Eliminar sin borrar | Eliminar un alojamiento ya no lo borra de la base, ni a sus reservas y bloqueos: se marca `eliminado = true` y `activo = false` (columna nueva `hospedaje.eliminado`), como el `publicado = FALSE` del modelo de la materia. Deja de verse en el catálogo, en el detalle y en Mis propiedades, y las reservas viejas siguen en Mis reservas y Reservas recibidas. Test nuevo `HospedajeServiceTest` (3 casos). |
 | Sin reseñas ni administrador | Los datos de ejemplo ya no cargan calificaciones ni reseñas (se habían recortado en el análisis), así que el catálogo y el detalle no muestran estrellas. El cartel "¡Mejor puntuado!" pasó a decir "Destacado", y las tarjetas del catálogo quedaron todas del mismo alto: el nombre va en una línea y los extras también (dos y "+N"). Tampoco se carga el tipo de usuario `administrador`. Para la base que ya existía, `schema.sql` vacía las reseñas y borra ese tipo si nadie lo usa. |
+| Perfil que guarda | "Guardar cambios" en Mi perfil mostraba "¡Datos actualizados!" sin guardar nada. Ahora llama a `PUT /api/usuarios/{id}`, que cambia nombre y apellido, y la contraseña si se pide (verifica la actual, no deja repetirla y guarda la nueva con hash). La sesión se actualiza con los datos nuevos. El ojo para ver la contraseña quedó centrado en el campo. |
+| Nombre del sistema | Todos los README del repo (raíz, entregas 1 a 4 y entrega final) dicen "AlojAR — Sistema de reservas de alojamientos". "Openlodge" es solo el nombre del paquete del backend (`com.openlodge.openlodge`). |
+| Filtros del catálogo en el backend | Destino, precio, extras y fechas viajan a `GET /api/hospedajes` y se resuelven en una sola consulta con una *Specification* de Spring Data (`HospedajeSpecs`): cada filtro que llega suma una condición al `WHERE`. Antes, ciudad, precio y extras se filtraban en el navegador y la búsqueda por fechas hacía dos consultas por cada alojamiento. El destino busca en la ciudad y en el nombre sin importar mayúsculas ni tildes. Cada búsqueda queda en la consola del backend. Ahora la casita de "cargando" y el botón bloqueado funcionan con cualquier filtro. Tres tests nuevos de validación en `HospedajeServiceTest`. |
 
 ## Guion de la demo
 
