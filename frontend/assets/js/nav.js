@@ -21,7 +21,7 @@
     <a href="catalogo.html"><i class="bi bi-search"></i> Catálogo</a>
     <a href="mis-propiedades.html"><i class="bi bi-house-door"></i> Mis propiedades</a>
     <a href="publicar-alojamiento.html"><i class="bi bi-plus-circle"></i> Publicar</a>
-    <a href="reservas-recibidas.html"><i class="bi bi-inbox"></i> Reservas recibidas</a>
+    <a href="reservas-recibidas.html"><i class="bi bi-inbox"></i> Reservas recibidas <span class="nav-contador" hidden></span></a>
     <a href="perfil.html"><i class="bi bi-person-circle"></i> Mi perfil</a>
   `;
 
@@ -63,4 +63,45 @@
       link.classList.add("nav-activo");
     }
   });
+
+  if (usuario.rol === "anfitrion") {
+    actualizarContadorReservas(usuario.id, urlActual === "reservas-recibidas.html");
+  }
 })();
+
+// Numero rojo en "Reservas recibidas": cuantas reservas confirmadas entraron desde la ultima
+// vez que el anfitrion abrio esa pantalla. En el navegador se guarda el id de la ultima reserva
+// que vio (los id de reserva siempre crecen). La primera vez no muestra nada.
+async function actualizarContadorReservas(anfitrionId, estaEnReservasRecibidas) {
+  const contador = document.querySelector(".nav-contador");
+  const clave = `ultimaReservaVista_${anfitrionId}`;
+  if (!contador) return;
+
+  let reservas;
+  try {
+    const respuesta = await fetch(`${API_BASE}/reservas/anfitrion/${anfitrionId}`);
+    if (!respuesta.ok) return;
+    reservas = await respuesta.json();
+  } catch {
+    return;   // sin backend no se muestra el numero, el resto de la barra sigue igual
+  }
+
+  const ultimoId = reservas.reduce((max, r) => Math.max(max, r.id), 0);
+
+  let vista = null;
+  try { vista = localStorage.getItem(clave); } catch { /* sin almacenamiento: no hay numero */ }
+
+  // al entrar a Reservas recibidas (o la primera vez) se marca todo como visto
+  if (estaEnReservasRecibidas || vista === null) {
+    try { localStorage.setItem(clave, String(ultimoId)); } catch { /* nada */ }
+    return;
+  }
+
+  const nuevas = reservas.filter((r) => r.estado === "CONFIRMADA" && r.id > Number(vista)).length;
+  if (nuevas > 0) {
+    contador.textContent = nuevas > 9 ? "9+" : String(nuevas);
+    contador.title = `${nuevas} reserva${nuevas === 1 ? "" : "s"} nueva${nuevas === 1 ? "" : "s"}`;
+    contador.hidden = false;
+    contador.closest("a")?.classList.add("tiene-nuevas");
+  }
+}
